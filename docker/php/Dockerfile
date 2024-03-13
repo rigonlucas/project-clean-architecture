@@ -21,14 +21,12 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 # Configura o Composer
-# TODO: Verificar se ao carregar o composer do container externo, ele utiliza uma versão do PHP própria ou
-# deste container do qual esta sendo chamado
-#COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-# RUN curl --silent --show-error https://getcomposer.org/installer | php && \
-#     mv composer.phar /usr/local/bin/composer && \
-#     chmod +x /usr/local/bin/composer && \
-#     composer self-update --preview
-# RUN command -v composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+ RUN curl --silent --show-error https://getcomposer.org/installer | php && \
+     mv composer.phar /usr/local/bin/composer && \
+     chmod +x /usr/local/bin/composer && \
+     composer self-update --preview
+ RUN command -v composer
 
 RUN chown -R www-data:www-data /var/www/html
 
