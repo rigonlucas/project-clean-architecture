@@ -1,8 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\CreateUser;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    dd(\App\Models\User::all());
-    return view('welcome');
-});
+Route::get('user/create', [CreateUser::class, '__invoke']);
