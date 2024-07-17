@@ -5,13 +5,13 @@ services:
     build:
       context: ./docker/nginx
       dockerfile: Dockerfile
-    ports: 
+    ports:
       - "8080:80"
     networks:
       - internal
     volumes:
       - ./:/var/www/html/
-      - ./logs/nginx:/var/log/nginx/
+      - ./storage/logs/nginx:/var/log/nginx/
   php:
     container_name: php_project_xxxx
     build:
@@ -24,7 +24,7 @@ services:
       - internal
     volumes:
       - ./:/var/www/html/
-      - ./logs/php.log:/var/log/fpm-php.www.log
+      - ./storage/logs/php.log:/var/log/fpm-php.www.log
     expose:
       - "9000"
 #  mysql:
