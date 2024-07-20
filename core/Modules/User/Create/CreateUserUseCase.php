@@ -6,8 +6,8 @@ use Core\Generics\Outputs\GenericOutput;
 use Core\Generics\Outputs\OutputError;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Modules\User\Commons\Entities\UserEntity;
-use Core\Modules\User\Create\Exceptions\InvalidAgeException;
-use Core\Modules\User\Create\Gateways\CreateUserInterface;
+use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
+use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
 use Core\Modules\User\Create\outputs\CreateUserOutput;
 use Exception;
@@ -17,7 +17,7 @@ class CreateUserUseCase
     private GenericOutput $output;
 
     public function __construct(
-        private CreateUserInterface $createUserInterface
+        private UserCommandInterface $createUserInterface
     ) {
     }
 

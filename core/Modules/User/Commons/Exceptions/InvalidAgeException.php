@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Modules\User\Create\Exceptions;
+namespace Core\Modules\User\Commons\Exceptions;
 
 use Exception;
 

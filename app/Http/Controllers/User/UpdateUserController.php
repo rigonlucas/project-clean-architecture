@@ -4,31 +4,34 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Core\Generics\Outputs\OutputError;
-use Core\Modules\User\Create\CreateUserUseCase;
-use Core\Modules\User\Create\Inputs\CreateUserInput;
 use Core\Modules\User\Create\outputs\CreateUserOutput;
+use Core\Modules\User\Update\Inputs\UpdateUserInput;
+use Core\Modules\User\Update\UpdateUserUseCase;
 use Illuminate\Http\Request;
 use Infra\Persistence\User\Command\UserCommand;
+use Infra\Persistence\User\Repository\UserRepository;
 
-class CreateUser extends Controller
+class UpdateUserController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, int $id)
     {
-        $input = new CreateUserInput(
-            name: 'name 4',
-            email: 'email 4',
-            password: 'password',
-            age: 17
+        $input = new UpdateUserInput(
+            id: $id,
+            name: 'name 2',
+            email: 'email 2',
+            password: 'password 2',
+            age: 18
         );
 
-        $useCase = new CreateUserUseCase(
+        $useCase = new UpdateUserUseCase(
+            new UserRepository(),
             new UserCommand()
         );
         $useCase->execute($input);
         $output = $useCase->getOutput();
 
         /** @var CreateUserOutput $output */
-        if ($output->status->statusCode === 201) {
+        if ($output->status->statusCode === 200) {
             return response()->json(
                 [
                     'message' => $output->status->message,
