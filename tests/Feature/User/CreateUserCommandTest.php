@@ -15,11 +15,11 @@ class CreateUserCommandTest extends TestCase
     {
         // Arrange
         $userCommand = new UserCommand();
-        $userEntity = new UserEntity(
+        $userEntity = UserEntity::details(
+            id: 1,
             name: 'name 2',
             email: 'email 3',
-            password: 'password',
-            age: 18
+            birthday: now()->subYears(18)
         );
         // Act
         $userCommand->create($userEntity);

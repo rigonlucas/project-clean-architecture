@@ -17,7 +17,7 @@ class UserCommand implements UserCommandInterface
         $userModel->password = $userEntity->getPassword();
         $userModel->save();
 
-        return $userEntity;
+        return $userEntity->setId($userModel->id);
     }
 
     public function update(CreateUserEntity $userEntity): CreateUserEntity

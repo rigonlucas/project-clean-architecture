@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Core\Generics\Outputs\OutputError;
-use Core\Modules\User\Create\outputs\CreateUserOutput;
+use Core\Modules\User\Create\Output\CreateUserOutput;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
 use Core\Modules\User\Update\UpdateUserUseCase;
 use Illuminate\Http\Request;

@@ -9,7 +9,7 @@ use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
-use Core\Modules\User\Update\outputs\UpdateUserOutput;
+use Core\Modules\User\Update\Output\UpdateUserOutput;
 use Exception;
 
 class UpdateUserUseCase

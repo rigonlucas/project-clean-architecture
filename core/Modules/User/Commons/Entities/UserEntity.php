@@ -3,21 +3,65 @@
 namespace Core\Modules\User\Commons\Entities;
 
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
+use DateTimeInterface;
 
 class UserEntity
 {
     private ?int $id = null;
+    private string $name;
+    private ?string $email;
+    private ?string $password;
+    private ?DateTimeInterface $birthday;
 
-    /**
-     * @throws InvalidAgeException
-     */
-    public function __construct(
-        private string $name,
-        private string $email,
-        private ?string $password = null,
-        private ?int $age = null
-    ) {
-        $this->validateAge();
+    private function __construct()
+    {
+    }
+
+    public static function create(
+        string $name,
+        string $email,
+        string $password,
+        ?DateTimeInterface $birthday = null
+    ): UserEntity {
+        $userEntity = new UserEntity();
+        $userEntity->name = $name;
+        $userEntity->email = $email;
+        $userEntity->password = $password;
+        $userEntity->birthday = $birthday;
+
+        return $userEntity;
+    }
+
+    public static function update(
+        int $id,
+        string $name,
+        string $email,
+        ?string $password,
+        ?DateTimeInterface $birthday = null
+    ): UserEntity {
+        $userEntity = new UserEntity();
+        $userEntity->id = $id;
+        $userEntity->name = $name;
+        $userEntity->email = $email;
+        $userEntity->password = $password;
+        $userEntity->birthday = $birthday;
+
+        return $userEntity;
+    }
+
+    public static function details(
+        int $id,
+        string $name,
+        string $email,
+        ?DateTimeInterface $birthday = null
+    ): UserEntity {
+        $userEntity = new UserEntity();
+        $userEntity->id = $id;
+        $userEntity->name = $name;
+        $userEntity->email = $email;
+        $userEntity->birthday = $birthday;
+
+        return $userEntity;
     }
 
     /**
@@ -25,7 +69,7 @@ class UserEntity
      */
     public function validateAge(): void
     {
-        if ($this->age < 18) {
+        if ($this->birthday < 18) {
             throw new InvalidAgeException('Idade inválida');
         }
     }
@@ -45,9 +89,9 @@ class UserEntity
         return $this->password;
     }
 
-    public function getAge(): ?int
+    public function getBirthday(): ?int
     {
-        return $this->age;
+        return $this->birthday;
     }
 
     public function getId(): ?int
@@ -55,23 +99,9 @@ class UserEntity
         return $this->id;
     }
 
-    public function setId(?int $id): void
+    public function setId(int $id): self
     {
         $this->id = $id;
-    }
-
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    public function setNome(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function setEmail(string $email): void
-    {
-        $this->email = $email;
+        return $this;
     }
 }

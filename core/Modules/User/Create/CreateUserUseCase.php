@@ -2,14 +2,16 @@
 
 namespace Core\Modules\User\Create;
 
+use Core\Adapters\App\AppInterface;
 use Core\Generics\Outputs\GenericOutput;
 use Core\Generics\Outputs\OutputError;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Modules\User\Commons\Entities\UserEntity;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
+use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
-use Core\Modules\User\Create\outputs\CreateUserOutput;
+use Core\Modules\User\Create\Output\CreateUserOutput;
 use Exception;
 
 class CreateUserUseCase
@@ -17,18 +19,28 @@ class CreateUserUseCase
     private GenericOutput $output;
 
     public function __construct(
-        private UserCommandInterface $createUserInterface
+        private AppInterface $app,
+        private UserCommandInterface $createUserInterface,
+        private UserRepositoryInterface $userRepository,
     ) {
     }
 
     public function execute(CreateUserInput $createUserInput): void
     {
         try {
-            $userEntity = new UserEntity(
+            $userEntity = $this->userRepository->existsEmail($createUserInput->email);
+            if ($userEntity) {
+                $this->output = new OutputError(
+                    new OutputStatus(403, 'Forbidden'),
+                    'Usuário encontrado'
+                );
+                return;
+            }
+            $userEntity = UserEntity::create(
                 $createUserInput->name,
                 $createUserInput->email,
                 $createUserInput->password,
-                $createUserInput->age
+                $createUserInput->birthday
             );
 
             $userEntity = $this->createUserInterface->create($userEntity);
@@ -40,12 +52,16 @@ class CreateUserUseCase
         } catch (InvalidAgeException $e) {
             $this->output = new OutputError(
                 new OutputStatus(400, 'Bad Request'),
-                $e->getMessage()
+                'Idade inválida',
+                $e->getTrace(),
+                $this->app->isDevelopeMode()
             );
         } catch (Exception $e) {
             $this->output = new OutputError(
                 new OutputStatus(500, 'Internal Server Error'),
-                $e->getMessage()
+                'Erro interno do servidor',
+                $e->getTrace(),
+                $this->app->isDevelopeMode()
             );
         }
     }
