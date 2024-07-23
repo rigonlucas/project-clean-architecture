@@ -2,6 +2,7 @@
 
 namespace Core\Modules\User\Update;
 
+use Core\Adapters\App\AppInterface;
 use Core\Generics\Outputs\GenericOutput;
 use Core\Generics\Outputs\OutputError;
 use Core\Generics\Outputs\OutputStatus;
@@ -17,6 +18,7 @@ class UpdateUserUseCase
     private GenericOutput $output;
 
     public function __construct(
+        private AppInterface $app,
         private UserRepositoryInterface $userRepository,
         private UserCommandInterface $userCommand
     ) {
@@ -26,7 +28,6 @@ class UpdateUserUseCase
     {
         try {
             $userEntity = $this->userRepository->findById($input->id);
-            $userEntity->setId($input->age);
             if (is_null($userEntity)) {
                 $this->output = new OutputError(
                     new OutputStatus(404, 'Not found'),
@@ -34,11 +35,12 @@ class UpdateUserUseCase
                 );
                 return;
             }
+            $userEntity->setBirthday($input->birthday);
+            $userEntity->validateAge();
 
-            $userEntity->setPassword($input->password);
-            $userEntity->setId($input->id);
             $userEntity->setNome($input->name);
             $userEntity->setEmail($input->email);
+            $userEntity->setPassword($input->password);
 
             $this->userCommand->update($userEntity);
 
@@ -49,12 +51,16 @@ class UpdateUserUseCase
         } catch (InvalidAgeException $e) {
             $this->output = new OutputError(
                 new OutputStatus(400, 'Bad Request'),
-                $e->getMessage()
+                $e->getMessage(),
+                $e->getTrace(),
+                $this->app->isDevelopeMode()
             );
         } catch (Exception $e) {
             $this->output = new OutputError(
                 new OutputStatus(500, 'Internal Server Error'),
-                $e->getMessage()
+                $e->getMessage(),
+                $e->getTrace(),
+                $this->app->isDevelopeMode()
             );
         }
     }

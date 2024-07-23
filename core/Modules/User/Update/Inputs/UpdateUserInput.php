@@ -2,6 +2,8 @@
 
 namespace Core\Modules\User\Update\Inputs;
 
+use DateTimeInterface;
+
 readonly class UpdateUserInput
 {
     public function __construct(
@@ -9,7 +11,7 @@ readonly class UpdateUserInput
         public string $name,
         public string $email,
         public string $password,
-        public int $age
+        public DateTimeInterface $birthday
     ) {
     }
 }

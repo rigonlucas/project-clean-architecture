@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Core\Generics\Outputs\OutputError;
-use Core\Modules\User\Create\Output\CreateUserOutput;
+use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
 use Core\Modules\User\Update\UpdateUserUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Infra\Persistence\User\Command\UserCommand;
 use Infra\Persistence\User\Repository\UserRepository;
 
@@ -18,45 +18,22 @@ class UpdateUserController extends Controller
         $input = new UpdateUserInput(
             id: $id,
             name: 'name 2',
-            email: 'email 2',
-            password: 'password 2',
-            age: 18
+            email: 'email@2.com.br',
+            password: Hash::make('password'),
+            birthday: now()->subYears(18)
         );
 
         $useCase = new UpdateUserUseCase(
+            new AppAdapter(),
             new UserRepository(),
             new UserCommand()
         );
         $useCase->execute($input);
         $output = $useCase->getOutput();
+        $presenter = $output->getPresenter();
 
-        /** @var CreateUserOutput $output */
-        if ($output->status->statusCode === 200) {
-            return response()->json(
-                [
-                    'message' => $output->status->message,
-                    'data' => $output->userEntity->getName()
-                ],
-                $output->status->statusCode
-            );
-        }
-
-        if ($output->status->statusCode === 500) {
-            return response()->json(
-                [
-                    'message' => $output->status->message,
-                    'data' => $output->status->message
-                ],
-                $output->status->statusCode
-            );
-        }
-
-        /** @var OutputError $output */
         return response()->json(
-            [
-                'message' => $output->status->message,
-                'data' => $output->message
-            ],
+            $presenter->toArray(),
             $output->status->statusCode
         );
     }

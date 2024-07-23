@@ -6,6 +6,7 @@ use Core\Generics\Outputs\GenericOutput;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Generics\Presenters\GenericPresenter;
 use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Update\Presenter\UpdateUserPresenter;
 
 class UpdateUserOutput implements GenericOutput
 {
@@ -25,6 +26,6 @@ class UpdateUserOutput implements GenericOutput
 
     public function getPresenter(): GenericPresenter
     {
-        // TODO: Implement getPresenter() method.
+        return new UpdateUserPresenter($this);
     }
 }

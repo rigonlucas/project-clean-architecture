@@ -3,15 +3,15 @@
 namespace Core\Modules\User\Update\Presenter;
 
 use Core\Generics\Presenters\GenericPresenter;
-use Core\Modules\User\Create\Output\CreateUserOutput;
+use Core\Modules\User\Update\Output\UpdateUserOutput;
 
 class UpdateUserPresenter implements GenericPresenter
 {
-    public function __construct(private CreateUserOutput $output)
+    public function __construct(private UpdateUserOutput $output)
     {
     }
 
-    public function getOutput(): CreateUserOutput
+    public function getOutput(): UpdateUserOutput
     {
         return $this->output;
     }
@@ -23,7 +23,8 @@ class UpdateUserPresenter implements GenericPresenter
             'data' => [
                 'id' => $this->output->userEntity->getId(),
                 'name' => $this->output->userEntity->getName(),
-                'email' => $this->output->userEntity->getEmail()
+                'email' => $this->output->userEntity->getEmail(),
+                'birthday' => $this->output->userEntity->getBirthday()->format('Y-m-d')
             ]
         ];
     }

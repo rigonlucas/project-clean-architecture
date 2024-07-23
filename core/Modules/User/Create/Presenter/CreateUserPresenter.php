@@ -23,7 +23,8 @@ readonly class CreateUserPresenter implements GenericPresenter
             'data' => [
                 'id' => $this->output->userEntity->getId(),
                 'name' => $this->output->userEntity->getName(),
-                'email' => $this->output->userEntity->getEmail()
+                'email' => $this->output->userEntity->getEmail(),
+                'birthday' => $this->output->userEntity->getBirthday()->format('Y-m-d')
             ]
         ];
     }

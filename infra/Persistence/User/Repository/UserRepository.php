@@ -17,10 +17,10 @@ class UserRepository implements UserRepositoryInterface
     {
         $userModel = User::query()->find($id);
         if ($userModel) {
-            return UserEntity::create(
+            return UserEntity::details(
+                id: $userModel->id,
                 name: $userModel->name,
                 email: $userModel->email,
-                password: $userModel->password,
                 birthday: $userModel->birthday
             );
         }
@@ -32,11 +32,10 @@ class UserRepository implements UserRepositoryInterface
     {
         $userModel = User::query()->where('email', '=', $email)->first();
         if ($userModel) {
-            return UserEntity::update(
+            return UserEntity::details(
                 id: $userModel->id,
                 name: $userModel->name,
-                email: $userModel->email,
-                password: null
+                email: $userModel->email
             );
         }
 

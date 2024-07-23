@@ -3,6 +3,7 @@
 namespace Core\Modules\User\Commons\Entities;
 
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
+use DateTime;
 use DateTimeInterface;
 
 class UserEntity
@@ -32,23 +33,6 @@ class UserEntity
         return $userEntity;
     }
 
-    public static function update(
-        int $id,
-        string $name,
-        string $email,
-        ?string $password,
-        ?DateTimeInterface $birthday = null
-    ): UserEntity {
-        $userEntity = new UserEntity();
-        $userEntity->id = $id;
-        $userEntity->name = $name;
-        $userEntity->email = $email;
-        $userEntity->password = $password;
-        $userEntity->birthday = $birthday;
-
-        return $userEntity;
-    }
-
     public static function details(
         int $id,
         string $name,
@@ -69,7 +53,7 @@ class UserEntity
      */
     public function validateAge(): void
     {
-        if ($this->birthday < 18) {
+        if ($this->birthday->diff(new DateTime())->y < 18) {
             throw new InvalidAgeException('Idade inválida');
         }
     }
@@ -84,14 +68,32 @@ class UserEntity
         return $this->email;
     }
 
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+        return $this;
+    }
+
     public function getPassword(): ?string
     {
         return $this->password;
     }
 
-    public function getBirthday(): ?int
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getBirthday(): ?DateTimeInterface
     {
         return $this->birthday;
+    }
+
+    public function setBirthday(DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+        return $this;
     }
 
     public function getId(): ?int
@@ -102,6 +104,12 @@ class UserEntity
     public function setId(int $id): self
     {
         $this->id = $id;
+        return $this;
+    }
+
+    public function setNome(string $name): self
+    {
+        $this->name = $name;
         return $this;
     }
 }
