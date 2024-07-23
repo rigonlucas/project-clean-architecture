@@ -2,12 +2,15 @@
 
 namespace Core\Modules\User\Commons\Entities;
 
+use Core\Modules\User\Commons\Entities\Traits\HasUserEntityBuilder;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use DateTime;
 use DateTimeInterface;
 
 class UserEntity
 {
+    use HasUserEntityBuilder;
+
     private ?int $id = null;
     private string $name;
     private ?string $email;
@@ -18,40 +21,17 @@ class UserEntity
     {
     }
 
-    public static function create(
-        string $name,
-        string $email,
-        string $password,
-        ?DateTimeInterface $birthday = null
-    ): UserEntity {
-        $userEntity = new UserEntity();
-        $userEntity->name = $name;
-        $userEntity->email = $email;
-        $userEntity->password = $password;
-        $userEntity->birthday = $birthday;
-
-        return $userEntity;
-    }
-
-    public static function details(
-        int $id,
-        string $name,
-        string $email,
-        ?DateTimeInterface $birthday = null
-    ): UserEntity {
-        $userEntity = new UserEntity();
-        $userEntity->id = $id;
-        $userEntity->name = $name;
-        $userEntity->email = $email;
-        $userEntity->birthday = $birthday;
-
-        return $userEntity;
-    }
-
     /**
      * @throws InvalidAgeException
      */
     public function validateAge(): void
+    {
+        if ($this->birthday->diff(new DateTime())->y < 18) {
+            throw new InvalidAgeException('Idade inválida');
+        }
+    }
+
+    public function validateAgeLower(): void
     {
         if ($this->birthday->diff(new DateTime())->y < 18) {
             throw new InvalidAgeException('Idade inválida');

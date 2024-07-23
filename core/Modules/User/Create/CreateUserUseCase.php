@@ -42,7 +42,6 @@ class CreateUserUseCase
                 $createUserInput->password,
                 $createUserInput->birthday
             );
-            $userEntity->validateAge();
 
             $userEntity = $this->createUserInterface->create($userEntity);
 

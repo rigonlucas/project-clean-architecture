@@ -6,6 +6,7 @@ use Core\Adapters\App\AppInterface;
 use Core\Generics\Outputs\GenericOutput;
 use Core\Generics\Outputs\OutputError;
 use Core\Generics\Outputs\OutputStatus;
+use Core\Modules\User\Commons\Entities\UserEntity;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
@@ -27,20 +28,21 @@ class UpdateUserUseCase
     public function execute(UpdateUserInput $input): void
     {
         try {
-            $userEntity = $this->userRepository->findById($input->id);
-            if (is_null($userEntity)) {
+            $userEntity = $this->userRepository->existsEmail($input->id);
+            if (!$userEntity) {
                 $this->output = new OutputError(
                     new OutputStatus(404, 'Not found'),
                     'Usuário não encontrado'
                 );
                 return;
             }
-            $userEntity->setBirthday($input->birthday);
-            $userEntity->validateAge();
-
-            $userEntity->setNome($input->name);
-            $userEntity->setEmail($input->email);
-            $userEntity->setPassword($input->password);
+            $userEntity = UserEntity::update(
+                $input->id,
+                $input->name,
+                $input->email,
+                $input->password,
+                $input->birthday
+            );
 
             $this->userCommand->update($userEntity);
 

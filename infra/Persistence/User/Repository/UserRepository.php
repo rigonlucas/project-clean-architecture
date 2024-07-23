@@ -46,4 +46,9 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::query()->where('email', '=', $email)->exists();
     }
+
+    public function existsId(int $id): bool
+    {
+        return User::query()->where('id', '=', $id)->exists();
+    }
 }
