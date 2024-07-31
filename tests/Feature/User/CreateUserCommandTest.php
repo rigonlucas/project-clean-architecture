@@ -20,7 +20,7 @@ class CreateUserCommandTest extends TestCase
             name: 'name 2',
             email: 'email3@email.com',
             password: 'password',
-            uuid: AppAdapter::getInstance()->uuid5Generate('email3@email.com'),
+            uuid: AppAdapter::getInstance()->uuid7Generate(),
             birthday: now()->subYears(18)
         );
         // Act

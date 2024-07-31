@@ -19,7 +19,6 @@ trait HasUserEntityBuilder
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->birthday = $birthday;
-        $userEntity->validateAge();
         $userEntity->name = $name;
         $userEntity->email = $email;
         $userEntity->password = $password;
@@ -55,7 +54,6 @@ trait HasUserEntityBuilder
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->birthday = $birthday;
-        $userEntity->validateAge();
         $userEntity->id = $id;
         $userEntity->name = $name;
         $userEntity->email = $email;

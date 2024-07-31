@@ -4,36 +4,39 @@ namespace Tests\Unit\User\Entity;
 
 use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Commons\Entities\UserEntity;
-use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use Tests\TestCase;
 
+/**
+ * @group UserEntity
+ */
 class UserEntityTest extends TestCase
 {
-    public function test_deve_lancar_exception_de_idade_invalida(): void
+    public function test_deve_retornar_que_o_usuario_nao_tem_idade_legal(): void
     {
-        $this->expectException(InvalidAgeException::class);
         // Arrange
-        UserEntity::create(
+        $userEntity = UserEntity::create(
             name: 'John Doe',
             email: '',
             password: 'password',
-            uuid: AppAdapter::getInstance()->uuid5Generate('john@email.com'),
+            uuid: AppAdapter::getInstance()->uuid7Generate(),
             birthday: now()->subYears(17)
         );
+        $this->assertTrue($userEntity->hasNoLegalAge());
     }
 
     public function test_deve_retornar_nome_do_usuario(): void
     {
         // Arrange
-        $user = UserEntity::create(
+        $userEntity = UserEntity::create(
             name: 'John Doe',
             email: 'john@email.com',
             password: 'password',
-            uuid: AppAdapter::getInstance()->uuid5Generate('john@email.com'),
+            uuid: AppAdapter::getInstance()->uuid7Generate(),
             birthday: now()->subYears(18)
         );
         // Act
-        $name = $user->getName();
+        $this->assertFalse($userEntity->hasNoLegalAge());
+        $name = $userEntity->getName();
 
         // Assert
         $this->assertEquals('John Doe', $name);

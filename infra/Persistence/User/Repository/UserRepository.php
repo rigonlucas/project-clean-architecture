@@ -28,10 +28,29 @@ class UserRepository implements UserRepositoryInterface
         return null;
     }
 
+    public function findByUuid(string $uuid): ?UserEntity
+    {
+        $userModel = User::query()
+            ->select(['id', 'name', 'email', 'birthday', 'uuid'])
+            ->where('uuid', '=', $uuid)
+            ->first();
+        if ($userModel) {
+            return UserEntity::details(
+                id: $userModel->id,
+                name: $userModel->name,
+                email: $userModel->email,
+                uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
+                birthday: new DateTime($userModel->birthday),
+            );
+        }
+
+        return null;
+    }
+
     public function findByEmail(string $email): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid'])
             ->where('email', '=', $email)
             ->first();
         if ($userModel) {

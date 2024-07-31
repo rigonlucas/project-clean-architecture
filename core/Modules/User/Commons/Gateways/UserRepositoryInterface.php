@@ -8,6 +8,8 @@ interface UserRepositoryInterface
 {
     public function findById(int $id): ?UserEntity;
 
+    public function findByUuid(string $uuid): ?UserEntity;
+
     public function findByEmail(string $email): ?UserEntity;
 
     public function existsEmail(string $email): bool;

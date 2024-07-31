@@ -30,7 +30,7 @@ class UpdateUserUseCaseTest extends TestCase
             new UserCommand()
         );
         $input = new UpdateUserInput(
-            id: $userFactory->id,
+            uuid: $userFactory->id,
             name: 'name 2',
             email: 'email3@email.com',
             password: 'password',

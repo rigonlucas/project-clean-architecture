@@ -4,7 +4,6 @@ namespace Core\Modules\User\Commons\Entities;
 
 use AllowDynamicProperties;
 use Core\Modules\User\Commons\Entities\Traits\HasUserEntityBuilder;
-use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -25,14 +24,9 @@ use SensitiveParameter;
     {
     }
 
-    /**
-     * @throws InvalidAgeException
-     */
-    public function validateAge(): void
+    public function hasNoLegalAge(): bool
     {
-        if ($this->birthday->diff(new DateTime())->y < 18) {
-            throw new InvalidAgeException('Idade inválida');
-        }
+        return !($this->birthday->diff(new DateTime())->y >= 18);
     }
 
     public function getName(): string

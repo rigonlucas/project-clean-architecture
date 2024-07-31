@@ -13,7 +13,7 @@ class CreateUserController extends Controller
     {
         $input = new CreateUserInput(
             name: 'name 4231231232asdasd2',
-            email: 'email@email.com',
+            email: 'email2@email.com',
             password: 'password',
             birthday: now()->subYears(18)
         );

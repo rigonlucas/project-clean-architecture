@@ -4,11 +4,10 @@ namespace Tests\Integration\UseCases\User;
 
 use App\Models\User;
 use Core\Adapters\App\AppAdapter;
-use Core\Modules\User\Commons\Exceptions\EmailAlreadyUsedByOtherUserException;
-use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use Core\Modules\User\Create\CreateUserUseCase;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
 use Core\Modules\User\Create\Output\CreateUserOutput;
+use Core\Modules\User\Create\Output\CreateUserOutputError;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Persistence\User\Command\UserCommand;
@@ -53,9 +52,6 @@ class CreateUserUseCaseTest extends TestCase
 
     public function test_must_not_create_a_user_when_email_already_exists(): void
     {
-        // Assert exception
-        $this->expectException(EmailAlreadyUsedByOtherUserException::class);
-
         // Arrange
         $useCase = new CreateUserUseCase(
             AppAdapter::getInstance(),
@@ -72,13 +68,13 @@ class CreateUserUseCaseTest extends TestCase
 
         // Act
         $useCase->execute($input);
+
+        // Assert
+        $this->assertInstanceOf(CreateUserOutputError::class, $useCase->getOutput());
     }
 
     public function test_must_not_create_a_user_when_age_is_invalid(): void
     {
-        // Assert exception
-        $this->expectException(InvalidAgeException::class);
-
         // Arrange
         $useCase = new CreateUserUseCase(
             AppAdapter::getInstance(),
@@ -94,5 +90,34 @@ class CreateUserUseCaseTest extends TestCase
 
         // Act
         $useCase->execute($input);
+
+        // Assert
+        $this->assertTrue($useCase->hasErrorBag());
+        $this->assertInstanceOf(CreateUserOutputError::class, $useCase->getOutput());
+    }
+
+    public function test_must_not_create_a_user_when_age_and_email_already_exists_is_invalid(): void
+    {
+        // Arrange
+        $userFactory = User::factory()->create();
+
+        $useCase = new CreateUserUseCase(
+            AppAdapter::getInstance(),
+            new UserCommand(),
+            new UserRepository()
+        );
+        $input = new CreateUserInput(
+            name: 'name 2',
+            email: $userFactory->email,
+            password: 'password',
+            birthday: now()->subYears(17)
+        );
+
+        // Act
+        $useCase->execute($input);
+
+        // Assert exception
+        $this->assertTrue($useCase->hasErrorBag());
+        $this->assertInstanceOf(CreateUserOutputError::class, $useCase->getOutput());
     }
 }

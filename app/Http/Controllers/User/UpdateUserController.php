@@ -7,13 +7,14 @@ use Core\Modules\User\Update\Inputs\UpdateUserInput;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Infra\Handlers\UseCases\User\UpdateUserHandler;
+use Ramsey\Uuid\Uuid;
 
 class UpdateUserController extends Controller
 {
-    public function __invoke(Request $request, int $id)
+    public function __invoke(Request $request, string $uuid)
     {
         $input = new UpdateUserInput(
-            id: $id,
+            uuid: Uuid::fromString($uuid),
             name: 'name 2',
             email: 'email@2.com.br',
             password: Hash::make('password'),

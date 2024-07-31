@@ -2,6 +2,7 @@
 
 namespace Core\Adapters\App;
 
+use DateTimeInterface;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
@@ -33,9 +34,9 @@ class AppAdapter implements AppInterface
         return Hash::make($password);
     }
 
-    public function uuid5Generate(string $name): UuidInterface
+    public function uuid7Generate(?DateTimeInterface $dateTime = null): UuidInterface
     {
-        return Uuid::uuid5(ns: Uuid::NAMESPACE_DNS, name: $name);
+        return Uuid::uuid7($dateTime);
     }
 
     public function uuidFromString(string $uuid): UuidInterface

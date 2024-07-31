@@ -21,7 +21,7 @@ readonly class UpdateUserPresenter implements GenericPresenter
         return [
             'message' => $this->output->status->message,
             'data' => [
-                'id' => $this->output->userEntity->getId(),
+                'uuid' => $this->output->userEntity->getUuid()->toString(),
                 'name' => $this->output->userEntity->getName(),
                 'email' => $this->output->userEntity->getEmail(),
                 'birthday' => $this->output->userEntity->getBirthday()->format('Y-m-d')
