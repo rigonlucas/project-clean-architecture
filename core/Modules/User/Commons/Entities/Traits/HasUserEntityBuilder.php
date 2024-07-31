@@ -4,6 +4,7 @@ namespace Core\Modules\User\Commons\Entities\Traits;
 
 use Core\Modules\User\Commons\Entities\UserEntity;
 use DateTimeInterface;
+use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
 
 trait HasUserEntityBuilder
@@ -13,14 +14,16 @@ trait HasUserEntityBuilder
         string $email,
         #[SensitiveParameter]
         string $password,
+        UuidInterface $uuid = null,
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->birthday = $birthday;
+        $userEntity->validateAge();
         $userEntity->name = $name;
         $userEntity->email = $email;
         $userEntity->password = $password;
-        $userEntity->validateAge();
+        $userEntity->uuid = $uuid;
 
         return $userEntity;
     }
@@ -29,6 +32,7 @@ trait HasUserEntityBuilder
         int $id,
         string $name,
         string $email,
+        UuidInterface $uuid,
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
@@ -36,6 +40,7 @@ trait HasUserEntityBuilder
         $userEntity->name = $name;
         $userEntity->email = $email;
         $userEntity->birthday = $birthday;
+        $userEntity->uuid = $uuid;
 
         return $userEntity;
     }
@@ -50,11 +55,11 @@ trait HasUserEntityBuilder
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->birthday = $birthday;
+        $userEntity->validateAge();
         $userEntity->id = $id;
         $userEntity->name = $name;
         $userEntity->email = $email;
         $userEntity->password = $password;
-        $userEntity->validateAge();
 
         return $userEntity;
     }

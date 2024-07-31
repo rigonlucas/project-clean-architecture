@@ -3,6 +3,8 @@
 namespace Core\Adapters\App;
 
 use Illuminate\Support\Facades\Hash;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 class AppAdapter implements AppInterface
 {
@@ -29,5 +31,15 @@ class AppAdapter implements AppInterface
     public function passwordHash(string $password): string
     {
         return Hash::make($password);
+    }
+
+    public function uuid5Generate(string $name): UuidInterface
+    {
+        return Uuid::uuid5(ns: Uuid::NAMESPACE_DNS, name: $name);
+    }
+
+    public function uuidFromString(string $uuid): UuidInterface
+    {
+        return Uuid::fromString($uuid);
     }
 }

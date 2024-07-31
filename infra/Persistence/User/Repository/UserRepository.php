@@ -3,22 +3,25 @@
 namespace Infra\Persistence\User\Repository;
 
 use App\Models\User;
+use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Commons\Entities\UserEntity;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
+use DateTime;
 
 class UserRepository implements UserRepositoryInterface
 {
     public function findById(int $id): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid'])
             ->find($id);
         if ($userModel) {
             return UserEntity::details(
                 id: $userModel->id,
                 name: $userModel->name,
                 email: $userModel->email,
-                birthday: $userModel->birthday
+                uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
+                birthday: new DateTime($userModel->birthday)
             );
         }
 
@@ -36,7 +39,8 @@ class UserRepository implements UserRepositoryInterface
                 id: $userModel->id,
                 name: $userModel->name,
                 email: $userModel->email,
-                birthday: $userModel->birthday
+                uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
+                birthday: new DateTime($userModel->birthday)
             );
         }
 

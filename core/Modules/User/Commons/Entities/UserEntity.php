@@ -2,13 +2,15 @@
 
 namespace Core\Modules\User\Commons\Entities;
 
+use AllowDynamicProperties;
 use Core\Modules\User\Commons\Entities\Traits\HasUserEntityBuilder;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use DateTime;
 use DateTimeInterface;
+use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
 
-class UserEntity
+#[AllowDynamicProperties] class UserEntity
 {
     use HasUserEntityBuilder;
 
@@ -16,6 +18,7 @@ class UserEntity
     private string $name;
     private ?string $email;
     private ?string $password;
+    private UuidInterface $uuid;
     private ?DateTimeInterface $birthday;
 
     private function __construct()
@@ -87,5 +90,15 @@ class UserEntity
     {
         $this->name = $name;
         return $this;
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(UuidInterface $uuid): void
+    {
+        $this->uuid = $uuid;
     }
 }

@@ -51,5 +51,6 @@ class UpdateUserUseCaseTest extends TestCase
             'birthday' => $output->userEntity->getBirthday()
         ]);
         $this->assertEquals(ResponseStatusCodeEnum::OK->value, $output->status->statusCode);
+        $this->assertNotEquals($input->password, $output->userEntity->getPassword());
     }
 }

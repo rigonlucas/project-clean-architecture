@@ -16,6 +16,7 @@ class UserCommand implements UserCommandInterface
         $userModel->email = $userEntity->getEmail();
         $userModel->password = $userEntity->getPassword();
         $userModel->birthday = $userEntity->getBirthday();
+        $userModel->uuid = $userEntity->getUuid()->toString();
         $userModel->save();
 
         return $userEntity->setId($userModel->id);

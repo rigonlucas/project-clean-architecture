@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\User\Entity;
 
+use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Commons\Entities\UserEntity;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use Tests\TestCase;
@@ -15,7 +16,8 @@ class UserEntityTest extends TestCase
         UserEntity::create(
             name: 'John Doe',
             email: '',
-            password: '',
+            password: 'password',
+            uuid: AppAdapter::getInstance()->uuid5Generate('john@email.com'),
             birthday: now()->subYears(17)
         );
     }
@@ -26,7 +28,8 @@ class UserEntityTest extends TestCase
         $user = UserEntity::create(
             name: 'John Doe',
             email: 'john@email.com',
-            password: '',
+            password: 'password',
+            uuid: AppAdapter::getInstance()->uuid5Generate('john@email.com'),
             birthday: now()->subYears(18)
         );
         // Act

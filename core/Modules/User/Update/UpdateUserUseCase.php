@@ -13,6 +13,7 @@ use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
 use Core\Modules\User\Update\Output\UpdateUserOutput;
+use Core\Tools\Http\ResponseStatusCodeEnum;
 
 class UpdateUserUseCase
 {
@@ -31,32 +32,31 @@ class UpdateUserUseCase
      */
     public function execute(UpdateUserInput $input): void
     {
-        $userEntity = $this->userRepository->existsId($input->id);
-        if (!$userEntity) {
+        $recordedUser = $this->userRepository->findById($input->id);
+        if (!$recordedUser) {
             $this->output = new OutputError(
                 new OutputStatus(404, 'Not found'),
                 'Usuário não encontrado'
             );
             return;
         }
-        $recordedEserEntity = $this->userRepository->findByEmail($input->id);
-        if ($recordedEserEntity && $recordedEserEntity->getId() != $input->id) {
+        $recordedUserByEmail = $this->userRepository->findByEmail($input->email);
+        if ($recordedUserByEmail && $recordedUserByEmail->getId() != $input->id) {
             throw new EmailAlreadyUsedByOtherUserException();
         }
 
         $userEntity = UserEntity::update(
-            $input->id,
-            $input->name,
-            $input->email,
-            $this->app->passwordHash($input->password),
-            $input->birthday
+            id: $input->id,
+            name: $input->name,
+            email: $input->email,
+            password: $this->app->passwordHash($input->password),
+            birthday: $input->birthday
         );
-        $userEntity->validateAge();
-
+        $userEntity->setUuid($recordedUser->getUuid());
         $this->userCommand->update($userEntity);
 
         $this->output = new UpdateUserOutput(
-            new OutputStatus(200, 'Ok'),
+            new OutputStatus(ResponseStatusCodeEnum::OK->value, ResponseStatusCodeEnum::OK->name),
             $userEntity
         );
     }
