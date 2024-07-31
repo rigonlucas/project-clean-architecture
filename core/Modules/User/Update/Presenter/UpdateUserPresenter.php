@@ -5,7 +5,7 @@ namespace Core\Modules\User\Update\Presenter;
 use Core\Generics\Presenters\GenericPresenter;
 use Core\Modules\User\Update\Output\UpdateUserOutput;
 
-class UpdateUserPresenter implements GenericPresenter
+readonly class UpdateUserPresenter implements GenericPresenter
 {
     public function __construct(private UpdateUserOutput $output)
     {

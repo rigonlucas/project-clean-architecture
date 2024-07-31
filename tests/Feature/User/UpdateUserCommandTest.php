@@ -18,11 +18,12 @@ class UpdateUserCommandTest extends TestCase
         $userModel = User::factory()->create();
         $userCommand = new UserCommand();
 
-        $userEntity = new UserEntity(
+        $userEntity = UserEntity::update(
+            id: $userModel->id,
             name: 'name 2',
             email: 'email@3',
             password: 'password',
-            age: 18
+            birthday: now()->subYears(18)
         );
         $userEntity->setId($userModel->id);
 
@@ -33,10 +34,12 @@ class UpdateUserCommandTest extends TestCase
         $this->assertDatabaseHas('users', [
             'id' => $userModel->id,
             'name' => $userEntity->getName(),
-            'email' => $userEntity->getEmail()
+            'email' => $userEntity->getEmail(),
+            'birthday' => $userEntity->getBirthday()
         ]);
 
         $this->assertNotEquals($userModel->name, $userEntity->getName());
         $this->assertNotEquals($userModel->email, $userEntity->getEmail());
+        $this->assertNotEquals($userModel->birthday, $userEntity->getBirthday());
     }
 }

@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Core\Adapters\App\AppAdapter;
-use Core\Modules\User\Create\CreateUserUseCase;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
 use Illuminate\Http\Request;
-use Infra\Persistence\User\Command\UserCommand;
-use Infra\Persistence\User\Repository\UserRepository;
+use Infra\Handlers\UseCases\User\CreateUserHandler;
 
 class CreateUserController extends Controller
 {
@@ -16,18 +13,13 @@ class CreateUserController extends Controller
     {
         $input = new CreateUserInput(
             name: 'name 4231231232asdasd2',
-            email: 'email 422312asdas3223',
+            email: 'email@email.com',
             password: 'password',
             birthday: now()->subYears(18)
         );
 
-        $useCase = new CreateUserUseCase(
-            new AppAdapter(),
-            new UserCommand(),
-            new UserRepository()
-        );
-        $useCase->execute($input);
-        $output = $useCase->getOutput();
+        $handler = (new CreateUserHandler())->handle($input);
+        $output = $handler->getOutput();
         $presenter = $output->getPresenter();
 
         return response()->json(

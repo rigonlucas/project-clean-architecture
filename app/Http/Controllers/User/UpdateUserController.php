@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
-use Core\Modules\User\Update\UpdateUserUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Infra\Persistence\User\Command\UserCommand;
-use Infra\Persistence\User\Repository\UserRepository;
+use Infra\Handlers\UseCases\User\UpdateUserHandler;
 
 class UpdateUserController extends Controller
 {
@@ -23,13 +20,8 @@ class UpdateUserController extends Controller
             birthday: now()->subYears(18)
         );
 
-        $useCase = new UpdateUserUseCase(
-            new AppAdapter(),
-            new UserRepository(),
-            new UserCommand()
-        );
-        $useCase->execute($input);
-        $output = $useCase->getOutput();
+        $handler = (new UpdateUserHandler())->handle($input);
+        $output = $handler->getOutput();
         $presenter = $output->getPresenter();
 
         return response()->json(

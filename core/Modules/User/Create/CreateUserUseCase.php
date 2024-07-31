@@ -4,66 +4,50 @@ namespace Core\Modules\User\Create;
 
 use Core\Adapters\App\AppInterface;
 use Core\Generics\Outputs\GenericOutput;
-use Core\Generics\Outputs\OutputError;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Modules\User\Commons\Entities\UserEntity;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
+use Core\Modules\User\Commons\Exceptions\UserNotFoundException;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
 use Core\Modules\User\Create\Output\CreateUserOutput;
-use Exception;
 
 class CreateUserUseCase
 {
-    private GenericOutput $output;
+    private CreateUserOutput $output;
 
     public function __construct(
-        private AppInterface $app,
-        private UserCommandInterface $createUserInterface,
-        private UserRepositoryInterface $userRepository,
+        private readonly AppInterface $app,
+        private readonly UserCommandInterface $createUserInterface,
+        private readonly UserRepositoryInterface $userRepository,
     ) {
     }
 
+    /**
+     * @throws InvalidAgeException
+     * @throws UserNotFoundException
+     */
     public function execute(CreateUserInput $createUserInput): void
     {
-        try {
-            $userEntity = $this->userRepository->existsEmail($createUserInput->email);
-            if ($userEntity) {
-                $this->output = new OutputError(
-                    new OutputStatus(403, 'Forbidden'),
-                    'Usuário encontrado'
-                );
-                return;
-            }
-            $userEntity = UserEntity::create(
-                $createUserInput->name,
-                $createUserInput->email,
-                $createUserInput->password,
-                $createUserInput->birthday
-            );
-
-            $userEntity = $this->createUserInterface->create($userEntity);
-
-            $this->output = new CreateUserOutput(
-                new OutputStatus(201, 'Ok'),
-                $userEntity
-            );
-        } catch (InvalidAgeException $e) {
-            $this->output = new OutputError(
-                new OutputStatus(400, 'Bad Request'),
-                'Idade inválida',
-                $e->getTrace(),
-                $this->app->isDevelopeMode()
-            );
-        } catch (Exception $e) {
-            $this->output = new OutputError(
-                new OutputStatus(500, 'Internal Server Error'),
-                'Erro interno do servidor',
-                $e->getTrace(),
-                $this->app->isDevelopeMode()
-            );
+        $userEntity = $this->userRepository->existsEmail($createUserInput->email);
+        if ($userEntity) {
+            throw new UserNotFoundException();
         }
+        $userEntity = UserEntity::create(
+            $createUserInput->name,
+            $createUserInput->email,
+            $this->app->passwordHash($createUserInput->password),
+            $createUserInput->birthday
+        );
+        $userEntity->validateAge();
+
+        $userEntity = $this->createUserInterface->create($userEntity);
+
+        $this->output = new CreateUserOutput(
+            new OutputStatus(201, 'Ok'),
+            $userEntity
+        );
     }
 
     public function getOutput(): GenericOutput

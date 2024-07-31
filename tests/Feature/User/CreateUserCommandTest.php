@@ -15,10 +15,10 @@ class CreateUserCommandTest extends TestCase
     {
         // Arrange
         $userCommand = new UserCommand();
-        $userEntity = UserEntity::details(
-            id: 1,
+        $userEntity = UserEntity::create(
             name: 'name 2',
-            email: 'email 3',
+            email: 'email3@email.com',
+            password: 'password',
             birthday: now()->subYears(18)
         );
         // Act
@@ -27,7 +27,8 @@ class CreateUserCommandTest extends TestCase
         // Assert
         $this->assertDatabaseHas('users', [
             'name' => $userEntity->getName(),
-            'email' => $userEntity->getEmail()
+            'email' => $userEntity->getEmail(),
+            'birthday' => $userEntity->getBirthday()
         ]);
     }
 }

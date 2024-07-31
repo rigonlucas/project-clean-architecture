@@ -6,6 +6,7 @@ use Core\Modules\User\Commons\Entities\Traits\HasUserEntityBuilder;
 use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use DateTime;
 use DateTimeInterface;
+use SensitiveParameter;
 
 class UserEntity
 {
@@ -25,13 +26,6 @@ class UserEntity
      * @throws InvalidAgeException
      */
     public function validateAge(): void
-    {
-        if ($this->birthday->diff(new DateTime())->y < 18) {
-            throw new InvalidAgeException('Idade inválida');
-        }
-    }
-
-    public function validateAgeLower(): void
     {
         if ($this->birthday->diff(new DateTime())->y < 18) {
             throw new InvalidAgeException('Idade inválida');
@@ -59,8 +53,10 @@ class UserEntity
         return $this->password;
     }
 
-    public function setPassword(string $password): self
-    {
+    public function setPassword(
+        #[SensitiveParameter]
+        string $password
+    ): self {
         $this->password = $password;
         return $this;
     }

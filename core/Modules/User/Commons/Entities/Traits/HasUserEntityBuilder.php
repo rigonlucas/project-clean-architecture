@@ -3,27 +3,24 @@
 namespace Core\Modules\User\Commons\Entities\Traits;
 
 use Core\Modules\User\Commons\Entities\UserEntity;
-use Core\Modules\User\Commons\Exceptions\InvalidAgeException;
 use DateTimeInterface;
+use SensitiveParameter;
 
 trait HasUserEntityBuilder
 {
-    /**
-     * @throws InvalidAgeException
-     */
     public static function create(
         string $name,
         string $email,
+        #[SensitiveParameter]
         string $password,
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->birthday = $birthday;
-        $userEntity->validateAge();
-
         $userEntity->name = $name;
         $userEntity->email = $email;
         $userEntity->password = $password;
+        $userEntity->validateAge();
 
         return $userEntity;
     }
@@ -43,24 +40,21 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    /**
-     * @throws InvalidAgeException
-     */
     public static function update(
         int $id,
         string $name,
         string $email,
+        #[SensitiveParameter]
         string $password,
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->birthday = $birthday;
-        $userEntity->validateAge();
-
         $userEntity->id = $id;
         $userEntity->name = $name;
         $userEntity->email = $email;
         $userEntity->password = $password;
+        $userEntity->validateAge();
 
         return $userEntity;
     }

@@ -12,22 +12,22 @@ class UserEntityTest extends TestCase
     {
         $this->expectException(InvalidAgeException::class);
         // Arrange
-        new UserEntity(
+        UserEntity::create(
             name: 'John Doe',
             email: '',
             password: '',
-            age: 17
+            birthday: now()->subYears(17)
         );
     }
 
     public function test_deve_retornar_nome_do_usuario(): void
     {
         // Arrange
-        $user = new UserEntity(
+        $user = UserEntity::create(
             name: 'John Doe',
             email: 'john@email.com',
             password: '',
-            age: 18
+            birthday: now()->subYears(18)
         );
         // Act
         $name = $user->getName();
