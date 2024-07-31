@@ -4,7 +4,6 @@ namespace Core\Modules\User\Update;
 
 use Core\Adapters\App\AppInterface;
 use Core\Generics\Outputs\GenericOutput;
-use Core\Generics\Outputs\OutputError;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Modules\User\Commons\Entities\UserEntity;
 use Core\Modules\User\Commons\Exceptions\EmailAlreadyUsedByOtherUserException;
@@ -13,6 +12,7 @@ use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
 use Core\Modules\User\Update\Output\UpdateUserOutput;
+use Core\Modules\User\Update\Output\UpdateUserOutputError;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 
 class UpdateUserUseCase
@@ -34,7 +34,7 @@ class UpdateUserUseCase
     {
         $recordedUser = $this->userRepository->findById($input->id);
         if (!$recordedUser) {
-            $this->output = new OutputError(
+            $this->output = new UpdateUserOutputError(
                 new OutputStatus(404, 'Not found'),
                 'Usuário não encontrado'
             );

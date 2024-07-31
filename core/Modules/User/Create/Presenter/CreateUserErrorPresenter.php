@@ -1,14 +1,15 @@
 <?php
 
-namespace Core\Generics\Presenters;
+namespace Core\Modules\User\Create\Presenter;
 
-use Core\Generics\Outputs\OutputError;
+use Core\Generics\Presenters\GenericPresenter;
+use Core\Modules\User\Create\Output\CreateUserOutputError;
 
-readonly class OutputErrorPresenter implements GenericPresenter
+readonly class CreateUserErrorPresenter implements GenericPresenter
 {
 
     public function __construct(
-        private OutputError $output,
+        private CreateUserOutputError $output,
         public ?array $trace = [],
         private bool $isDevelopementMode = false
     ) {
@@ -18,8 +19,7 @@ readonly class OutputErrorPresenter implements GenericPresenter
     {
         return [
             ...[
-                'message' => $this->output->status->message,
-                'error' => $this->output->status->statusCode
+                'errors' => $this->output->errors
             ],
             ...($this->isDevelopementMode ? ['trace' => $this->trace] : [])
         ];

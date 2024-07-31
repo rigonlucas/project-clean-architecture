@@ -1,15 +1,17 @@
 <?php
 
-namespace Core\Generics\Outputs;
+namespace Core\Modules\User\Update\Output;
 
+use Core\Generics\Outputs\GenericOutput;
+use Core\Generics\Outputs\OutputStatus;
 use Core\Generics\Presenters\GenericPresenter;
-use Core\Generics\Presenters\OutputErrorPresenter;
+use Core\Modules\User\Update\Presenter\UpdateUserErrorPresenter;
 
-readonly class OutputError implements GenericOutput
+readonly class UpdateUserOutputError implements GenericOutput
 {
     public function __construct(
         public OutputStatus $status,
-        public ?string $message = null,
+        public ?array $errors = [],
         public ?array $trace = [],
         public bool $isDevelopementMode = false
     ) {
@@ -27,6 +29,6 @@ readonly class OutputError implements GenericOutput
 
     public function getPresenter(): GenericPresenter
     {
-        return new OutputErrorPresenter($this, $this->trace, $this->isDevelopementMode);
+        return new UpdateUserErrorPresenter($this, $this->trace, $this->isDevelopementMode);
     }
 }
