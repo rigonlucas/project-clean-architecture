@@ -11,6 +11,7 @@ use Core\Tools\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Persistence\User\Command\UserCommand;
 use Infra\Persistence\User\Repository\UserRepository;
+use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class UpdateUserUseCaseTest extends TestCase
@@ -30,7 +31,7 @@ class UpdateUserUseCaseTest extends TestCase
             new UserCommand()
         );
         $input = new UpdateUserInput(
-            uuid: $userFactory->id,
+            uuid: Uuid::fromString($userFactory->uuid),
             name: 'name 2',
             email: 'email3@email.com',
             password: 'password',
