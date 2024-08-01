@@ -3,7 +3,7 @@
 namespace Infra\Persistence\User\Command;
 
 use App\Models\User;
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 
 class UserCommand implements UserCommandInterface

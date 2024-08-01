@@ -5,7 +5,7 @@ namespace Core\Modules\User\Update;
 use Core\Adapters\App\AppInterface;
 use Core\Generics\Outputs\GenericOutputInterface;
 use Core\Generics\Outputs\OutputStatus;
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;

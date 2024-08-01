@@ -5,7 +5,7 @@ namespace Core\Modules\User\Update\Output;
 use Core\Generics\Outputs\GenericOutputInterface;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Generics\Presenters\ToArrayPresenterInterface;
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 use Core\Modules\User\Update\Presenter\UpdateUserPresenterInterface;
 
 class UpdateUserOutputInterface implements GenericOutputInterface

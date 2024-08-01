@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Modules\User\Commons\Entities\Traits;
+namespace Core\Modules\User\Commons\Entities\User\Traits;
 
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;

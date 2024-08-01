@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Modules\User\Commons\Entities;
+namespace Core\Modules\User\Commons\Entities\User;
 
 use AllowDynamicProperties;
-use Core\Modules\User\Commons\Entities\Traits\HasUserEntityBuilder;
-use Core\Modules\User\Commons\Entities\Traits\UserAcessorsTrait;
+use Core\Modules\User\Commons\Entities\User\Traits\HasUserEntityBuilder;
+use Core\Modules\User\Commons\Entities\User\Traits\UserEntityAcessors;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -12,7 +12,7 @@ use Ramsey\Uuid\UuidInterface;
 #[AllowDynamicProperties] class UserEntity
 {
     use HasUserEntityBuilder;
-    use UserAcessorsTrait;
+    use UserEntityAcessors;
 
     private ?int $id = null;
     private string $name;

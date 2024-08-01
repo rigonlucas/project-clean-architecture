@@ -3,7 +3,7 @@
 namespace Tests\Feature\User;
 
 use Core\Adapters\App\AppAdapter;
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Persistence\User\Command\UserCommand;
 use Tests\TestCase;

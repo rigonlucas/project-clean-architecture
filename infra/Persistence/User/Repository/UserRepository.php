@@ -4,7 +4,7 @@ namespace Infra\Persistence\User\Repository;
 
 use App\Models\User;
 use Core\Adapters\App\AppAdapter;
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
 use DateTime;
 

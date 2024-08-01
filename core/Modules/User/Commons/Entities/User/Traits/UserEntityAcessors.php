@@ -1,12 +1,12 @@
 <?php
 
-namespace Core\Modules\User\Commons\Entities\Traits;
+namespace Core\Modules\User\Commons\Entities\User\Traits;
 
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
 
-trait UserAcessorsTrait
+trait UserEntityAcessors
 {
     public function getName(): string
     {

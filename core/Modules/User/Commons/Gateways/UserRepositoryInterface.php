@@ -2,7 +2,7 @@
 
 namespace Core\Modules\User\Commons\Gateways;
 
-use Core\Modules\User\Commons\Entities\UserEntity;
+use Core\Modules\User\Commons\Entities\User\UserEntity;
 
 interface UserRepositoryInterface
 {
