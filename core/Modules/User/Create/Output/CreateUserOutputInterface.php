@@ -2,19 +2,19 @@
 
 namespace Core\Modules\User\Create\Output;
 
-use Core\Generics\Outputs\GenericOutput;
+use Core\Generics\Outputs\GenericOutputInterface;
 use Core\Generics\Outputs\OutputStatus;
-use Core\Generics\Presenters\GenericPresenter;
+use Core\Generics\Presenters\ToArrayPresenterInterface;
 use Core\Modules\User\Commons\Entities\UserEntity;
-use Core\Modules\User\Create\Presenter\CreateUserPresenter;
+use Core\Modules\User\Create\Presenter\CreateUserPresenterInterface;
 
-readonly class CreateUserOutput implements GenericOutput
+readonly class CreateUserOutputInterface implements GenericOutputInterface
 {
     public function __construct(public OutputStatus $status, public UserEntity $userEntity, public string $message = '')
     {
     }
 
-    public function getMessages(): string
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -24,8 +24,8 @@ readonly class CreateUserOutput implements GenericOutput
         return $this->status;
     }
 
-    public function getPresenter(): GenericPresenter
+    public function getPresenter(): ToArrayPresenterInterface
     {
-        return new CreateUserPresenter($this);
+        return new CreateUserPresenterInterface($this);
     }
 }

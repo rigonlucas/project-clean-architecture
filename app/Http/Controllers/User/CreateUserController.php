@@ -11,14 +11,14 @@ class CreateUserController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $input = new CreateUserInput(
+        $createUserInput = new CreateUserInput(
             name: 'name 4231231232asdasd2',
-            email: 'email2@email.com',
+            email: 'email32@email.com',
             password: 'password',
             birthday: now()->subYears(18)
         );
 
-        $handler = (new CreateUserHandler())->handle($input);
+        $handler = (new CreateUserHandler())->handle($createUserInput);
         $output = $handler->getOutput();
         $presenter = $output->getPresenter();
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace Core\Modules\User\Create\Presenter;
+namespace Core\Modules\User\Update\Presenter;
 
-use Core\Generics\Presenters\GenericPresenter;
-use Core\Modules\User\Create\Output\CreateUserOutputError;
+use Core\Generics\Presenters\ToArrayPresenterInterface;
+use Core\Modules\User\Update\Output\UpdateUserOutputInterfaceError;
 
-readonly class CreateUserErrorPresenter implements GenericPresenter
+readonly class UpdateUserErrorPresenterInterface implements ToArrayPresenterInterface
 {
 
     public function __construct(
-        private CreateUserOutputError $output,
+        private UpdateUserOutputInterfaceError $output,
         public ?array $trace = [],
         private bool $isDevelopementMode = false
     ) {
@@ -19,6 +19,7 @@ readonly class CreateUserErrorPresenter implements GenericPresenter
     {
         return [
             ...[
+                'message' => $this->output->getMessage(),
                 'errors' => $this->output->errors
             ],
             ...($this->isDevelopementMode ? ['trace' => $this->trace] : [])

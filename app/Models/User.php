@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,6 +46,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function accounts(): BelongsToMany
+    {
+        return $this->belongsToMany(Account::class, 'account_users')
+            ->using(AccountUser::class)
+            ->withTimestamps()
+            ->withPivot('uuid_registration', 'deleted_at');
+    }
 
     /**
      * Get the attributes that should be cast.

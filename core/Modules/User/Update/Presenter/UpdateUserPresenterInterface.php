@@ -2,16 +2,16 @@
 
 namespace Core\Modules\User\Update\Presenter;
 
-use Core\Generics\Presenters\GenericPresenter;
-use Core\Modules\User\Update\Output\UpdateUserOutput;
+use Core\Generics\Presenters\ToArrayPresenterInterface;
+use Core\Modules\User\Update\Output\UpdateUserOutputInterface;
 
-readonly class UpdateUserPresenter implements GenericPresenter
+readonly class UpdateUserPresenterInterface implements ToArrayPresenterInterface
 {
-    public function __construct(private UpdateUserOutput $output)
+    public function __construct(private UpdateUserOutputInterface $output)
     {
     }
 
-    public function getOutput(): UpdateUserOutput
+    public function getOutput(): UpdateUserOutputInterface
     {
         return $this->output;
     }

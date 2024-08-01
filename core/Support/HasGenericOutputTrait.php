@@ -2,13 +2,13 @@
 
 namespace Core\Support;
 
-use Core\Generics\Outputs\GenericOutput;
+use Core\Generics\Outputs\GenericOutputInterface;
 
 trait HasGenericOutputTrait
 {
-    private GenericOutput $output;
+    private GenericOutputInterface $output;
 
-    public function getOutput(): GenericOutput
+    public function getOutput(): GenericOutputInterface
     {
         return $this->output;
     }

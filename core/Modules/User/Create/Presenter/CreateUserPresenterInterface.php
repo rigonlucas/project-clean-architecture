@@ -2,16 +2,16 @@
 
 namespace Core\Modules\User\Create\Presenter;
 
-use Core\Generics\Presenters\GenericPresenter;
-use Core\Modules\User\Create\Output\CreateUserOutput;
+use Core\Generics\Presenters\ToArrayPresenterInterface;
+use Core\Modules\User\Create\Output\CreateUserOutputInterface;
 
-readonly class CreateUserPresenter implements GenericPresenter
+readonly class CreateUserPresenterInterface implements ToArrayPresenterInterface
 {
-    public function __construct(private CreateUserOutput $output)
+    public function __construct(private CreateUserOutputInterface $output)
     {
     }
 
-    public function getOutput(): CreateUserOutput
+    public function getOutput(): CreateUserOutputInterface
     {
         return $this->output;
     }

@@ -5,7 +5,7 @@ namespace Tests\Integration\UseCases\User;
 use App\Models\User;
 use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
-use Core\Modules\User\Update\Output\UpdateUserOutput;
+use Core\Modules\User\Update\Output\UpdateUserOutputInterface;
 use Core\Modules\User\Update\UpdateUserUseCase;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -39,9 +39,9 @@ class UpdateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $useCase->execute($input);
-        /** @var UpdateUserOutput $output */
-        $output = $useCase->getOutput();
+        $output = $useCase->execute($input);
+        /** @var UpdateUserOutputInterface $output */
+        $output = $output;
 
         // Assert
         $this->assertDatabaseHas('users', [

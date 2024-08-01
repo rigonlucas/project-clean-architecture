@@ -13,15 +13,14 @@ class CreateUserHandler
 {
     use  HasGenericOutputTrait;
 
-    public function handle(CreateUserInput $input): self
+    public function handle(CreateUserInput $createUserInput): self
     {
         $useCase = new CreateUserUseCase(
             AppAdapter::getInstance(),
             new UserCommand(),
             new UserRepository()
         );
-        $useCase->execute($input);
-        $this->output = $useCase->getOutput();
+        $this->output = $useCase->execute($createUserInput);
 
         return $this;
     }

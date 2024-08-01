@@ -20,8 +20,7 @@ class UpdateUserHandler
             new UserRepository(),
             new UserCommand()
         );
-        $useCase->execute($input);
-        $this->output = $useCase->getOutput();
+        $this->output = $useCase->execute($input);
 
         return $this;
     }

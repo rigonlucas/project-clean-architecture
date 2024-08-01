@@ -2,19 +2,19 @@
 
 namespace Core\Modules\User\Update\Output;
 
-use Core\Generics\Outputs\GenericOutput;
+use Core\Generics\Outputs\GenericOutputInterface;
 use Core\Generics\Outputs\OutputStatus;
-use Core\Generics\Presenters\GenericPresenter;
+use Core\Generics\Presenters\ToArrayPresenterInterface;
 use Core\Modules\User\Commons\Entities\UserEntity;
-use Core\Modules\User\Update\Presenter\UpdateUserPresenter;
+use Core\Modules\User\Update\Presenter\UpdateUserPresenterInterface;
 
-class UpdateUserOutput implements GenericOutput
+class UpdateUserOutputInterface implements GenericOutputInterface
 {
     public function __construct(public OutputStatus $status, public UserEntity $userEntity, public string $message = '')
     {
     }
 
-    public function getMessages(): string
+    public function getMessage(): string
     {
         return $this->message;
     }
@@ -24,8 +24,8 @@ class UpdateUserOutput implements GenericOutput
         return $this->status;
     }
 
-    public function getPresenter(): GenericPresenter
+    public function getPresenter(): ToArrayPresenterInterface
     {
-        return new UpdateUserPresenter($this);
+        return new UpdateUserPresenterInterface($this);
     }
 }

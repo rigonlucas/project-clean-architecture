@@ -35,7 +35,8 @@
     "psr-4": {
       "Tests\\": "tests/",
       "App\\": "app/",
-      "Core\\": "core/"
+      "Core\\": "core/",
+      "Infra\\": "infra/"
     }
   },
   "scripts": {

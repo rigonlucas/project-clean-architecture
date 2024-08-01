@@ -3,16 +3,14 @@
 namespace Core\Modules\User\Update;
 
 use Core\Adapters\App\AppInterface;
-use Core\Generics\Outputs\GenericOutput;
+use Core\Generics\Outputs\GenericOutputInterface;
 use Core\Generics\Outputs\OutputStatus;
 use Core\Modules\User\Commons\Entities\UserEntity;
-use Core\Modules\User\Commons\Exceptions\EmailAlreadyUsedByOtherUserException;
 use Core\Modules\User\Commons\Gateways\UserCommandInterface;
 use Core\Modules\User\Commons\Gateways\UserRepositoryInterface;
-use Core\Modules\User\Create\Output\CreateUserOutputError;
 use Core\Modules\User\Update\Inputs\UpdateUserInput;
-use Core\Modules\User\Update\Output\UpdateUserOutput;
-use Core\Modules\User\Update\Output\UpdateUserOutputError;
+use Core\Modules\User\Update\Output\UpdateUserOutputInterface;
+use Core\Modules\User\Update\Output\UpdateUserOutputInterfaceError;
 use Core\Support\HasErrorBagTrait;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 
@@ -20,7 +18,6 @@ class UpdateUserUseCase
 {
     use HasErrorBagTrait;
 
-    private GenericOutput $output;
 
     public function __construct(
         private readonly AppInterface $app,
@@ -29,19 +26,15 @@ class UpdateUserUseCase
     ) {
     }
 
-    /**
-     * @param UpdateUserInput $input
-     * @throws EmailAlreadyUsedByOtherUserException
-     */
-    public function execute(UpdateUserInput $input): void
+    public function execute(UpdateUserInput $input): GenericOutputInterface
     {
         $recordedUser = $this->userRepository->findByUuid($input->uuid);
         if (!$recordedUser) {
-            $this->output = new UpdateUserOutputError(
+            return new UpdateUserOutputInterfaceError(
                 new OutputStatus(404, 'Not found'),
+                'Contém erros de validação',
                 ['name' => 'Usuário não encontrado']
             );
-            return;
         }
         $recordedUserByEmail = $this->userRepository->findByEmail($input->email);
         if ($recordedUserByEmail && $recordedUserByEmail->getUuid()->toString() != $input->uuid) {
@@ -59,30 +52,26 @@ class UpdateUserUseCase
         $hasNoLegalAge = $userEntity->hasNoLegalAge();
         if ($hasNoLegalAge) {
             $this->addError('birthday', 'Idade inválida');
+            $this->addError('birthday', 'Idade deve ser maior que 18 anos');
         }
 
         if ($this->hasErrorBag()) {
-            $this->output = new CreateUserOutputError(
+            return new UpdateUserOutputInterfaceError(
                 new OutputStatus(
                     ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value,
                     ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->name
                 ),
+                'Contém erros de validação',
                 $this->getErrorBag()
             );
-            return;
         }
 
         $userEntity->setUuid($recordedUser->getUuid());
         $this->userCommand->update($userEntity);
 
-        $this->output = new UpdateUserOutput(
+        return new UpdateUserOutputInterface(
             new OutputStatus(ResponseStatusCodeEnum::OK->value, ResponseStatusCodeEnum::OK->name),
             $userEntity
         );
-    }
-
-    public function getOutput(): GenericOutput
-    {
-        return $this->output;
     }
 }

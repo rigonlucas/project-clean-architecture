@@ -6,8 +6,8 @@ use App\Models\User;
 use Core\Adapters\App\AppAdapter;
 use Core\Modules\User\Create\CreateUserUseCase;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
-use Core\Modules\User\Create\Output\CreateUserOutput;
-use Core\Modules\User\Create\Output\CreateUserOutputError;
+use Core\Modules\User\Create\Output\CreateUserOutputInterface;
+use Core\Modules\User\Create\Output\CreateUserOutputInterfaceError;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Persistence\User\Command\UserCommand;
@@ -34,9 +34,9 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $useCase->execute($input);
-        /** @var CreateUserOutput $output */
-        $output = $useCase->getOutput();
+        $output = $useCase->execute($input);
+        /** @var CreateUserOutputInterface $output */
+        $output = $output;
 
         // Assert
         $this->assertDatabaseHas('users', [
@@ -67,10 +67,10 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $useCase->execute($input);
+        $output = $useCase->execute($input);
 
         // Assert
-        $this->assertInstanceOf(CreateUserOutputError::class, $useCase->getOutput());
+        $this->assertInstanceOf(CreateUserOutputInterfaceError::class, $output);
     }
 
     public function test_must_not_create_a_user_when_age_is_invalid(): void
@@ -89,11 +89,11 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $useCase->execute($input);
+        $output = $useCase->execute($input);
 
         // Assert
         $this->assertTrue($useCase->hasErrorBag());
-        $this->assertInstanceOf(CreateUserOutputError::class, $useCase->getOutput());
+        $this->assertInstanceOf(CreateUserOutputInterfaceError::class, $output);
     }
 
     public function test_must_not_create_a_user_when_age_and_email_already_exists_is_invalid(): void
@@ -114,10 +114,10 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $useCase->execute($input);
+        $output = $useCase->execute($input);
 
         // Assert exception
         $this->assertTrue($useCase->hasErrorBag());
-        $this->assertInstanceOf(CreateUserOutputError::class, $useCase->getOutput());
+        $this->assertInstanceOf(CreateUserOutputInterfaceError::class, $output);
     }
 }
