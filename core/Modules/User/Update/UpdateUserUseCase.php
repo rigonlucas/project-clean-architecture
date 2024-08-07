@@ -28,17 +28,19 @@ class UpdateUserUseCase
 
     public function execute(UpdateUserInput $input): GenericOutputInterface
     {
-        $recordedUser = $this->userRepository->findByUuid($input->uuid);
+        $recordedUser = $this->userRepository->findByUuid(uuid: $input->uuid);
         if (!$recordedUser) {
             return new UpdateUserOutputInterfaceError(
-                new OutputStatus(404, 'Not found'),
-                'Contém erros de validação',
-                ['name' => 'Usuário não encontrado']
+                status: new OutputStatus(statusCode: 404, message: 'Not found'),
+                message: 'Contém erros de validação',
+                errors: ['name' => 'Usuário não encontrado']
             );
         }
-        $recordedUserByEmail = $this->userRepository->findByEmail($input->email);
-        if ($recordedUserByEmail && $recordedUserByEmail->getUuid()->toString() != $input->uuid) {
-            $this->addError('email', 'Email já utilizado por outro usuário');
+        if ($recordedUser->getEmail() != $input->email) {
+            $recordedUserByEmail = $this->userRepository->findByEmail(email: $input->email);
+            if ($recordedUserByEmail && $recordedUserByEmail->getUuid()->toString() != $input->uuid) {
+                $this->addError('email', 'Email já utilizado por outro usuário');
+            }
         }
 
         $userEntity = UserEntity::update(
@@ -51,7 +53,6 @@ class UpdateUserUseCase
 
         $hasNoLegalAge = $userEntity->hasNoLegalAge();
         if ($hasNoLegalAge) {
-            $this->addError('birthday', 'Idade inválida');
             $this->addError('birthday', 'Idade deve ser maior que 18 anos');
         }
 

@@ -16,7 +16,7 @@ class CreateUserController extends Controller
             name: $request->name,
             email: $request->email,
             password: $request->password,
-            birthday: Carbon::createFromFormat('d/m/Y', $request->birthday)
+            birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
         );
 
         $handler = (new CreateUserHandler())->handle($createUserInput);

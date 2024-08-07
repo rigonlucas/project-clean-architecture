@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration\e2e;
+namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
 use Core\Tools\Http\HttpApiHeaders;
@@ -24,7 +24,7 @@ class CreateUserE2eTest extends TestCase
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => $this->faker->password(8),
-                'birthday' => now()->subYears(18)->format('d/m/Y')
+                'birthday' => now()->subYears(18)->format('Y-m-d')
             ],
             HttpApiHeaders::$headersJson
         );
@@ -41,7 +41,7 @@ class CreateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_create_user_fail_case()
+    public function test_create_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
     {
         $userMoodel = User::factory()->create([
             'email' => $this->faker->userName . '@gmail.com'
@@ -52,7 +52,7 @@ class CreateUserE2eTest extends TestCase
                 'name' => $userMoodel->name,
                 'email' => $userMoodel->email,
                 'password' => $this->faker->password(8),
-                'birthday' => now()->subYears(17)->format('d/m/Y')
+                'birthday' => now()->subYears(17)->format('Y-m-d')
             ],
             HttpApiHeaders::$headersJson
         );
@@ -66,7 +66,7 @@ class CreateUserE2eTest extends TestCase
             ]
         ]);
     }
-    
+
     public function test_create_user_fail_case_password_less_than_8_characters()
     {
         $response = $this->postJson(
@@ -74,12 +74,11 @@ class CreateUserE2eTest extends TestCase
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
-                'password' => $this->faker->password(7),
-                'birthday' => now()->subYears(18)->format('d/m/Y')
+                'password' => $this->faker->words(7),
+                'birthday' => now()->subYears(18)->format('Y-m-d')
             ],
             HttpApiHeaders::$headersJson
         );
-
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
