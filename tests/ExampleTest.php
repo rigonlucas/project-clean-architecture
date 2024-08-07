@@ -1,14 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Tests\TestCase;
 
 /**
  * @group relations
  */
-class RelationsTest extends TestCase
+class ExampleTest extends TestCase
 {
     use DatabaseMigrations;
 

@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\V1\User\CreateUserRequest;
+use Carbon\Carbon;
 use Core\Modules\User\Create\Inputs\CreateUserInput;
-use Illuminate\Http\Request;
 use Infra\Handlers\UseCases\User\CreateUserHandler;
 
 class CreateUserController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(CreateUserRequest $request)
     {
         $createUserInput = new CreateUserInput(
-            name: 'name 4231231232asdasd2',
-            email: 'email32@email.com',
-            password: 'password',
-            birthday: now()->subYears(18)
+            name: $request->name,
+            email: $request->email,
+            password: $request->password,
+            birthday: Carbon::createFromFormat('d/m/Y', $request->birthday)
         );
 
         $handler = (new CreateUserHandler())->handle($createUserInput);
