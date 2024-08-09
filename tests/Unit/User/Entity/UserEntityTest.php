@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\User\Entity;
 
-use Core\Adapters\App\AppAdapter;
 use Core\Application\User\Commons\Entities\User\UserEntity;
+use Infra\Dependencies\AppAdapter;
 use Tests\TestCase;
 
 /**

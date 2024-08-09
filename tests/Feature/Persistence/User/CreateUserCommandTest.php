@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Persistence\User;
 
-use Core\Adapters\App\AppAdapter;
 use Core\Application\User\Commons\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
+use Infra\Dependencies\AppAdapter;
 use Tests\TestCase;
 
 class CreateUserCommandTest extends TestCase

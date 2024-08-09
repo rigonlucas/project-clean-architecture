@@ -3,7 +3,6 @@
 namespace Tests\Integration\UseCases\User;
 
 use App\Models\User;
-use Core\Adapters\App\AppAdapter;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Application\User\Create\Output\CreateUserOutput;
@@ -11,6 +10,7 @@ use Core\Generics\Exceptions\OutputErrorException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
+use Infra\Dependencies\AppAdapter;
 use Tests\TestCase;
 
 /**

@@ -3,13 +3,13 @@
 namespace Tests\Integration\UseCases\User;
 
 use App\Models\User;
-use Core\Adapters\App\AppAdapter;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Generics\Exceptions\OutputErrorException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
+use Infra\Dependencies\AppAdapter;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 

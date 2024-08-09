@@ -1,13 +1,15 @@
 <?php
 
-namespace Core\Adapters\App;
+namespace Infra\Dependencies;
 
+use Core\Adapters\Framework\AppContract;
+use Core\Adapters\Framework\UuidContract;
 use DateTimeInterface;
 use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class AppAdapter implements AppInterface
+class AppAdapter implements AppContract, UuidContract
 {
     private static ?AppAdapter $instance = null;
 

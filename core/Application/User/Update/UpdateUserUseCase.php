@@ -2,7 +2,7 @@
 
 namespace Core\Application\User\Update;
 
-use Core\Adapters\App\AppInterface;
+use Core\Adapters\Framework\AppContract;
 use Core\Application\User\Commons\Entities\User\UserEntity;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
@@ -18,7 +18,7 @@ class UpdateUserUseCase
 
 
     public function __construct(
-        private readonly AppInterface $app,
+        private readonly AppContract $app,
         private readonly UserRepositoryInterface $userRepository,
         private readonly UserCommandInterface $userCommand
     ) {

@@ -3,10 +3,10 @@
 namespace Infra\Database\User\Repository;
 
 use App\Models\User;
-use Core\Adapters\App\AppAdapter;
 use Core\Application\User\Commons\Entities\User\UserEntity;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use DateTime;
+use Infra\Dependencies\AppAdapter;
 
 class UserRepository implements UserRepositoryInterface
 {
