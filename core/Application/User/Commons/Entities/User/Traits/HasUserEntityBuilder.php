@@ -18,11 +18,11 @@ trait HasUserEntityBuilder
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
-        $userEntity->birthday = $birthday;
-        $userEntity->name = $name;
-        $userEntity->email = $email;
-        $userEntity->password = $password;
-        $userEntity->uuid = $uuid;
+        $userEntity->setBirthday($birthday);
+        $userEntity->setName($name);
+        $userEntity->setEmail($email);
+        $userEntity->setPassword($password);
+        $userEntity->setUuid($uuid);
 
         return $userEntity;
     }
@@ -35,11 +35,11 @@ trait HasUserEntityBuilder
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
-        $userEntity->id = $id;
-        $userEntity->name = $name;
-        $userEntity->email = $email;
-        $userEntity->birthday = $birthday;
-        $userEntity->uuid = $uuid;
+        $userEntity->setId($id);
+        $userEntity->setName($name);
+        $userEntity->setEmail($email);
+        $userEntity->setBirthday($birthday);
+        $userEntity->setUuid($uuid);
 
         return $userEntity;
     }
@@ -53,11 +53,11 @@ trait HasUserEntityBuilder
         ?DateTimeInterface $birthday = null
     ): UserEntity {
         $userEntity = new UserEntity();
-        $userEntity->birthday = $birthday;
-        $userEntity->id = $id;
-        $userEntity->name = $name;
-        $userEntity->email = $email;
-        $userEntity->password = $password;
+        $userEntity->setBirthday($birthday);
+        $userEntity->setId($id);
+        $userEntity->setName($name);
+        $userEntity->setEmail($email);
+        $userEntity->setPassword($password);
 
         return $userEntity;
     }

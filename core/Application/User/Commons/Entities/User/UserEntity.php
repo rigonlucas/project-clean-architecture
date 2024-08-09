@@ -2,14 +2,13 @@
 
 namespace Core\Application\User\Commons\Entities\User;
 
-use AllowDynamicProperties;
 use Core\Application\User\Commons\Entities\User\Traits\HasUserEntityBuilder;
 use Core\Application\User\Commons\Entities\User\Traits\UserEntityAcessors;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 
-#[AllowDynamicProperties] class UserEntity
+class UserEntity
 {
     use HasUserEntityBuilder;
     use UserEntityAcessors;

@@ -59,7 +59,7 @@ trait UserEntityAcessors
         return $this;
     }
 
-    public function setNome(string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
