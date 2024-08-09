@@ -35,8 +35,8 @@ class CreateUserController extends Controller
         }
 
         return response()->json(
-            (new CreateUserPresenter($output->userEntity))->withDataAttribute()->toArray(),
-            ResponseStatusCodeEnum::CREATED->value
+            data: (new CreateUserPresenter($output->userEntity))->withDataAttribute()->toArray(),
+            status: ResponseStatusCodeEnum::CREATED->value
         );
     }
 }

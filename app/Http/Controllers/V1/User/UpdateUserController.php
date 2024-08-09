@@ -38,8 +38,8 @@ class UpdateUserController extends Controller
         }
 
         return response()->json(
-            (new UpdateUserPresenter($output->userEntity))->withDataAttribute()->toArray(),
-            ResponseStatusCodeEnum::OK->value
+            data: (new UpdateUserPresenter($output->userEntity))->withDataAttribute()->toArray(),
+            status: ResponseStatusCodeEnum::OK->value
         );
     }
 }
