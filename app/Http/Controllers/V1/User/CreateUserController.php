@@ -7,10 +7,10 @@ use App\Http\Requests\V1\User\CreateUserRequest;
 use Carbon\Carbon;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
-use Core\Handlers\UseCases\User\CreateUserHandler;
 use Core\Presentation\Errors\ErrorPresenter;
 use Core\Presentation\User\CreateUserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
+use Infra\Handlers\UseCases\User\CreateUserHandler;
 
 class CreateUserController extends Controller
 {

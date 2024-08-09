@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Handlers\UseCases\User;
+namespace Infra\Handlers\UseCases\User;
 
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\Output\UpdateUserOutput;

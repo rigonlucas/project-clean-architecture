@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Handlers\UseCases\User;
+namespace Infra\Handlers\UseCases\User;
 
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;

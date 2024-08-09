@@ -7,10 +7,10 @@ use App\Http\Requests\V1\User\UpdateUserRequest;
 use Carbon\Carbon;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
-use Core\Handlers\UseCases\User\UpdateUserHandler;
 use Core\Presentation\Errors\ErrorPresenter;
 use Core\Presentation\User\UpdateUserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
+use Infra\Handlers\UseCases\User\UpdateUserHandler;
 use Ramsey\Uuid\Uuid;
 
 class UpdateUserController extends Controller
