@@ -9,7 +9,7 @@ use SensitiveParameter;
 
 trait HasUserEntityBuilder
 {
-    public static function create(
+    public static function forCreate(
         string $name,
         string $email,
         #[SensitiveParameter]
@@ -27,7 +27,7 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    public static function details(
+    public static function record(
         int $id,
         string $name,
         string $email,
@@ -44,7 +44,7 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    public static function update(
+    public static function forUpdate(
         int $id,
         string $name,
         string $email,
@@ -62,7 +62,7 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    public static function delete(int $id): UserEntity
+    public static function forDelete(int $id): UserEntity
     {
         $userEntity = new UserEntity();
         $userEntity->setId($id);

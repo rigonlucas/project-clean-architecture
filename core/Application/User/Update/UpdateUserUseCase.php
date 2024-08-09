@@ -44,7 +44,7 @@ class UpdateUserUseCase
             }
         }
 
-        $userEntity = UserEntity::update(
+        $userEntity = UserEntity::forUpdate(
             id: $recordedUser->getId(),
             name: $input->name,
             email: $input->email,
@@ -57,7 +57,7 @@ class UpdateUserUseCase
             $this->addError('birthday', 'Idade deve ser maior que 18 anos');
         }
 
-        $this->hasErrorBag();
+        $this->checkValidationErrors();
 
         $userEntity->setUuid($recordedUser->getUuid());
         $this->userCommand->update($userEntity);

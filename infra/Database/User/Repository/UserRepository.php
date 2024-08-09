@@ -15,17 +15,17 @@ class UserRepository implements UserRepositoryInterface
         $userModel = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid'])
             ->find($id);
-        if ($userModel) {
-            return UserEntity::details(
-                id: $userModel->id,
-                name: $userModel->name,
-                email: $userModel->email,
-                uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
-                birthday: new DateTime($userModel->birthday)
-            );
+        if (!$userModel) {
+            return null;
         }
 
-        return null;
+        return UserEntity::record(
+            id: $userModel->id,
+            name: $userModel->name,
+            email: $userModel->email,
+            uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
+            birthday: new DateTime($userModel->birthday)
+        );
     }
 
     public function findByUuid(string $uuid): ?UserEntity
@@ -34,17 +34,17 @@ class UserRepository implements UserRepositoryInterface
             ->select(['id', 'name', 'email', 'birthday', 'uuid'])
             ->where('uuid', '=', $uuid)
             ->first();
-        if ($userModel) {
-            return UserEntity::details(
-                id: $userModel->id,
-                name: $userModel->name,
-                email: $userModel->email,
-                uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
-                birthday: new DateTime($userModel->birthday),
-            );
+        if (!$userModel) {
+            return null;
         }
 
-        return null;
+        return UserEntity::record(
+            id: $userModel->id,
+            name: $userModel->name,
+            email: $userModel->email,
+            uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
+            birthday: new DateTime($userModel->birthday),
+        );
     }
 
     public function findByEmail(string $email): ?UserEntity
@@ -53,17 +53,17 @@ class UserRepository implements UserRepositoryInterface
             ->select(['id', 'name', 'email', 'birthday', 'uuid'])
             ->where('email', '=', $email)
             ->first();
-        if ($userModel) {
-            return UserEntity::details(
-                id: $userModel->id,
-                name: $userModel->name,
-                email: $userModel->email,
-                uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
-                birthday: new DateTime($userModel->birthday)
-            );
+        if (!$userModel) {
+            return null;
         }
 
-        return null;
+        return UserEntity::record(
+            id: $userModel->id,
+            name: $userModel->name,
+            email: $userModel->email,
+            uuid: AppAdapter::getInstance()->uuidFromString($userModel->uuid),
+            birthday: new DateTime($userModel->birthday)
+        );
     }
 
     public function existsEmail(string $email): bool

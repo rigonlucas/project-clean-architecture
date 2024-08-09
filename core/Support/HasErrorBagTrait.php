@@ -17,7 +17,7 @@ trait HasErrorBagTrait
     /**
      * @throws OutputErrorException
      */
-    public function hasErrorBag(
+    public function checkValidationErrors(
         string $message = 'Validation error',
         ResponseStatusCodeEnum $errorCodeEnum = ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY
     ): void {

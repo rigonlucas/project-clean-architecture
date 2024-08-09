@@ -16,7 +16,7 @@ class CreateUserCommandTest extends TestCase
     {
         // Arrange
         $userCommand = new UserCommand();
-        $userEntity = UserEntity::create(
+        $userEntity = UserEntity::forCreate(
             name: 'name 2',
             email: 'email3@email.com',
             password: 'password',

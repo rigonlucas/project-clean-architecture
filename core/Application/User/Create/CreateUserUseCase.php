@@ -31,7 +31,7 @@ class CreateUserUseCase
         if ($emailAlreadyExists) {
             $this->addError('email', 'Email já utilizado por outro usuário');
         }
-        $userEntity = UserEntity::create(
+        $userEntity = UserEntity::forCreate(
             name: $createUserInput->name,
             email: $createUserInput->email,
             password: $this->app->passwordHash($createUserInput->password),
@@ -43,7 +43,8 @@ class CreateUserUseCase
         if ($hasNoLegalAge) {
             $this->addError('birthday', 'Idade inválida');
         }
-        $this->hasErrorBag();
+
+        $this->checkValidationErrors();
 
         $userEntity = $this->createUserInterface->create($userEntity);
         return new CreateUserOutput(userEntity: $userEntity);

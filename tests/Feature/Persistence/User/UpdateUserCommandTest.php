@@ -18,7 +18,7 @@ class UpdateUserCommandTest extends TestCase
         $userModel = User::factory()->create();
         $userCommand = new UserCommand();
 
-        $userEntity = UserEntity::update(
+        $userEntity = UserEntity::forUpdate(
             id: $userModel->id,
             name: 'name 2',
             email: 'email@3',

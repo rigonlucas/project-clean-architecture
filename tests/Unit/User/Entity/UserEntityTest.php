@@ -14,7 +14,7 @@ class UserEntityTest extends TestCase
     public function test_deve_retornar_que_o_usuario_nao_tem_idade_legal(): void
     {
         // Arrange
-        $userEntity = UserEntity::create(
+        $userEntity = UserEntity::forCreate(
             name: 'John Doe',
             email: '',
             password: 'password',
@@ -27,7 +27,7 @@ class UserEntityTest extends TestCase
     public function test_deve_retornar_nome_do_usuario(): void
     {
         // Arrange
-        $userEntity = UserEntity::create(
+        $userEntity = UserEntity::forCreate(
             name: 'John Doe',
             email: 'john@email.com',
             password: 'password',
