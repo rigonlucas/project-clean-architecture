@@ -4,16 +4,18 @@ namespace Tests\Integration\UseCases\User;
 
 use App\Models\User;
 use Core\Adapters\App\AppAdapter;
-use Core\Modules\User\Create\CreateUserUseCase;
-use Core\Modules\User\Create\Inputs\CreateUserInput;
-use Core\Modules\User\Create\Output\CreateUserOutputInterface;
-use Core\Modules\User\Create\Output\CreateUserOutputInterfaceError;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Application\User\Create\CreateUserUseCase;
+use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Application\User\Create\Output\CreateUserOutput;
+use Core\Generics\Exceptions\OutputErrorException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Infra\Persistence\User\Command\UserCommand;
-use Infra\Persistence\User\Repository\UserRepository;
+use Infra\Database\User\Command\UserCommand;
+use Infra\Database\User\Repository\UserRepository;
 use Tests\TestCase;
 
+/**
+ * @group UseCaseCreateUser
+ */
 class CreateUserUseCaseTest extends TestCase
 {
     use DatabaseMigrations;
@@ -34,9 +36,8 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
+        /** @var CreateUserOutput $output */
         $output = $useCase->execute($input);
-        /** @var CreateUserOutputInterface $output */
-        $output = $output;
 
         // Assert
         $this->assertDatabaseHas('users', [
@@ -46,12 +47,15 @@ class CreateUserUseCaseTest extends TestCase
             'password' => $output->userEntity->getPassword(),
             'birthday' => $output->userEntity->getBirthday()
         ]);
-        $this->assertEquals(ResponseStatusCodeEnum::CREATED->value, $output->status->statusCode);
         $this->assertNotEquals($input->password, $output->userEntity->getPassword());
     }
 
+    /**
+     * @group CreateUserUseCaseError1
+     */
     public function test_must_not_create_a_user_when_email_already_exists(): void
     {
+        $this->expectException(OutputErrorException::class);
         // Arrange
         $useCase = new CreateUserUseCase(
             AppAdapter::getInstance(),
@@ -67,14 +71,17 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $output = $useCase->execute($input);
-
-        // Assert
-        $this->assertInstanceOf(CreateUserOutputInterfaceError::class, $output);
+        try {
+            $useCase->execute($input);
+        } catch (OutputErrorException $e) {
+            $this->assertArrayHasKey('email', $e->getErrors());
+            throw $e;
+        }
     }
 
     public function test_must_not_create_a_user_when_age_is_invalid(): void
     {
+        $this->expectException(OutputErrorException::class);
         // Arrange
         $useCase = new CreateUserUseCase(
             AppAdapter::getInstance(),
@@ -88,16 +95,17 @@ class CreateUserUseCaseTest extends TestCase
             birthday: now()->subYears(17)
         );
 
-        // Act
-        $output = $useCase->execute($input);
-
-        // Assert
-        $this->assertTrue($useCase->hasErrorBag());
-        $this->assertInstanceOf(CreateUserOutputInterfaceError::class, $output);
+        try {
+            $useCase->execute($input);
+        } catch (OutputErrorException $e) {
+            $this->assertArrayHasKey('birthday', $e->getErrors());
+            throw $e;
+        }
     }
 
     public function test_must_not_create_a_user_when_age_and_email_already_exists_is_invalid(): void
     {
+        $this->expectException(OutputErrorException::class);
         // Arrange
         $userFactory = User::factory()->create();
 
@@ -113,11 +121,12 @@ class CreateUserUseCaseTest extends TestCase
             birthday: now()->subYears(17)
         );
 
-        // Act
-        $output = $useCase->execute($input);
-
-        // Assert exception
-        $this->assertTrue($useCase->hasErrorBag());
-        $this->assertInstanceOf(CreateUserOutputInterfaceError::class, $output);
+        try {
+            $useCase->execute($input);
+        } catch (OutputErrorException $e) {
+            $this->assertArrayHasKey('email', $e->getErrors());
+            $this->assertArrayHasKey('birthday', $e->getErrors());
+            throw $e;
+        }
     }
 }

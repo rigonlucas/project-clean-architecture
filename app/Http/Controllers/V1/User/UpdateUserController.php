@@ -5,8 +5,12 @@ namespace App\Http\Controllers\V1\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\UpdateUserRequest;
 use Carbon\Carbon;
-use Core\Modules\User\Update\Inputs\UpdateUserInput;
-use Infra\Handlers\UseCases\User\UpdateUserHandler;
+use Core\Application\User\Update\Inputs\UpdateUserInput;
+use Core\Generics\Exceptions\OutputErrorException;
+use Core\Handlers\UseCases\User\UpdateUserHandler;
+use Core\Presentation\Errors\ErrorPresenter;
+use Core\Presentation\User\UpdateUserPresenter;
+use Core\Tools\Http\ResponseStatusCodeEnum;
 use Ramsey\Uuid\Uuid;
 
 class UpdateUserController extends Controller
@@ -21,13 +25,21 @@ class UpdateUserController extends Controller
             birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
         );
 
-        $handler = (new UpdateUserHandler())->handle($input);
-        $output = $handler->getOutput();
-        $presenter = $output->getPresenter();
+        try {
+            $output = (new UpdateUserHandler())->handle($input);
+        } catch (OutputErrorException $outputErrorException) {
+            return response()->json(
+                data: (new ErrorPresenter(
+                    message: 'Contém erros de validação',
+                    errors: $outputErrorException->getErrors()
+                ))->toArray(),
+                status: $outputErrorException->getCode()
+            );
+        }
 
         return response()->json(
-            $presenter->toArray(),
-            $output->status->statusCode
+            (new UpdateUserPresenter($output->userEntity))->toArray(),
+            ResponseStatusCodeEnum::OK->value
         );
     }
 }

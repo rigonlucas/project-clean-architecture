@@ -42,7 +42,6 @@ class UpdateUserE2eTest extends TestCase
         //assert response
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'message',
             'data' => [
                 'uuid',
                 'name',
@@ -149,6 +148,7 @@ class UpdateUserE2eTest extends TestCase
         );
 
         //assert response
+        //dd(json_decode($response->getContent()));
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
@@ -156,6 +156,8 @@ class UpdateUserE2eTest extends TestCase
                 'email'
             ]
         ]);
+
+
         $response->assertJsonFragment([
             'email' => ['Email já utilizado por outro usuário']
         ]);
@@ -187,11 +189,9 @@ class UpdateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-
         //assert response
         $response->assertStatus(200);
         $response->assertJsonStructure([
-            'message',
             'data' => [
                 'uuid',
                 'name',

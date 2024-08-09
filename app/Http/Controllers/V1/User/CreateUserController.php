@@ -5,8 +5,12 @@ namespace App\Http\Controllers\V1\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\CreateUserRequest;
 use Carbon\Carbon;
-use Core\Modules\User\Create\Inputs\CreateUserInput;
-use Infra\Handlers\UseCases\User\CreateUserHandler;
+use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Generics\Exceptions\OutputErrorException;
+use Core\Handlers\UseCases\User\CreateUserHandler;
+use Core\Presentation\Errors\ErrorPresenter;
+use Core\Presentation\User\CreateUserPresenter;
+use Core\Tools\Http\ResponseStatusCodeEnum;
 
 class CreateUserController extends Controller
 {
@@ -18,14 +22,21 @@ class CreateUserController extends Controller
             password: $request->password,
             birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
         );
-
-        $handler = (new CreateUserHandler())->handle($createUserInput);
-        $output = $handler->getOutput();
-        $presenter = $output->getPresenter();
+        try {
+            $output = (new CreateUserHandler())->handle($createUserInput);
+        } catch (OutputErrorException $outputErrorException) {
+            return response()->json(
+                data: (new ErrorPresenter(
+                    message: 'Contém erros de validação',
+                    errors: $outputErrorException->getErrors()
+                ))->toArray(),
+                status: $outputErrorException->getCode()
+            );
+        }
 
         return response()->json(
-            $presenter->toArray(),
-            $output->status->statusCode
+            (new CreateUserPresenter($output->userEntity))->toArray(),
+            ResponseStatusCodeEnum::CREATED->value
         );
     }
 }

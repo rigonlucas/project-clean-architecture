@@ -31,7 +31,6 @@ class CreateUserE2eTest extends TestCase
 
         $response->assertStatus(201);
         $response->assertJsonStructure([
-            'message',
             'data' => [
                 'uuid',
                 'name',
@@ -56,7 +55,6 @@ class CreateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
