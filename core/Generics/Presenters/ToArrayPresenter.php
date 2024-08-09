@@ -2,7 +2,7 @@
 
 namespace Core\Generics\Presenters;
 
-interface ToArrayPresenterInterface
+interface ToArrayPresenter
 {
     public function toArray(): array;
 }

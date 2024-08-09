@@ -3,23 +3,32 @@
 namespace Core\Presentation\User;
 
 use Core\Application\User\Commons\Entities\User\UserEntity;
-use Core\Generics\Presenters\ToArrayPresenterInterface;
+use Core\Generics\Presenters\PresenterWithDataAttribute;
+use Core\Generics\Presenters\ToArrayPresenter;
 
-readonly class UpdateUserPresenter implements ToArrayPresenterInterface
+class UpdateUserPresenter implements ToArrayPresenter, PresenterWithDataAttribute
 {
-    public function __construct(private UserEntity $userEntity)
+    private array $data;
+
+    public function __construct(UserEntity $userEntity)
     {
+        $this->data = [
+            'id' => $userEntity->getId(),
+            'name' => $userEntity->getName(),
+            'email' => $userEntity->getEmail(),
+            'birthday' => $userEntity->getBirthday()->format('Y-m-d'),
+            'uuid' => $userEntity->getUuid()->toString()
+        ];
     }
 
     public function toArray(): array
     {
-        return [
-            'data' => [
-                'uuid' => $this->userEntity->getUuid()->toString(),
-                'name' => $this->userEntity->getName(),
-                'email' => $this->userEntity->getEmail(),
-                'birthday' => $this->userEntity->getBirthday()->format('Y-m-d')
-            ]
-        ];
+        return $this->data;
+    }
+
+    public function withDataAttribute(): UpdateUserPresenter
+    {
+        $this->data['data'] = $this->data;
+        return $this;
     }
 }

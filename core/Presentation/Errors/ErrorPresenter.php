@@ -2,9 +2,9 @@
 
 namespace Core\Presentation\Errors;
 
-use Core\Generics\Presenters\ToArrayPresenterInterface;
+use Core\Generics\Presenters\ToArrayPresenter;
 
-readonly class ErrorPresenter implements ToArrayPresenterInterface
+readonly class ErrorPresenter implements ToArrayPresenter
 {
 
     public function __construct(
@@ -24,5 +24,10 @@ readonly class ErrorPresenter implements ToArrayPresenterInterface
             ],
             ...($this->isDevelopementMode ? ['trace' => $this->trace] : [])
         ];
+    }
+
+    public function withDataAttribute(): self
+    {
+        return $this;
     }
 }
