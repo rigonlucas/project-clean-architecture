@@ -1,23 +1,22 @@
 <?php
 
-namespace Core\Presentation\User;
+namespace Core\Presentation\Http\User;
 
-use Core\Application\User\Commons\Entities\User\UserEntity;
+use Core\Domain\Entities\User\UserEntity;
 use Core\Generics\Presenters\PresenterWithDataAttribute;
 use Core\Generics\Presenters\ToArrayPresenter;
 
-class UpdateUserPresenter implements ToArrayPresenter, PresenterWithDataAttribute
+class UserPresenter implements ToArrayPresenter, PresenterWithDataAttribute
 {
     private array $data;
 
     public function __construct(UserEntity $userEntity)
     {
         $this->data = [
-            'id' => $userEntity->getId(),
+            'uuid' => $userEntity->getUuid()->toString(),
             'name' => $userEntity->getName(),
             'email' => $userEntity->getEmail(),
             'birthday' => $userEntity->getBirthday()->format('Y-m-d'),
-            'uuid' => $userEntity->getUuid()->toString()
         ];
     }
 
@@ -26,7 +25,7 @@ class UpdateUserPresenter implements ToArrayPresenter, PresenterWithDataAttribut
         return $this->data;
     }
 
-    public function withDataAttribute(): UpdateUserPresenter
+    public function withDataAttribute(): UserPresenter
     {
         $this->data['data'] = $this->data;
         return $this;

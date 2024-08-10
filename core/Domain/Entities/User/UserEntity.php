@@ -1,9 +1,9 @@
 <?php
 
-namespace Core\Application\User\Commons\Entities\User;
+namespace Core\Domain\Entities\User;
 
-use Core\Application\User\Commons\Entities\User\Traits\HasUserEntityBuilder;
-use Core\Application\User\Commons\Entities\User\Traits\UserEntityAcessors;
+use Core\Domain\Entities\User\Traits\HasUserEntityBuilder;
+use Core\Domain\Entities\User\Traits\UserEntityAcessors;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;

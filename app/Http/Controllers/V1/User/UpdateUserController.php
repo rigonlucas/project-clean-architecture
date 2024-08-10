@@ -7,8 +7,9 @@ use App\Http\Requests\V1\User\UpdateUserRequest;
 use Carbon\Carbon;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
-use Core\Presentation\Errors\ErrorPresenter;
-use Core\Presentation\User\UpdateUserPresenter;
+use Core\Presentation\Http\Errors\ErrorPresenter;
+use Core\Presentation\Http\User\UpdateUserPresenter;
+use Core\Presentation\Http\User\UserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Infra\Handlers\UseCases\User\UpdateUserHandler;
 use Ramsey\Uuid\Uuid;
@@ -38,7 +39,7 @@ class UpdateUserController extends Controller
         }
 
         return response()->json(
-            data: (new UpdateUserPresenter($output->userEntity))->withDataAttribute()->toArray(),
+            data: (new UserPresenter($output->userEntity))->withDataAttribute()->toArray(),
             status: ResponseStatusCodeEnum::OK->value
         );
     }

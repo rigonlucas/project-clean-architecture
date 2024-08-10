@@ -2,7 +2,7 @@
 
 namespace Core\Application\User\Update\Output;
 
-use Core\Application\User\Commons\Entities\User\UserEntity;
+use Core\Domain\Entities\User\UserEntity;
 
 readonly class UpdateUserOutput
 {

@@ -3,7 +3,7 @@
 namespace Tests\Feature\Persistence\User;
 
 use App\Models\User;
-use Core\Application\User\Commons\Entities\User\UserEntity;
+use Core\Domain\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
 use Tests\TestCase;

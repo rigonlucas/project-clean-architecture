@@ -3,11 +3,11 @@
 namespace Core\Application\User\Create;
 
 use Core\Adapters\Framework\AppContract;
-use Core\Application\User\Commons\Entities\User\UserEntity;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Application\User\Create\Output\CreateUserOutput;
+use Core\Domain\Entities\User\UserEntity;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Support\HasErrorBagTrait;
 

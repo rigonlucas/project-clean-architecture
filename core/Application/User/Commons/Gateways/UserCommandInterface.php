@@ -2,7 +2,7 @@
 
 namespace Core\Application\User\Commons\Gateways;
 
-use Core\Application\User\Commons\Entities\User\UserEntity;
+use Core\Domain\Entities\User\UserEntity;
 
 interface UserCommandInterface
 {

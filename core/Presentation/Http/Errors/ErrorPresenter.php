@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Presentation\Errors;
+namespace Core\Presentation\Http\Errors;
 
 use Core\Generics\Presenters\ToArrayPresenter;
 

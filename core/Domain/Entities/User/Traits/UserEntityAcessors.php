@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Application\User\Commons\Entities\User\Traits;
+namespace Core\Domain\Entities\User\Traits;
 
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;

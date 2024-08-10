@@ -3,8 +3,8 @@
 namespace Infra\Database\User\Repository;
 
 use App\Models\User;
-use Core\Application\User\Commons\Entities\User\UserEntity;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Domain\Entities\User\UserEntity;
 use DateTime;
 use Infra\Dependencies\AppAdapter;
 
