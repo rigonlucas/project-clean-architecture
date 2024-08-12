@@ -18,7 +18,7 @@ class UserEntityTest extends TestCase
             name: 'John Doe',
             email: '',
             password: 'password',
-            uuid: Framework::getInstance()->uuid7Generate(),
+            uuid: Framework::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(17)
         );
         $this->assertTrue($userEntity->hasNoLegalAge());
@@ -31,7 +31,7 @@ class UserEntityTest extends TestCase
             name: 'John Doe',
             email: 'john@email.com',
             password: 'password',
-            uuid: Framework::getInstance()->uuid7Generate(),
+            uuid: Framework::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)
         );
         // Act

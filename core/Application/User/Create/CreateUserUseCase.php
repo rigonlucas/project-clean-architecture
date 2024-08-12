@@ -34,7 +34,7 @@ class CreateUserUseCase
             name: $createUserInput->name,
             email: $createUserInput->email,
             password: $this->framework->passwordHash($createUserInput->password),
-            uuid: $this->framework->uuid7Generate(),
+            uuid: $this->framework->uuid()->uuid7Generate(),
             birthday: $createUserInput->birthday
         );
 

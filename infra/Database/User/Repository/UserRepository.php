@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
-            uuid: Framework::getInstance()->uuidFromString($userModel->uuid),
+            uuid: Framework::getInstance()->uuid()->uuidFromString($userModel->uuid),
             birthday: new DateTime($userModel->birthday)
         );
     }
@@ -42,7 +42,7 @@ class UserRepository implements UserRepositoryInterface
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
-            uuid: Framework::getInstance()->uuidFromString($userModel->uuid),
+            uuid: Framework::getInstance()->uuid()->uuidFromString($userModel->uuid),
             birthday: new DateTime($userModel->birthday),
         );
     }
@@ -61,7 +61,7 @@ class UserRepository implements UserRepositoryInterface
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
-            uuid: Framework::getInstance()->uuidFromString($userModel->uuid),
+            uuid: Framework::getInstance()->uuid()->uuidFromString($userModel->uuid),
             birthday: new DateTime($userModel->birthday)
         );
     }
