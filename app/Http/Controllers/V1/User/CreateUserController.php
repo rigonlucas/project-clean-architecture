@@ -10,7 +10,7 @@ use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
-use Infra\Handlers\UseCases\User\CreateUserHandler;
+use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 
 class CreateUserController extends Controller
 {

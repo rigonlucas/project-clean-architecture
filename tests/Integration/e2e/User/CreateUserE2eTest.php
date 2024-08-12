@@ -6,6 +6,7 @@ use App\Models\User;
 use Core\Tools\Http\HttpApiHeaders;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
@@ -28,7 +29,6 @@ class CreateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
@@ -84,5 +84,15 @@ class CreateUserE2eTest extends TestCase
                 'password'
             ]
         ]);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $user = User::factory()->create();
+        Sanctum::actingAs(
+            $user,
+            ['*']
+        );
     }
 }

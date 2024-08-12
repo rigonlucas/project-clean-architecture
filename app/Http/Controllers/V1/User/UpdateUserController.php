@@ -11,7 +11,7 @@ use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UpdateUserPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
-use Infra\Handlers\UseCases\User\UpdateUserHandler;
+use Infra\Handlers\UseCases\User\Update\UpdateUserHandler;
 use Ramsey\Uuid\Uuid;
 
 class UpdateUserController extends Controller

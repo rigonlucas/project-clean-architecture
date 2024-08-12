@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Application\User\Create\Output;
+namespace Infra\Handlers\UseCases\User\Create;
 
 use Core\Domain\Entities\User\UserEntity;
 

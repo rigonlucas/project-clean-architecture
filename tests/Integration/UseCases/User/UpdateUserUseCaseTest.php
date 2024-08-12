@@ -8,7 +8,7 @@ use Core\Application\User\Update\UpdateUserUseCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\AppAdapter;
+use Infra\Dependencies\Framework\Framework;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
@@ -24,7 +24,7 @@ class UpdateUserUseCaseTest extends TestCase
         ]);
 
         $useCase = new UpdateUserUseCase(
-            AppAdapter::getInstance(),
+            Framework::getInstance(),
             new UserRepository(),
             new UserCommand()
         );
@@ -37,16 +37,16 @@ class UpdateUserUseCaseTest extends TestCase
         );
 
         // Act
-        $output = $useCase->execute($input);
+        $userEntity = $useCase->execute($input);
 
         // Assert
         $this->assertDatabaseHas('users', [
-            'id' => $output->userEntity->getId(),
-            'name' => $output->userEntity->getName(),
-            'email' => $output->userEntity->getEmail(),
-            'password' => $output->userEntity->getPassword(),
-            'birthday' => $output->userEntity->getBirthday()
+            'id' => $userEntity->getId(),
+            'name' => $userEntity->getName(),
+            'email' => $userEntity->getEmail(),
+            'password' => $userEntity->getPassword(),
+            'birthday' => $userEntity->getBirthday()
         ]);
-        $this->assertNotEquals($input->password, $output->userEntity->getPassword());
+        $this->assertNotEquals($input->password, $userEntity->getPassword());
     }
 }

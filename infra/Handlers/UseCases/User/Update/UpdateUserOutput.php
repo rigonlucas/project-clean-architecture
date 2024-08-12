@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Application\User\Update\Output;
+namespace Infra\Handlers\UseCases\User\Update;
 
 use Core\Domain\Entities\User\UserEntity;
 

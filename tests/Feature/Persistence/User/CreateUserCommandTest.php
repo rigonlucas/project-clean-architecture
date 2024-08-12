@@ -5,7 +5,7 @@ namespace Tests\Feature\Persistence\User;
 use Core\Domain\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
-use Infra\Dependencies\AppAdapter;
+use Infra\Dependencies\Framework\Framework;
 use Tests\TestCase;
 
 class CreateUserCommandTest extends TestCase
@@ -20,7 +20,7 @@ class CreateUserCommandTest extends TestCase
             name: 'name 2',
             email: 'email3@email.com',
             password: 'password',
-            uuid: AppAdapter::getInstance()->uuid7Generate(),
+            uuid: Framework::getInstance()->uuid7Generate(),
             birthday: now()->subYears(18)
         );
         // Act

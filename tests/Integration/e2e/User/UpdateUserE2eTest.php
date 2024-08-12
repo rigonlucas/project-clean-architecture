@@ -17,20 +17,15 @@ class UpdateUserE2eTest extends TestCase
     use DatabaseMigrations;
     use WithFaker;
 
+    private User $user;
+
     public function test_update_user_success_case()
     {
-        //create user
-        $user = User::factory()->create();
-        Sanctum::actingAs(
-            $user,
-            ['*']
-        );
-
         //update user
         $response = $this->putJson(
             route('v1.user.update'),
             [
-                'uuid' => $user->uuid,
+                'uuid' => $this->user->uuid,
                 'name' => $this->faker->name . 'updated',
                 'email' => $this->faker->userName . 'email@gmail.com',
                 'password' => 'teste12345',
@@ -53,13 +48,6 @@ class UpdateUserE2eTest extends TestCase
 
     public function test_update_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
     {
-        //create user
-        $user = User::factory()->create();
-        Sanctum::actingAs(
-            $user,
-            ['*']
-        );
-
         //create user with same email
         $userMoodel = User::factory()->create([
             'email' => $this->faker->userName . '@gmail.com'
@@ -69,7 +57,7 @@ class UpdateUserE2eTest extends TestCase
         $response = $this->putJson(
             route('v1.user.update'),
             [
-                'uuid' => $user->uuid,
+                'uuid' => $this->user->uuid,
                 'name' => $userMoodel->name,
                 'email' => $userMoodel->email,
                 'password' => 'teste1234',
@@ -90,18 +78,11 @@ class UpdateUserE2eTest extends TestCase
 
     public function test_update_user_fail_case_password_less_than_8_characters()
     {
-        //create user
-        $user = User::factory()->create();
-        Sanctum::actingAs(
-            $user,
-            ['*']
-        );
-
         //update user
         $response = $this->putJson(
             route('v1.user.update'),
             [
-                'uuid' => $user->uuid,
+                'uuid' => $this->user->uuid,
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => $this->faker->text(7),
@@ -122,13 +103,6 @@ class UpdateUserE2eTest extends TestCase
 
     public function test_update_user_fail_case_email_exists()
     {
-        //create user
-        $user = User::factory()->create();
-        Sanctum::actingAs(
-            $user,
-            ['*']
-        );
-
         //create user with same email
         $otherUser = User::factory()->create([
             'email' => $this->faker->userName . '@gmail.com'
@@ -138,7 +112,7 @@ class UpdateUserE2eTest extends TestCase
         $response = $this->putJson(
             route('v1.user.update'),
             [
-                'uuid' => $user->uuid,
+                'uuid' => $this->user->uuid,
                 'name' => $otherUser->name,
                 'email' => $otherUser->email,
                 'password' => 'teste12345',
@@ -165,13 +139,6 @@ class UpdateUserE2eTest extends TestCase
 
     public function test_update_user_success_case_new_valid_email()
     {
-        //create user
-        $user = User::factory()->create();
-        Sanctum::actingAs(
-            $user,
-            ['*']
-        );
-
         //create user with same email
         $otherUser = User::factory()->create([
             'email' => $this->faker->userName . '@gmail.com'
@@ -181,7 +148,7 @@ class UpdateUserE2eTest extends TestCase
         $response = $this->putJson(
             route('v1.user.update'),
             [
-                'uuid' => $user->uuid,
+                'uuid' => $this->user->uuid,
                 'name' => $otherUser->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => 'teste12345',
@@ -199,5 +166,15 @@ class UpdateUserE2eTest extends TestCase
                 'birthday',
             ]
         ]);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+        Sanctum::actingAs(
+            $this->user,
+            ['*']
+        );
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Core\Application\User\Update;
 
-use Core\Adapters\Framework\AppContract;
+use Core\Adapters\Framework\FrameworkContract;
+use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
-use Core\Application\User\Update\Output\UpdateUserOutput;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Support\HasErrorBagTrait;
@@ -18,7 +18,7 @@ class UpdateUserUseCase
 
 
     public function __construct(
-        private readonly AppContract $app,
+        private readonly FrameworkContract $framework,
         private readonly UserRepositoryInterface $userRepository,
         private readonly UserCommandInterface $userCommand
     ) {
@@ -27,11 +27,11 @@ class UpdateUserUseCase
     /**
      * @throws OutputErrorException
      */
-    public function execute(UpdateUserInput $input): UpdateUserOutput
+    public function execute(UpdateUserInput $input): UserEntity
     {
         $recordedUser = $this->userRepository->findByUuid(uuid: $input->uuid);
         if (!$recordedUser) {
-            throw new OutputErrorException(
+            throw new UserNotFountException(
                 message: 'Contém erros de validação',
                 code: ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value,
                 errors: $this->getErrorBag()
@@ -48,7 +48,7 @@ class UpdateUserUseCase
             id: $recordedUser->getId(),
             name: $input->name,
             email: $input->email,
-            password: $this->app->passwordHash($input->password),
+            password: $this->framework->passwordHash($input->password),
             birthday: $input->birthday
         );
 
@@ -60,8 +60,6 @@ class UpdateUserUseCase
         $this->checkValidationErrors();
 
         $userEntity->setUuid($recordedUser->getUuid());
-        $this->userCommand->update($userEntity);
-
-        return new UpdateUserOutput($userEntity);
+        return $this->userCommand->update($userEntity);
     }
 }

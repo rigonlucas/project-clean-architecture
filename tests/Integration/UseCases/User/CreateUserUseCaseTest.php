@@ -4,11 +4,10 @@ namespace Tests\Integration\UseCases\User;
 
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
-use Core\Application\User\Create\Output\CreateUserOutput;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\AppAdapter;
+use Infra\Dependencies\Framework\Framework;
 use Tests\TestCase;
 
 /**
@@ -22,7 +21,7 @@ class CreateUserUseCaseTest extends TestCase
     {
         // Arrange
         $useCase = new CreateUserUseCase(
-            AppAdapter::getInstance(),
+            Framework::getInstance(),
             new UserCommand(),
             new UserRepository()
         );
@@ -34,17 +33,16 @@ class CreateUserUseCaseTest extends TestCase
         );
 
         // Act
-        /** @var CreateUserOutput $output */
-        $output = $useCase->execute($input);
+        $UserEntity = $useCase->execute($input);
 
         // Assert
         $this->assertDatabaseHas('users', [
-            'id' => $output->userEntity->getId(),
-            'name' => $output->userEntity->getName(),
-            'email' => $output->userEntity->getEmail(),
-            'password' => $output->userEntity->getPassword(),
-            'birthday' => $output->userEntity->getBirthday()
+            'id' => $UserEntity->getId(),
+            'name' => $UserEntity->getName(),
+            'email' => $UserEntity->getEmail(),
+            'password' => $UserEntity->getPassword(),
+            'birthday' => $UserEntity->getBirthday()
         ]);
-        $this->assertNotEquals($input->password, $output->userEntity->getPassword());
+        $this->assertNotEquals($input->password, $UserEntity->getPassword());
     }
 }
