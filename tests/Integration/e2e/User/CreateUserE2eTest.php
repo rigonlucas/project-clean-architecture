@@ -94,6 +94,29 @@ class CreateUserE2eTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function test_create_user_join_into_an_account_code_expired()
+    {
+        $accountCode = AccountJoinCode::factory()->create([
+            'code' => '123456',
+            'user_id' => null,
+            'expired_at' => now()->subDay()
+        ]);
+
+        $response = $this->postJson(
+            route('v1.user.create'),
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->userName . '@gmail.com',
+                'password' => $this->faker->password(8),
+                'birthday' => now()->subYears(18)->format('Y-m-d'),
+                'account_access_code' => $accountCode->code,
+            ],
+            HttpApiHeaders::$headersJson
+        );
+
+        $response->assertStatus(404);
+    }
+
     public function test_create_user_join_into_an_account_code_not_found()
     {
         $response = $this->postJson(
