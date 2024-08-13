@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Persistence\User;
 
+use App\Models\Account;
+use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
@@ -15,11 +17,17 @@ class CreateUserCommandTest extends TestCase
     public function test_deve_testar_create_de_um_usuario(): void
     {
         // Arrange
+        $accountModel = Account::factory()->create();
         $userCommand = new UserCommand();
         $userEntity = UserEntity::forCreate(
             name: 'name 2',
             email: 'email3@email.com',
             password: 'password',
+            account: AccountEntity::forDetail(
+                id: $accountModel->id,
+                name: $accountModel->name,
+                uuid: $accountModel->uuid
+            ),
             uuid: Framework::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)
         );

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\CreateUserRequest;
 use Carbon\Carbon;
+use Core\Application\User\Create\Inputs\AccountInput;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
@@ -22,8 +23,16 @@ class CreateUserController extends Controller
             password: $request->password,
             birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
         );
+        
+        $accountInput = new AccountInput(
+            name: $request->account_name,
+            uuid: $request->account_uuid
+        );
         try {
-            $output = (new CreateUserHandler())->handle($createUserInput);
+            $output = (new CreateUserHandler())->handle(
+                createUserInput: $createUserInput,
+                accountInput: $accountInput
+            );
         } catch (OutputErrorException $outputErrorException) {
             return response()->json(
                 data: (new ErrorPresenter(

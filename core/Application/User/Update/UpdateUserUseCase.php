@@ -33,8 +33,7 @@ class UpdateUserUseCase
         if (!$recordedUser) {
             throw new UserNotFountException(
                 message: 'Contém erros de validação',
-                code: ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value,
-                errors: $this->getErrorBag()
+                code: ResponseStatusCodeEnum::NOT_FOUND->value
             );
         }
         if ($recordedUser->getEmail() != $input->email) {
@@ -52,7 +51,7 @@ class UpdateUserUseCase
             birthday: $input->birthday
         );
 
-        $hasNoLegalAge = $userEntity->hasNoLegalAge();
+        $hasNoLegalAge = $userEntity->underAge();
         if ($hasNoLegalAge) {
             $this->addError('birthday', 'Idade deve ser maior que 18 anos');
         }

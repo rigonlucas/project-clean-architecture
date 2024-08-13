@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
-use Core\Presentation\Http\User\UpdateUserPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Infra\Handlers\UseCases\User\Update\UpdateUserHandler;
@@ -16,10 +15,10 @@ use Ramsey\Uuid\Uuid;
 
 class UpdateUserController extends Controller
 {
-    public function __invoke(UpdateUserRequest $request)
+    public function __invoke(UpdateUserRequest $request, string $uuid)
     {
         $input = new UpdateUserInput(
-            uuid: Uuid::fromString($request->uuid),
+            uuid: Uuid::fromString($uuid),
             name: $request->name,
             email: $request->email,
             password: $request->password,
@@ -27,7 +26,7 @@ class UpdateUserController extends Controller
         );
 
         try {
-            $output = (new UpdateUserHandler())->handle($input);
+            $output = (new UpdateUserHandler())->handle(input: $input);
         } catch (OutputErrorException $outputErrorException) {
             return response()->json(
                 data: (new ErrorPresenter(

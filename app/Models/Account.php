@@ -4,9 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property mixed $id
+ * @property mixed|string $name
+ * @property mixed|string $uuid
+ */
 class Account extends Model
 {
     use HasFactory;
@@ -14,18 +18,6 @@ class Account extends Model
 
     protected $fillable = [
         'name',
+        'uuid',
     ];
-
-    public function users(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'account_users');
-    }
-
-    public function usersWithPivotData(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'account_users')
-            ->with('accounts')
-            ->withTimestamps()
-            ->withPivot('uuid_registration', 'deleted_at');
-    }
 }

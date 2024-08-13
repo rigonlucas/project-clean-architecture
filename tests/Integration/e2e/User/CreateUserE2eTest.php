@@ -25,7 +25,8 @@ class CreateUserE2eTest extends TestCase
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => $this->faker->password(8),
-                'birthday' => now()->subYears(18)->format('Y-m-d')
+                'birthday' => now()->subYears(18)->format('Y-m-d'),
+                'account_name' => $this->faker->name . '-account'
             ],
             HttpApiHeaders::$headersJson
         );
@@ -51,7 +52,8 @@ class CreateUserE2eTest extends TestCase
                 'name' => $userMoodel->name,
                 'email' => $userMoodel->email,
                 'password' => $this->faker->password(8),
-                'birthday' => now()->subYears(17)->format('Y-m-d')
+                'birthday' => now()->subYears(17)->format('Y-m-d'),
+                'account_name' => $this->faker->name . '-account'
             ],
             HttpApiHeaders::$headersJson
         );
@@ -73,7 +75,8 @@ class CreateUserE2eTest extends TestCase
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => $this->faker->words(7),
-                'birthday' => now()->subYears(18)->format('Y-m-d')
+                'birthday' => now()->subYears(18)->format('Y-m-d'),
+                'account_name' => $this->faker->name . '-account'
             ],
             HttpApiHeaders::$headersJson
         );

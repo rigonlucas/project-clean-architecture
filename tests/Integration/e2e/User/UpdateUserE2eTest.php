@@ -4,6 +4,7 @@ namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
 use Core\Tools\Http\HttpApiHeaders;
+use Core\Tools\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
@@ -23,9 +24,8 @@ class UpdateUserE2eTest extends TestCase
     {
         //update user
         $response = $this->putJson(
-            route('v1.user.update'),
+            route('v1.user.update', ['uuid' => $this->user->uuid]),
             [
-                'uuid' => $this->user->uuid,
                 'name' => $this->faker->name . 'updated',
                 'email' => $this->faker->userName . 'email@gmail.com',
                 'password' => 'teste12345',
@@ -55,9 +55,8 @@ class UpdateUserE2eTest extends TestCase
 
         //update user
         $response = $this->putJson(
-            route('v1.user.update'),
+            route('v1.user.update', ['uuid' => $this->user->uuid]),
             [
-                'uuid' => $this->user->uuid,
                 'name' => $userMoodel->name,
                 'email' => $userMoodel->email,
                 'password' => 'teste1234',
@@ -80,9 +79,8 @@ class UpdateUserE2eTest extends TestCase
     {
         //update user
         $response = $this->putJson(
-            route('v1.user.update'),
+            route('v1.user.update', ['uuid' => $this->user->uuid]),
             [
-                'uuid' => $this->user->uuid,
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => $this->faker->text(7),
@@ -110,9 +108,8 @@ class UpdateUserE2eTest extends TestCase
 
         //update user
         $response = $this->putJson(
-            route('v1.user.update'),
+            route('v1.user.update', ['uuid' => $this->user->uuid]),
             [
-                'uuid' => $this->user->uuid,
                 'name' => $otherUser->name,
                 'email' => $otherUser->email,
                 'password' => 'teste12345',
@@ -122,7 +119,6 @@ class UpdateUserE2eTest extends TestCase
         );
 
         //assert response
-        //dd(json_decode($response->getContent()));
         $response->assertStatus(422);
         $response->assertJsonStructure([
             'message',
@@ -146,9 +142,8 @@ class UpdateUserE2eTest extends TestCase
 
         //update user
         $response = $this->putJson(
-            route('v1.user.update'),
+            route('v1.user.update', ['uuid' => $this->user->uuid]),
             [
-                'uuid' => $this->user->uuid,
                 'name' => $otherUser->name,
                 'email' => $this->faker->userName . '@gmail.com',
                 'password' => 'teste12345',
@@ -166,6 +161,23 @@ class UpdateUserE2eTest extends TestCase
                 'birthday',
             ]
         ]);
+    }
+
+    public function test_update_user_fail_case_user_not_found()
+    {
+        //update user
+        $response = $this->putJson(
+            route('v1.user.update', ['uuid' => $this->faker->uuid]),
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->userName . '@gmail.com',
+                'password' => 'teste12345',
+                'birthday' => now()->subYears(18)->format('Y-m-d')
+            ],
+            HttpApiHeaders::$headersJson
+        );
+        //assert response
+        $response->assertStatus(ResponseStatusCodeEnum::NOT_FOUND->value);
     }
 
     protected function setUp(): void

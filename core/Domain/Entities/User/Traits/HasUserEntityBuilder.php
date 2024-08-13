@@ -2,6 +2,7 @@
 
 namespace Core\Domain\Entities\User\Traits;
 
+use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -14,8 +15,9 @@ trait HasUserEntityBuilder
         string $email,
         #[SensitiveParameter]
         string $password,
+        AccountEntity $account,
         UuidInterface $uuid = null,
-        ?DateTimeInterface $birthday = null
+        ?DateTimeInterface $birthday = null,
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->setBirthday($birthday);
@@ -23,6 +25,7 @@ trait HasUserEntityBuilder
         $userEntity->setEmail($email);
         $userEntity->setPassword($password);
         $userEntity->setUuid($uuid);
+        $userEntity->setAccount($account);
 
         return $userEntity;
     }

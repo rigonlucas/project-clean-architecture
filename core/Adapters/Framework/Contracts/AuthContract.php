@@ -4,7 +4,7 @@ namespace Core\Adapters\Framework\Contracts;
 
 interface AuthContract
 {
-    public function login(string $email, string $password): string;
+    public function login(string $email, string $password): void;
 
     public function logout(): void;
 

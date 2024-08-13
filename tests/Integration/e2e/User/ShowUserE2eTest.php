@@ -10,7 +10,7 @@ use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
- * @group e2e_update_user
+ * @group e2e_show_user
  */
 class ShowUserE2eTest extends TestCase
 {
@@ -22,18 +22,10 @@ class ShowUserE2eTest extends TestCase
     public function test_update_user_success_case()
     {
         //update user
-        $response = $this->putJson(
-            route('v1.user.update'),
-            [
-                'uuid' => $this->user->uuid,
-                'name' => $this->faker->name . 'updated',
-                'email' => $this->faker->userName . 'email@gmail.com',
-                'password' => 'teste12345',
-                'birthday' => now()->subYears(18)->format('Y-m-d')
-            ],
+        $response = $this->getJson(
+            route('v1.user.show', ['uuid' => $this->user->uuid]),
             HttpApiHeaders::$headersJson
         );
-
         //assert response
         $response->assertStatus(200);
         $response->assertJsonStructure([

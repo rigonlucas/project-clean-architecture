@@ -6,7 +6,7 @@ use Core\Adapters\Framework\Contracts\AuthContract;
 
 class AuthAdapter implements AuthContract
 {
-    private static AuthAdapter $instance;
+    private static ?AuthAdapter $instance = null;
 
     private function __construct()
     {
@@ -21,7 +21,7 @@ class AuthAdapter implements AuthContract
         return self::$instance;
     }
 
-    public function login(string $email, string $password): string
+    public function login(string $email, string $password): void
     {
         // TODO: Implement login() method.
     }

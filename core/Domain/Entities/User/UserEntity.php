@@ -2,6 +2,7 @@
 
 namespace Core\Domain\Entities\User;
 
+use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\Traits\HasUserEntityBuilder;
 use Core\Domain\Entities\User\Traits\UserEntityAcessors;
 use DateTime;
@@ -19,12 +20,13 @@ class UserEntity
     private ?string $password;
     private UuidInterface $uuid;
     private ?DateTimeInterface $birthday;
+    private AccountEntity $account;
 
     private function __construct()
     {
     }
 
-    public function hasNoLegalAge(): bool
+    public function underAge(): bool
     {
         return !($this->birthday->diff(new DateTime())->y >= 18);
     }

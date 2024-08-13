@@ -19,19 +19,14 @@ class ShowUserUseCase
     /**
      * @throws UserNotFountException
      */
-    public function execute(int $id,): UserEntity
+    public function execute(string $uuid): UserEntity
     {
-        $userEntity = $this->userRepository->findById($id);
+        $userEntity = $this->userRepository->findByUuid($uuid);
         if (!$userEntity) {
             throw new UserNotFountException(
                 message: 'User not found',
                 code: ResponseStatusCodeEnum::NOT_FOUND->value,
             );
-        }
-
-        $this->framework->auth()->userAccountsIds();
-
-        if ($userEntity) {
         }
 
         return $userEntity;
