@@ -81,7 +81,7 @@ trait UserEntityAcessors
         return $this->account;
     }
 
-    public function setAccount(AccountEntity $account): self
+    public function setAccount(?AccountEntity $account): self
     {
         $this->account = $account;
         return $this;

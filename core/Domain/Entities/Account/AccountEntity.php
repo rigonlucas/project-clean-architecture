@@ -13,6 +13,7 @@ class AccountEntity
     private ?int $id = null;
     private ?string $name = null;
     private ?string $uuid = null;
+    private ?AccountJoinCodeEntity $joinCodeEntity = null;
 
     private function __construct()
     {

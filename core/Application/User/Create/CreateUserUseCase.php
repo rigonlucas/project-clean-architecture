@@ -34,18 +34,13 @@ class CreateUserUseCase
      */
     public function execute(CreateUserInput $createUserInput, ?AccountInput $accountInput): UserEntity
     {
-        $this->checkEmail($createUserInput);
-        $accountEntity = $this->checkAccount($accountInput);
-
-        if ($accountEntity->getId() === null) {
-            $accountEntity = $this->accountCommandInterface->createAccount($accountEntity);
-        }
+        $this->processEmail($createUserInput);
 
         $userEntity = UserEntity::forCreate(
             name: $createUserInput->name,
             email: $createUserInput->email,
             password: $this->framework->passwordHash($createUserInput->password),
-            account: $accountEntity,
+            account: null,
             uuid: $this->framework->uuid()->uuid7Generate(),
             birthday: $createUserInput->birthday
         );
@@ -55,6 +50,14 @@ class CreateUserUseCase
             $this->addError('birthday', 'Idade inválida');
         }
 
+        $accountEntity = $this->processAccount($accountInput);
+
+        if ($accountEntity->getId() === null) {
+            $accountEntity = $this->accountCommandInterface->createAccount($accountEntity);
+        }
+
+        $userEntity->setAccount($accountEntity);
+
         $this->checkValidationErrors();
 
         $this->accountCommandInterface->useAccountJoinCode($accountEntity, $userEntity);
@@ -62,7 +65,7 @@ class CreateUserUseCase
         return $this->createUserInterface->create($userEntity);
     }
 
-    private function checkEmail(CreateUserInput $createUserInput): void
+    private function processEmail(CreateUserInput $createUserInput): void
     {
         $emailAlreadyExists = $this->userRepository->existsEmail($createUserInput->email);
         if ($emailAlreadyExists) {
@@ -73,15 +76,34 @@ class CreateUserUseCase
     /**
      * @throws AccountNotFoundException
      */
-    private function checkAccount(?AccountInput $accountInput): AccountEntity
+    private function processAccount(?AccountInput $accountInput): AccountEntity
     {
         if (!is_null($accountInput->name)) {
-            return AccountEntity::forCreate(
-                name: $accountInput->name,
-                uuid: $this->framework->uuid()->uuid7Generate()
-            );
+            return $this->createNewAccount($accountInput);
         }
 
+        return $this->findAnAccount($accountInput);
+    }
+
+    private function createNewAccount(?AccountInput $accountInput): AccountEntity
+    {
+        $accountEntity = AccountEntity::forCreate(
+            name: $accountInput->name,
+            uuid: $this->framework->uuid()->uuid7Generate()
+        );
+
+        if (!$accountEntity->isNameValid()) {
+            $this->addError('account', 'Account name is invalid');
+        }
+
+        return $accountEntity;
+    }
+
+    /**
+     * @throws AccountNotFoundException
+     */
+    private function findAnAccount(?AccountInput $accountInput): AccountEntity
+    {
         $accountEntity = $this->accountRepository->findByAccessCode($accountInput->accessCode);
         if (!$accountEntity) {
             throw new AccountNotFoundException(
@@ -89,8 +111,8 @@ class CreateUserUseCase
                 code: ResponseStatusCodeEnum::NOT_FOUND->value
             );
         }
-        if (!$accountEntity->isNameValid()) {
-            $this->addError('account', 'Account name is invalid');
+        if (!$accountEntity->getJoinCodeEntity()->isCodeValid()) {
+            $this->addError('account', 'Account join code is invalid');
         }
 
         return $accountEntity;

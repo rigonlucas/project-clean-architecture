@@ -3,20 +3,23 @@
 namespace Core\Domain\Entities\Account\Traits\JoinCode;
 
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
+use DateTimeInterface;
 
 trait AccountJoinCodeBuilder
 {
-    public function forDetail(
+    public static function forDetail(
         int $id,
         string $code,
-        int $account_id,
-        int $user_id
+        int $accountid,
+        DateTimeInterface $expiresAt,
+        ?int $userId
     ): AccountJoinCodeEntity {
         $accountJoinCode = new AccountJoinCodeEntity();
         $accountJoinCode->setId($id);
         $accountJoinCode->setCode($code);
-        $accountJoinCode->setAccountId($account_id);
-        $accountJoinCode->setUserId($user_id);
+        $accountJoinCode->setExpiresAt($expiresAt);
+        $accountJoinCode->setAccountId($accountid);
+        $accountJoinCode->setUserId($userId);
 
         return $accountJoinCode;
     }

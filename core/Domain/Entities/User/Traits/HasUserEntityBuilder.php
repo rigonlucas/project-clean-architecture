@@ -15,7 +15,7 @@ trait HasUserEntityBuilder
         string $email,
         #[SensitiveParameter]
         string $password,
-        AccountEntity $account,
+        ?AccountEntity $account,
         UuidInterface $uuid = null,
         ?DateTimeInterface $birthday = null,
     ): UserEntity {

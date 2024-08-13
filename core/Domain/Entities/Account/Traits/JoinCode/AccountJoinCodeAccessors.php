@@ -2,6 +2,8 @@
 
 namespace Core\Domain\Entities\Account\Traits\JoinCode;
 
+use DateTimeInterface;
+
 trait AccountJoinCodeAccessors
 {
     public function getId(): ?int
@@ -26,21 +28,31 @@ trait AccountJoinCodeAccessors
 
     public function getAccountId(): ?int
     {
-        return $this->account_id;
+        return $this->accountId;
     }
 
-    public function setAccountId(?int $account_id): void
+    public function setAccountId(?int $accountId): void
     {
-        $this->account_id = $account_id;
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): ?int
     {
-        return $this->user_id;
+        return $this->userId;
     }
 
-    public function setUserId(?int $user_id): void
+    public function setUserId(?int $userId): void
     {
-        $this->user_id = $user_id;
+        $this->userId = $userId;
+    }
+
+    public function getExpiresAt(): ?DateTimeInterface
+    {
+        return $this->expiresAt;
+    }
+
+    public function setExpiresAt(?DateTimeInterface $expiresAt): void
+    {
+        $this->expiresAt = $expiresAt;
     }
 }

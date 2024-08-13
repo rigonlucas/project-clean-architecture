@@ -4,6 +4,8 @@ namespace Core\Domain\Entities\Account;
 
 use Core\Domain\Entities\Account\Traits\JoinCode\AccountJoinCodeAccessors;
 use Core\Domain\Entities\Account\Traits\JoinCode\AccountJoinCodeBuilder;
+use DateTime;
+use DateTimeInterface;
 
 class AccountJoinCodeEntity
 {
@@ -12,12 +14,13 @@ class AccountJoinCodeEntity
 
     private ?int $id = null;
     private ?string $code = null;
-    private ?int $account_id = null;
-    private ?int $user_id = null;
-    
+    private ?int $accountId = null;
+    private ?int $userId = null;
+    private ?DateTimeInterface $expiresAt = null;
+
     public function isCodeValid(): bool
     {
-        return strlen($this->code) === 6;
+        return strlen($this->code) === 6 && $this->expiresAt > new DateTime();
     }
 
 }

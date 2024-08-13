@@ -2,6 +2,8 @@
 
 namespace Core\Domain\Entities\Account\Traits\Account;
 
+use Core\Domain\Entities\Account\AccountJoinCodeEntity;
+
 trait AccountEntityAcessors
 {
     public function getId(): ?int
@@ -33,5 +35,16 @@ trait AccountEntityAcessors
     public function setUuid(string $uuid): void
     {
         $this->uuid = $uuid;
+    }
+
+    public function getJoinCodeEntity(): ?AccountJoinCodeEntity
+    {
+        return $this->joinCodeEntity;
+    }
+
+    public function setJoinCodeEntity(AccountJoinCodeEntity $joinCodeEntity): self
+    {
+        $this->joinCodeEntity = $joinCodeEntity;
+        return $this;
     }
 }

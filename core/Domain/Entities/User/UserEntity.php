@@ -20,7 +20,7 @@ class UserEntity
     private ?string $password;
     private UuidInterface $uuid;
     private ?DateTimeInterface $birthday;
-    private AccountEntity $account;
+    private ?AccountEntity $account;
 
     private function __construct()
     {
