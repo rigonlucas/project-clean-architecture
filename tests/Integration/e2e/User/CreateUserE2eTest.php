@@ -2,11 +2,11 @@
 
 namespace Tests\Integration\e2e\User;
 
+use App\Models\AccountJoinCode;
 use App\Models\User;
 use Core\Tools\Http\HttpApiHeaders;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 /**
@@ -39,6 +39,76 @@ class CreateUserE2eTest extends TestCase
                 'birthday',
             ]
         ]);
+    }
+
+    public function test_create_user_join_into_an_account_success_case()
+    {
+        $accountCode = AccountJoinCode::factory()->create([
+            'code' => '123456',
+            'user_id' => null,
+            'expired_at' => now()->addMinutes(5)
+        ]);
+
+        $response = $this->postJson(
+            route('v1.user.create'),
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->userName . '@gmail.com',
+                'password' => $this->faker->password(8),
+                'birthday' => now()->subYears(18)->format('Y-m-d'),
+                'account_access_code' => $accountCode->code,
+            ],
+            HttpApiHeaders::$headersJson
+        );
+
+        $response->assertStatus(201);
+        $response->assertJsonStructure([
+            'data' => [
+                'uuid',
+                'name',
+                'email',
+                'birthday',
+            ]
+        ]);
+    }
+
+    public function test_create_user_join_into_an_account_code_already_used()
+    {
+        $accountCode = AccountJoinCode::factory()->create([
+            'code' => '123456',
+            'expired_at' => now()->addMinutes(5)
+        ]);
+
+        $response = $this->postJson(
+            route('v1.user.create'),
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->userName . '@gmail.com',
+                'password' => $this->faker->password(8),
+                'birthday' => now()->subYears(18)->format('Y-m-d'),
+                'account_access_code' => $accountCode->code,
+            ],
+            HttpApiHeaders::$headersJson
+        );
+
+        $response->assertStatus(404);
+    }
+
+    public function test_create_user_join_into_an_account_code_not_found()
+    {
+        $response = $this->postJson(
+            route('v1.user.create'),
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->userName . '@gmail.com',
+                'password' => $this->faker->password(8),
+                'birthday' => now()->subYears(18)->format('Y-m-d'),
+                'account_access_code' => '123123',
+            ],
+            HttpApiHeaders::$headersJson
+        );
+
+        $response->assertStatus(404);
     }
 
     public function test_create_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
@@ -87,15 +157,5 @@ class CreateUserE2eTest extends TestCase
                 'password'
             ]
         ]);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-        $user = User::factory()->create();
-        Sanctum::actingAs(
-            $user,
-            ['*']
-        );
     }
 }

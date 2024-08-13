@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Domain\Entities\Account\Traits;
+namespace Core\Domain\Entities\Account\Traits\Account;
 
 use Core\Domain\Entities\Account\AccountEntity;
 

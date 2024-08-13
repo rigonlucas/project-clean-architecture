@@ -18,7 +18,7 @@ class CreateUserRequest extends FormRequest
             'email' => ['required', 'string', 'max:255', 'email:rfc,dns'],
             'password' => ['required', 'string', 'min:8'],
             'birthday' => ['required', 'date', 'before:today'],
-            'account_uuid' => ['nullable', 'uuid'],
+            'account_access_code' => ['nullable', 'min:6', 'max:6'],
             'account_name' => ['nullable', 'string', 'max:255'],
         ];
     }

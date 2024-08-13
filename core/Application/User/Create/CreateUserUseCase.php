@@ -57,6 +57,8 @@ class CreateUserUseCase
 
         $this->checkValidationErrors();
 
+        $this->accountCommandInterface->useAccountJoinCode($accountEntity, $userEntity);
+
         return $this->createUserInterface->create($userEntity);
     }
 
@@ -80,10 +82,10 @@ class CreateUserUseCase
             );
         }
 
-        $accountEntity = $this->accountRepository->findByUuid($accountInput->uuid);
+        $accountEntity = $this->accountRepository->findByAccessCode($accountInput->accessCode);
         if (!$accountEntity) {
             throw new AccountNotFoundException(
-                message: 'Account not found',
+                message: 'Account join code not found, expired or invalid',
                 code: ResponseStatusCodeEnum::NOT_FOUND->value
             );
         }

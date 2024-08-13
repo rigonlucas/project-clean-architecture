@@ -6,7 +6,7 @@ readonly class AccountInput
 {
     public function __construct(
         public ?string $name,
-        public ?string $uuid
+        public ?string $accessCode
     ) {
     }
 }

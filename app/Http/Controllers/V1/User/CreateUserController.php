@@ -23,10 +23,10 @@ class CreateUserController extends Controller
             password: $request->password,
             birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
         );
-        
+
         $accountInput = new AccountInput(
             name: $request->account_name,
-            uuid: $request->account_uuid
+            accessCode: $request->account_access_code
         );
         try {
             $output = (new CreateUserHandler())->handle(
@@ -36,7 +36,7 @@ class CreateUserController extends Controller
         } catch (OutputErrorException $outputErrorException) {
             return response()->json(
                 data: (new ErrorPresenter(
-                    message: 'Contém erros de validação',
+                    message: $outputErrorException->getMessage(),
                     errors: $outputErrorException->getErrors()
                 ))->toArray(),
                 status: $outputErrorException->getCode()
