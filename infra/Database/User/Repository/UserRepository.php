@@ -6,7 +6,7 @@ use App\Models\User;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Domain\Entities\User\UserEntity;
 use DateTime;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -23,7 +23,7 @@ class UserRepository implements UserRepositoryInterface
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
-            uuid: Framework::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             birthday: new DateTime($userModel->birthday)
         );
     }
@@ -42,7 +42,7 @@ class UserRepository implements UserRepositoryInterface
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
-            uuid: Framework::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             birthday: new DateTime($userModel->birthday),
         );
     }
@@ -61,7 +61,7 @@ class UserRepository implements UserRepositoryInterface
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
-            uuid: Framework::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             birthday: new DateTime($userModel->birthday)
         );
     }

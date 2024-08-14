@@ -4,7 +4,7 @@ namespace Tests\Unit\User\Entity;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 use Tests\TestCase;
 
 /**
@@ -22,9 +22,9 @@ class UserEntityTest extends TestCase
             account: AccountEntity::forDetail(
                 id: 1,
                 name: 'Account',
-                uuid: Framework::getInstance()->uuid()->uuid7Generate()
+                uuid: FrameworkService::getInstance()->uuid()->uuid7Generate()
             ),
-            uuid: Framework::getInstance()->uuid()->uuid7Generate(),
+            uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(17)
         );
         $this->assertTrue($userEntity->underAge());
@@ -40,9 +40,9 @@ class UserEntityTest extends TestCase
             account: AccountEntity::forDetail(
                 id: 1,
                 name: 'Account',
-                uuid: Framework::getInstance()->uuid()->uuid7Generate()
+                uuid: FrameworkService::getInstance()->uuid()->uuid7Generate()
             ),
-            uuid: Framework::getInstance()->uuid()->uuid7Generate(),
+            uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)
         );
         // Act

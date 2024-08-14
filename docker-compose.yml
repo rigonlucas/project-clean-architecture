@@ -1,6 +1,6 @@
 version: "3"
 services:
-  nginx:
+  nginx_project_xxx:
     container_name: nginx_project_xxxx
     build:
       context: ./docker/nginx
@@ -12,7 +12,7 @@ services:
     volumes:
       - ./:/var/www/html/
       - ./storage/logs/nginx:/var/log/nginx/
-  php:
+  php_project_xxx:
     container_name: php_project_xxxx
     build:
       context: ./docker/php

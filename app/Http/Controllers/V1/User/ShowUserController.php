@@ -10,7 +10,7 @@ use Core\Presentation\Http\User\UserPresenter;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Exception;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 
 class ShowUserController extends Controller
 {
@@ -18,7 +18,7 @@ class ShowUserController extends Controller
     {
         try {
             $useCase = new ShowUserUseCase(
-                framework: Framework::getInstance(),
+                framework: FrameworkService::getInstance(),
                 userRepository: new UserRepository()
             );
             $userEntity = $useCase->execute(uuid: $uuid);

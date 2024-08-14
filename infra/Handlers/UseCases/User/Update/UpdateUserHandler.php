@@ -7,7 +7,7 @@ use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Generics\Exceptions\OutputErrorException;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 
 class UpdateUserHandler
 {
@@ -17,7 +17,7 @@ class UpdateUserHandler
     public function handle(UpdateUserInput $input): UpdateUserOutput
     {
         $useCase = new UpdateUserUseCase(
-            Framework::getInstance(),
+            FrameworkService::getInstance(),
             new UserRepository(),
             new UserCommand()
         );

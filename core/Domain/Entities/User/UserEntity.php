@@ -28,6 +28,6 @@ class UserEntity
 
     public function underAge(): bool
     {
-        return !($this->birthday->diff(new DateTime())->y >= 18);
+        return $this->birthday->diff(new DateTime())->y < 18;
     }
 }

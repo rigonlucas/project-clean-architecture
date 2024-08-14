@@ -10,7 +10,7 @@ use Infra\Database\Account\Command\AccountCommand;
 use Infra\Database\Account\Repository\AccountRepository;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
@@ -25,7 +25,7 @@ class CreateUserUseCaseTest extends TestCase
     {
         // Arrange
         $useCase = new CreateUserUseCase(
-            framework: Framework::getInstance(),
+            framework: FrameworkService::getInstance(),
             createUserInterface: new UserCommand(),
             userRepository: new UserRepository(),
             accountCommandInterface: new AccountCommand(),

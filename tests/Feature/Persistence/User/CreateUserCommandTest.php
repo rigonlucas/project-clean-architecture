@@ -7,7 +7,7 @@ use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 use Tests\TestCase;
 
 class CreateUserCommandTest extends TestCase
@@ -28,7 +28,7 @@ class CreateUserCommandTest extends TestCase
                 name: $accountModel->name,
                 uuid: $accountModel->uuid
             ),
-            uuid: Framework::getInstance()->uuid()->uuid7Generate(),
+            uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)
         );
         // Act

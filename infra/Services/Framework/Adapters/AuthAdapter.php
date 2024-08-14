@@ -1,6 +1,6 @@
 <?php
 
-namespace Infra\Dependencies\Framework\Concerns;
+namespace Infra\Services\Framework\Adapters;
 
 use Core\Adapters\Framework\Contracts\AuthContract;
 

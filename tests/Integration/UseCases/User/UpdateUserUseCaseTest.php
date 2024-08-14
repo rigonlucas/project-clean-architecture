@@ -8,7 +8,7 @@ use Core\Application\User\Update\UpdateUserUseCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
@@ -24,7 +24,7 @@ class UpdateUserUseCaseTest extends TestCase
         ]);
 
         $useCase = new UpdateUserUseCase(
-            Framework::getInstance(),
+            FrameworkService::getInstance(),
             new UserRepository(),
             new UserCommand()
         );

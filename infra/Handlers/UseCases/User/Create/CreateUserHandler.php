@@ -10,7 +10,7 @@ use Infra\Database\Account\Command\AccountCommand;
 use Infra\Database\Account\Repository\AccountRepository;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Dependencies\Framework\Framework;
+use Infra\Services\Framework\FrameworkService;
 
 class CreateUserHandler
 {
@@ -21,7 +21,7 @@ class CreateUserHandler
     public function handle(CreateUserInput $createUserInput, ?AccountInput $accountInput): CreateUserOutput
     {
         $useCase = new CreateUserUseCase(
-            Framework::getInstance(),
+            FrameworkService::getInstance(),
             new UserCommand(),
             new UserRepository(),
             new AccountCommand(),
