@@ -5,6 +5,11 @@ namespace App\Http\Controllers\V1\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\CreateUserRequest;
 use Carbon\Carbon;
+use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
+use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
+use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserCommandInterface;
+use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\Inputs\AccountInput;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
@@ -15,6 +20,15 @@ use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 
 class CreateUserController extends Controller
 {
+    public function __construct(
+        private readonly TransactionManagerInterface $transactionManager,
+        private readonly UserCommandInterface $userCommandInterface,
+        private readonly UserRepositoryInterface $userRepositoryInterface,
+        private readonly AccountCommandInterface $accountCommandInterface,
+        private readonly AccountRepositoryInterface $accountRepositoryInterface
+    ) {
+    }
+
     public function __invoke(CreateUserRequest $request)
     {
         $createUserInput = new CreateUserInput(
@@ -29,11 +43,19 @@ class CreateUserController extends Controller
             accessCode: $request->account_access_code
         );
         try {
-            $output = (new CreateUserHandler())->handle(
+            $this->transactionManager->beginTransaction();
+            $output = (new CreateUserHandler(
+                $this->userCommandInterface,
+                $this->userRepositoryInterface,
+                $this->accountCommandInterface,
+                $this->accountRepositoryInterface
+            ))->handle(
                 createUserInput: $createUserInput,
                 accountInput: $accountInput
             );
+            $this->transactionManager->commit();
         } catch (OutputErrorException $outputErrorException) {
+            $this->transactionManager->rollBack();
             return response()->json(
                 data: (new ErrorPresenter(
                     message: $outputErrorException->getMessage(),

@@ -87,16 +87,10 @@ class CreateUserUseCase
 
     private function createNewAccount(?AccountInput $accountInput): AccountEntity
     {
-        $accountEntity = AccountEntity::forCreate(
+        return AccountEntity::forCreate(
             name: $accountInput->name,
             uuid: $this->framework->uuid()->uuid7Generate()
         );
-
-        if (!$accountEntity->isNameValid()) {
-            $this->addError('account', 'Account name is invalid');
-        }
-
-        return $accountEntity;
     }
 
     /**

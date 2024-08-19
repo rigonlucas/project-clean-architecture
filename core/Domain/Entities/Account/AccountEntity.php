@@ -18,9 +18,4 @@ class AccountEntity
     private function __construct()
     {
     }
-
-    public function isNameValid(): bool
-    {
-        return !empty($this->name);
-    }
 }

@@ -3,6 +3,7 @@
 namespace Core\Adapters\Framework;
 
 use Core\Adapters\Framework\Contracts\AuthContract;
+use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
 use Core\Adapters\Framework\Contracts\UuidContract;
 
 /**
@@ -14,6 +15,8 @@ interface FrameworkContract
     public function auth(): AuthContract;
 
     public function uuid(): UuidContract;
+
+    public function transactionManager(): TransactionManagerInterface;
 
     public function isDevelopeMode(): bool;
 

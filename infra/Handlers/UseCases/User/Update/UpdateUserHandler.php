@@ -2,15 +2,22 @@
 
 namespace Infra\Handlers\UseCases\User\Update;
 
+use Core\Application\User\Commons\Gateways\UserCommandInterface;
+use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Generics\Exceptions\OutputErrorException;
-use Infra\Database\User\Command\UserCommand;
-use Infra\Database\User\Repository\UserRepository;
 use Infra\Services\Framework\FrameworkService;
 
 class UpdateUserHandler
 {
+    public function __construct(
+        private readonly UserCommandInterface $userCommandInterface,
+        private readonly UserRepositoryInterface $userRepositoryInterface
+    ) {
+    }
+
+
     /**
      * @throws OutputErrorException
      */
@@ -18,8 +25,8 @@ class UpdateUserHandler
     {
         $useCase = new UpdateUserUseCase(
             FrameworkService::getInstance(),
-            new UserRepository(),
-            new UserCommand()
+            $this->userRepositoryInterface,
+            $this->userCommandInterface
         );
         return new UpdateUserOutput($useCase->execute($input));
     }

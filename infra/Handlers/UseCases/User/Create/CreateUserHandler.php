@@ -2,18 +2,25 @@
 
 namespace Infra\Handlers\UseCases\User\Create;
 
+use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
+use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserCommandInterface;
+use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\AccountInput;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
-use Infra\Database\Account\Command\AccountCommand;
-use Infra\Database\Account\Repository\AccountRepository;
-use Infra\Database\User\Command\UserCommand;
-use Infra\Database\User\Repository\UserRepository;
 use Infra\Services\Framework\FrameworkService;
 
-class CreateUserHandler
+readonly class CreateUserHandler
 {
+    public function __construct(
+        private UserCommandInterface $userCommandInterface,
+        private UserRepositoryInterface $userRepositoryInterface,
+        private AccountCommandInterface $accountCommandInterface,
+        private AccountRepositoryInterface $accountRepositoryInterface
+    ) {
+    }
 
     /**
      * @throws OutputErrorException
@@ -22,10 +29,10 @@ class CreateUserHandler
     {
         $useCase = new CreateUserUseCase(
             FrameworkService::getInstance(),
-            new UserCommand(),
-            new UserRepository(),
-            new AccountCommand(),
-            new AccountRepository()
+            $this->userCommandInterface,
+            $this->userRepositoryInterface,
+            $this->accountCommandInterface,
+            $this->accountRepositoryInterface
         );
         $userEntity = $useCase->execute($createUserInput, $accountInput);
 

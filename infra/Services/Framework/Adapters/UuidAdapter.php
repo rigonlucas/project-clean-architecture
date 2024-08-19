@@ -9,6 +9,20 @@ use Ramsey\Uuid\UuidInterface;
 
 class UuidAdapter implements UuidContract
 {
+    private static ?UuidAdapter $instance = null;
+
+    private function __construct()
+    {
+    }
+
+    public static function getInstance(): UuidAdapter
+    {
+        if (self::$instance === null) {
+            self::$instance = new UuidAdapter();
+        }
+
+        return self::$instance;
+    }
 
     public function uuid7Generate(?DateTimeInterface $dateTime = null): UuidInterface
     {

@@ -14,12 +14,17 @@ use Infra\Services\Framework\FrameworkService;
 
 class ShowUserController extends Controller
 {
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {
+    }
+
     public function __invoke(string $uuid)
     {
         try {
             $useCase = new ShowUserUseCase(
                 framework: FrameworkService::getInstance(),
-                userRepository: new UserRepository()
+                userRepository: $this->userRepository
             );
             $userEntity = $useCase->execute(uuid: $uuid);
         } catch (OutputErrorException $outputErrorException) {
