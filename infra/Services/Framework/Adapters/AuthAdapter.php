@@ -8,10 +8,6 @@ class AuthAdapter implements AuthContract
 {
     private static ?AuthAdapter $instance = null;
 
-    private function __construct()
-    {
-    }
-
     public static function getInstance(): AuthAdapter
     {
         if (self::$instance === null) {

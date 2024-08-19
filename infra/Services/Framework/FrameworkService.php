@@ -15,10 +15,6 @@ class FrameworkService implements FrameworkContract
 {
     private static ?FrameworkService $instance = null;
 
-    private function __construct()
-    {
-    }
-
     public function isDevelopeMode(): bool
     {
         return app()->isLocal();

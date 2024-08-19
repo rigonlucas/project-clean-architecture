@@ -10,10 +10,6 @@ class TransactionManagerAdapter implements TransactionManagerInterface
 
     private static ?TransactionManagerAdapter $instance = null;
 
-    private function __construct()
-    {
-    }
-
     public static function getInstance(): TransactionManagerAdapter
     {
         if (self::$instance === null) {

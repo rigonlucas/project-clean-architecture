@@ -11,10 +11,6 @@ class UuidAdapter implements UuidContract
 {
     private static ?UuidAdapter $instance = null;
 
-    private function __construct()
-    {
-    }
-
     public static function getInstance(): UuidAdapter
     {
         if (self::$instance === null) {
