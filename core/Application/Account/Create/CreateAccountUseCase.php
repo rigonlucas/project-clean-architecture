@@ -40,7 +40,7 @@ class CreateAccountUseCase
     /**
      * @throws AccountNotFoundException
      */
-    private function processAccount(?AccountInput $input, UserEntity $userEntity): ?AccountEntity
+    private function processAccount(AccountInput $input, UserEntity $userEntity): ?AccountEntity
     {
         if (is_null($input->accessCode)) {
             return $this->createNewAccount($userEntity);
@@ -60,7 +60,7 @@ class CreateAccountUseCase
     /**
      * @throws AccountNotFoundException
      */
-    private function findAnAccount(?AccountInput $accountInput): AccountEntity
+    private function findAnAccount(AccountInput $accountInput): AccountEntity
     {
         $accountEntity = $this->accountRepository->findByAccessCode($accountInput->accessCode);
         if (!$accountEntity) {
