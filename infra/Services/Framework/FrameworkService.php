@@ -2,10 +2,10 @@
 
 namespace Infra\Services\Framework;
 
-use Core\Adapters\Framework\Contracts\AuthContract;
-use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
-use Core\Adapters\Framework\Contracts\UuidContract;
-use Core\Adapters\Framework\FrameworkContract;
+use Core\Services\Framework\Contracts\AuthContract;
+use Core\Services\Framework\Contracts\TransactionManagerContract;
+use Core\Services\Framework\Contracts\UuidContract;
+use Core\Services\Framework\FrameworkContract;
 use Illuminate\Support\Facades\Hash;
 use Infra\Services\Framework\Adapters\AuthAdapter;
 use Infra\Services\Framework\Adapters\TransactionManagerAdapter;
@@ -39,7 +39,7 @@ class FrameworkService implements FrameworkContract
         return self::$instance;
     }
 
-    public function transactionManager(): TransactionManagerInterface
+    public function transactionManager(): TransactionManagerContract
     {
         return TransactionManagerAdapter::getInstance();
     }

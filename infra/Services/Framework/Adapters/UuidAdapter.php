@@ -2,7 +2,7 @@
 
 namespace Infra\Services\Framework\Adapters;
 
-use Core\Adapters\Framework\Contracts\UuidContract;
+use Core\Services\Framework\Contracts\UuidContract;
 use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;

@@ -4,13 +4,14 @@ namespace Infra\Handlers\UseCases\User\Create;
 
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Create\CreateAccountUseCase;
+use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\CreateUserUseCase;
-use Core\Application\User\Create\Inputs\AccountInput;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
-use Infra\Services\Framework\FrameworkService;
+use Core\Services\Framework\FrameworkContract;
 
 readonly class CreateUserHandler
 {
@@ -18,7 +19,8 @@ readonly class CreateUserHandler
         private UserCommandInterface $userCommandInterface,
         private UserRepositoryInterface $userRepositoryInterface,
         private AccountCommandInterface $accountCommandInterface,
-        private AccountRepositoryInterface $accountRepositoryInterface
+        private AccountRepositoryInterface $accountRepositoryInterface,
+        private FrameworkContract $frameworkService
     ) {
     }
 
@@ -27,15 +29,20 @@ readonly class CreateUserHandler
      */
     public function handle(CreateUserInput $createUserInput, ?AccountInput $accountInput): CreateUserOutput
     {
-        $useCase = new CreateUserUseCase(
-            FrameworkService::getInstance(),
-            $this->userCommandInterface,
-            $this->userRepositoryInterface,
-            $this->accountCommandInterface,
-            $this->accountRepositoryInterface
+        $createUserUseCase = new CreateUserUseCase(
+            framework: $this->frameworkService,
+            createUserInterface: $this->userCommandInterface,
+            userRepository: $this->userRepositoryInterface
         );
-        $userEntity = $useCase->execute($createUserInput, $accountInput);
+        $userEntity = $createUserUseCase->execute(createUserInput: $createUserInput);
 
-        return new CreateUserOutput($userEntity);
+        $createAccountUseCase = new CreateAccountUseCase(
+            framework: $this->frameworkService,
+            accountCommand: $this->accountCommandInterface,
+            accountRepository: $this->accountRepositoryInterface
+        );
+        $accountEntity = $createAccountUseCase->execute(input: $accountInput, userEntity: $userEntity);
+
+        return new CreateUserOutput(userEntity: $userEntity, accountEntity: $accountEntity);
     }
 }

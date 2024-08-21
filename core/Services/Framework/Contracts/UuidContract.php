@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Adapters\Framework\Contracts;
+namespace Core\Services\Framework\Contracts;
 
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;

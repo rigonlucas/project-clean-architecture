@@ -2,10 +2,10 @@
 
 namespace Infra\Services\Framework\Adapters;
 
-use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
+use Core\Services\Framework\Contracts\TransactionManagerContract;
 use Illuminate\Support\Facades\DB;
 
-class TransactionManagerAdapter implements TransactionManagerInterface
+class TransactionManagerAdapter implements TransactionManagerContract
 {
 
     private static ?TransactionManagerAdapter $instance = null;

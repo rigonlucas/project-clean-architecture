@@ -5,13 +5,13 @@ namespace App\Http\Controllers\V1\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\UpdateUserRequest;
 use Carbon\Carbon;
-use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
+use Core\Services\Framework\FrameworkContract;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Infra\Handlers\UseCases\User\Update\UpdateUserHandler;
 use Ramsey\Uuid\Uuid;
@@ -19,9 +19,9 @@ use Ramsey\Uuid\Uuid;
 class UpdateUserController extends Controller
 {
     public function __construct(
-        private readonly TransactionManagerInterface $transactionManager,
-        private readonly UserCommandInterface $userCommandInterface,
-        private readonly UserRepositoryInterface $userRepositoryInterface
+        private readonly FrameworkContract $frameworkService,
+        private readonly UserCommandInterface $userCommand,
+        private readonly UserRepositoryInterface $userRepository
     ) {
     }
 
@@ -36,14 +36,23 @@ class UpdateUserController extends Controller
         );
 
         try {
-            $this->transactionManager->beginTransaction();
+            $this->frameworkService
+                ->transactionManager()
+                ->beginTransaction();
+
             $output = (new UpdateUserHandler(
-                $this->userCommandInterface,
-                $this->userRepositoryInterface
+                $this->userCommand,
+                $this->userRepository,
+                $this->frameworkService
             ))->handle(input: $input);
-            $this->transactionManager->commit();
+
+            $this->frameworkService
+                ->transactionManager()
+                ->commit();
         } catch (OutputErrorException $outputErrorException) {
-            $this->transactionManager->rollBack();
+            $this->frameworkService
+                ->transactionManager()
+                ->rollBack();
             return response()->json(
                 data: (new ErrorPresenter(
                     message: 'Contém erros de validação',

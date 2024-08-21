@@ -2,13 +2,13 @@
 
 namespace Core\Application\User\Update;
 
-use Core\Adapters\Framework\FrameworkContract;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Generics\Exceptions\OutputErrorException;
+use Core\Services\Framework\FrameworkContract;
 use Core\Support\HasErrorBagTrait;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 

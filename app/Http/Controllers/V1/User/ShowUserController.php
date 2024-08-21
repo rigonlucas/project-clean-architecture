@@ -7,15 +7,16 @@ use Core\Application\User\Show\ShowUserUseCase;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
+use Core\Services\Framework\FrameworkContract;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Exception;
 use Infra\Database\User\Repository\UserRepository;
-use Infra\Services\Framework\FrameworkService;
 
 class ShowUserController extends Controller
 {
     public function __construct(
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
+        private readonly FrameworkContract $frameworkService
     ) {
     }
 
@@ -23,7 +24,7 @@ class ShowUserController extends Controller
     {
         try {
             $useCase = new ShowUserUseCase(
-                framework: FrameworkService::getInstance(),
+                framework: $this->frameworkService,
                 userRepository: $this->userRepository
             );
             $userEntity = $useCase->execute(uuid: $uuid);

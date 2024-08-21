@@ -2,7 +2,7 @@
 
 namespace Infra\Services\Framework\Adapters;
 
-use Core\Adapters\Framework\Contracts\AuthContract;
+use Core\Services\Framework\Contracts\AuthContract;
 
 class AuthAdapter implements AuthContract
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Core\Adapters\Framework\Contracts;
+namespace Core\Services\Framework\Contracts;
 
-interface TransactionManagerInterface
+interface TransactionManagerContract
 {
     public function beginTransaction(): void;
 

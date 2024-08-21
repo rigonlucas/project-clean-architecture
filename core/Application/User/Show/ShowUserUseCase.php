@@ -2,10 +2,10 @@
 
 namespace Core\Application\User\Show;
 
-use Core\Adapters\Framework\FrameworkContract;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Services\Framework\FrameworkContract;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 
 class ShowUserUseCase

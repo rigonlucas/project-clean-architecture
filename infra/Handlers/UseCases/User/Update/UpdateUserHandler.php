@@ -7,13 +7,14 @@ use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Generics\Exceptions\OutputErrorException;
-use Infra\Services\Framework\FrameworkService;
+use Core\Services\Framework\FrameworkContract;
 
 class UpdateUserHandler
 {
     public function __construct(
-        private readonly UserCommandInterface $userCommandInterface,
-        private readonly UserRepositoryInterface $userRepositoryInterface
+        private readonly UserCommandInterface $userCommand,
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly FrameworkContract $frameworkService
     ) {
     }
 
@@ -24,9 +25,9 @@ class UpdateUserHandler
     public function handle(UpdateUserInput $input): UpdateUserOutput
     {
         $useCase = new UpdateUserUseCase(
-            FrameworkService::getInstance(),
-            $this->userRepositoryInterface,
-            $this->userCommandInterface
+            $this->frameworkService,
+            $this->userRepository,
+            $this->userCommand
         );
         return new UpdateUserOutput($useCase->execute($input));
     }

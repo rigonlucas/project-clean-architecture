@@ -5,27 +5,29 @@ namespace App\Http\Controllers\V1\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\CreateUserRequest;
 use Carbon\Carbon;
-use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
-use Core\Application\User\Create\Inputs\AccountInput;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
+use Core\Services\Framework\Contracts\TransactionManagerContract;
+use Core\Services\Framework\FrameworkContract;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 
 class CreateUserController extends Controller
 {
     public function __construct(
-        private readonly TransactionManagerInterface $transactionManager,
+        private readonly TransactionManagerContract $transactionManager,
         private readonly UserCommandInterface $userCommandInterface,
         private readonly UserRepositoryInterface $userRepositoryInterface,
         private readonly AccountCommandInterface $accountCommandInterface,
-        private readonly AccountRepositoryInterface $accountRepositoryInterface
+        private readonly AccountRepositoryInterface $accountRepositoryInterface,
+        private readonly FrameworkContract $frameworkService
     ) {
     }
 
@@ -39,16 +41,17 @@ class CreateUserController extends Controller
         );
 
         $accountInput = new AccountInput(
-            name: $request->account_name,
+            name: $request->name,
             accessCode: $request->account_access_code
         );
         try {
             $this->transactionManager->beginTransaction();
             $output = (new CreateUserHandler(
-                $this->userCommandInterface,
-                $this->userRepositoryInterface,
-                $this->accountCommandInterface,
-                $this->accountRepositoryInterface
+                userCommandInterface: $this->userCommandInterface,
+                userRepositoryInterface: $this->userRepositoryInterface,
+                accountCommandInterface: $this->accountCommandInterface,
+                accountRepositoryInterface: $this->accountRepositoryInterface,
+                frameworkService: $this->frameworkService
             ))->handle(
                 createUserInput: $createUserInput,
                 accountInput: $accountInput

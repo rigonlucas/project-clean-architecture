@@ -1,1 +1,3 @@
 ## About project
+
+### Project structure

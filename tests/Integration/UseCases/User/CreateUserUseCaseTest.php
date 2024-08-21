@@ -3,15 +3,11 @@
 namespace Tests\Integration\UseCases\User;
 
 use Core\Application\User\Create\CreateUserUseCase;
-use Core\Application\User\Create\Inputs\AccountInput;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Infra\Database\Account\Command\AccountCommand;
-use Infra\Database\Account\Repository\AccountRepository;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Repository\UserRepository;
 use Infra\Services\Framework\FrameworkService;
-use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 /**
@@ -27,9 +23,7 @@ class CreateUserUseCaseTest extends TestCase
         $useCase = new CreateUserUseCase(
             framework: FrameworkService::getInstance(),
             createUserInterface: new UserCommand(),
-            userRepository: new UserRepository(),
-            accountCommandInterface: new AccountCommand(),
-            accountRepository: new AccountRepository()
+            userRepository: new UserRepository()
         );
         $input = new CreateUserInput(
             name: 'name 2',
@@ -37,13 +31,9 @@ class CreateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(18)
         );
-        $accountInput = new AccountInput(
-            'AA',
-            Uuid::uuid7()->toString()
-        );
 
         // Act
-        $UserEntity = $useCase->execute($input, $accountInput);
+        $UserEntity = $useCase->execute($input);
 
         // Assert
         $this->assertDatabaseHas('users', [

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Application\User\Create\Inputs;
+namespace Core\Application\Account\Create\Inputs;
 
 readonly class AccountInput
 {

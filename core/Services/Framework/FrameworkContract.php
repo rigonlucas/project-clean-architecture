@@ -1,10 +1,10 @@
 <?php
 
-namespace Core\Adapters\Framework;
+namespace Core\Services\Framework;
 
-use Core\Adapters\Framework\Contracts\AuthContract;
-use Core\Adapters\Framework\Contracts\TransactionManagerInterface;
-use Core\Adapters\Framework\Contracts\UuidContract;
+use Core\Services\Framework\Contracts\AuthContract;
+use Core\Services\Framework\Contracts\TransactionManagerContract;
+use Core\Services\Framework\Contracts\UuidContract;
 
 /**
  * Interface FrameworkContract is a contract for the framework adapter.
@@ -16,7 +16,7 @@ interface FrameworkContract
 
     public function uuid(): UuidContract;
 
-    public function transactionManager(): TransactionManagerInterface;
+    public function transactionManager(): TransactionManagerContract;
 
     public function isDevelopeMode(): bool;
 
