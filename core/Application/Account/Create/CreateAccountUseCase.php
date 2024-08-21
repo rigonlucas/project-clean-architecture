@@ -35,10 +35,9 @@ class CreateAccountUseCase
 
         if ($accountEntity->getJoinCodeEntity()) {
             $this->accountCommand->useAccountJoinCode($accountEntity);
+
             return $accountEntity;
         }
-
-        $accountEntity->setUserEntity($userEntity);
 
         return $this->accountCommand->createAccount($accountEntity);
     }
