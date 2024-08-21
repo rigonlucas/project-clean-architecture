@@ -45,16 +45,19 @@ class CreateUserController extends Controller
         );
         try {
             $this->transactionManager->beginTransaction();
-            $output = (new CreateUserHandler(
+
+            $handler = (new CreateUserHandler(
                 userCommandInterface: $this->userCommandInterface,
                 userRepositoryInterface: $this->userRepositoryInterface,
                 accountCommandInterface: $this->accountCommandInterface,
                 accountRepositoryInterface: $this->accountRepositoryInterface,
                 frameworkService: $this->frameworkService
-            ))->handle(
+            ));
+            $output = $handler->handle(
                 createUserInput: $createUserInput,
                 accountInput: $accountInput
             );
+
             $this->transactionManager->commit();
         } catch (OutputErrorException $outputErrorException) {
             $this->transactionManager->rollBack();

@@ -3,7 +3,6 @@
 namespace Core\Domain\Entities\Account\Traits\Account;
 
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
-use InvalidArgumentException;
 
 trait AccountEntityAcessors
 {
@@ -25,10 +24,6 @@ trait AccountEntityAcessors
 
     public function setName(string $name): void
     {
-        if (empty($name)) {
-            throw new InvalidArgumentException('Name is invalid');
-        }
-
         $this->name = $name;
     }
 
