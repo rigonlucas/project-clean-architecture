@@ -40,8 +40,7 @@ class AccountRepository implements AccountRepositoryInterface
             id: $accountJoin->id,
             code: $accountJoin->code,
             accountid: $accountJoin->account_id,
-            expiresAt: $accountJoin->expired_at,
-            userId: $accountJoin->user_id,
+            expiresAt: $accountJoin->expired_at
         );
 
         return (AccountEntity::forDetail(

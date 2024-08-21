@@ -36,16 +36,6 @@ trait AccountJoinCodeAccessors
         $this->accountId = $accountId;
     }
 
-    public function getUserId(): ?int
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?int $userId): void
-    {
-        $this->userId = $userId;
-    }
-
     public function getExpiresAt(): ?DateTimeInterface
     {
         return $this->expiresAt;

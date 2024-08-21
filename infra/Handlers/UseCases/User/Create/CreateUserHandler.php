@@ -27,7 +27,7 @@ readonly class CreateUserHandler
     /**
      * @throws OutputErrorException
      */
-    public function handle(CreateUserInput $createUserInput, ?AccountInput $accountInput): CreateUserOutput
+    public function handle(CreateUserInput $createUserInput, AccountInput $accountInput): CreateUserOutput
     {
         $createUserUseCase = new CreateUserUseCase(
             framework: $this->frameworkService,
@@ -41,7 +41,11 @@ readonly class CreateUserHandler
             accountCommand: $this->accountCommandInterface,
             accountRepository: $this->accountRepositoryInterface
         );
-        $accountEntity = $createAccountUseCase->execute(input: $accountInput, userEntity: $userEntity);
+
+        $accountInput->setUserNane($userEntity->getName());
+        $accountInput->setUserId($userEntity->getId());
+
+        $accountEntity = $createAccountUseCase->execute(input: $accountInput);
 
         return new CreateUserOutput(userEntity: $userEntity, accountEntity: $accountEntity);
     }

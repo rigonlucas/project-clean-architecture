@@ -26,33 +26,39 @@ class CreateAccountUseCase
     /**
      * @throws AccountNotFoundException
      */
-    public function execute(AccountInput $input, UserEntity $userEntity): AccountEntity
+    public function execute(AccountInput $input): AccountEntity
     {
-        $accountEntity = $this->processAccount($input, $userEntity);
+        $accountEntity = $this->processAccount($input);
+
+        $userEntity = UserEntity::forIdentify($input->getUserId());
+        $accountEntity->setUserEntity($userEntity);
+
         if ($accountEntity->getJoinCodeEntity()) {
-            $this->accountCommand->useAccountJoinCode($accountEntity, $userEntity);
+            $this->accountCommand->useAccountJoinCode($accountEntity);
             return $accountEntity;
         }
 
-        return $this->accountCommand->createAccount($accountEntity, $userEntity);
+        $accountEntity->setUserEntity($userEntity);
+
+        return $this->accountCommand->createAccount($accountEntity);
     }
 
     /**
      * @throws AccountNotFoundException
      */
-    private function processAccount(AccountInput $input, UserEntity $userEntity): ?AccountEntity
+    private function processAccount(AccountInput $input): ?AccountEntity
     {
         if (is_null($input->accessCode)) {
-            return $this->createNewAccount($userEntity);
+            return $this->createNewAccount($input);
         }
 
         return $this->findAnAccount($input);
     }
 
-    private function createNewAccount(UserEntity $userEntity): AccountEntity
+    private function createNewAccount(AccountInput $input): AccountEntity
     {
         return AccountEntity::forCreate(
-            name: $userEntity->getName(),
+            name: $input->getUserNane(),
             uuid: $this->framework->uuid()->uuid7Generate()
         );
     }
@@ -63,7 +69,7 @@ class CreateAccountUseCase
     private function findAnAccount(AccountInput $accountInput): AccountEntity
     {
         $accountEntity = $this->accountRepository->findByAccessCode($accountInput->accessCode);
-        if (!$accountEntity) {
+        if (is_null($accountEntity)) {
             throw new AccountNotFoundException(
                 message: 'Account join code not found, expired or invalid',
                 code: ResponseStatusCodeEnum::NOT_FOUND->value

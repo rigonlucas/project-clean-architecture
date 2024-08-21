@@ -15,7 +15,6 @@ class AccountJoinCodeEntity
     private ?int $id = null;
     private ?string $code = null;
     private ?int $accountId = null;
-    private ?int $userId = null;
     private ?DateTimeInterface $expiresAt = null;
 
     public function isCodeValid(): bool

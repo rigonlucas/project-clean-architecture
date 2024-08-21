@@ -3,6 +3,7 @@
 namespace Core\Domain\Entities\Account\Traits\Account;
 
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
+use Core\Domain\Entities\User\UserEntity;
 
 trait AccountEntityAcessors
 {
@@ -45,6 +46,17 @@ trait AccountEntityAcessors
     public function setJoinCodeEntity(AccountJoinCodeEntity $joinCodeEntity): self
     {
         $this->joinCodeEntity = $joinCodeEntity;
+        return $this;
+    }
+
+    public function getUserEntity(): UserEntity
+    {
+        return $this->userEntity;
+    }
+
+    public function setUserEntity(UserEntity $userEntity): self
+    {
+        $this->userEntity = $userEntity;
         return $this;
     }
 }

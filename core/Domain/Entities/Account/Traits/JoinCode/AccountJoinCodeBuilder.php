@@ -11,15 +11,13 @@ trait AccountJoinCodeBuilder
         int $id,
         string $code,
         int $accountid,
-        DateTimeInterface $expiresAt,
-        ?int $userId
+        DateTimeInterface $expiresAt
     ): AccountJoinCodeEntity {
         $accountJoinCode = new AccountJoinCodeEntity();
         $accountJoinCode->setId($id);
         $accountJoinCode->setCode($code);
         $accountJoinCode->setExpiresAt($expiresAt);
         $accountJoinCode->setAccountId($accountid);
-        $accountJoinCode->setUserId($userId);
 
         return $accountJoinCode;
     }

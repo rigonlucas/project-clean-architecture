@@ -72,4 +72,12 @@ trait HasUserEntityBuilder
 
         return $userEntity;
     }
+
+    public static function forIdentify(int $id): UserEntity
+    {
+        $userEntity = new UserEntity();
+        $userEntity->setId($id);
+
+        return $userEntity;
+    }
 }
