@@ -23,6 +23,7 @@ class AccountJoinCodeFactory extends Factory
             'code' => $this->faker->unique()->word,
             'account_id' => Account::factory(),
             'user_id' => User::factory(),
+            'expired_at' => now()->addDay()
         ];
     }
 }

@@ -30,7 +30,7 @@ class AccountCommand implements AccountCommandInterface
     public function useAccountJoinCode(AccountEntity $accountEntity): void
     {
         AccountJoinCode::query()
-            ->where('code', '=', $accountEntity->getUuid())
+            ->where('code', '=', $accountEntity->getJoinCodeEntity()->getCode())
             ->update([
                 'user_id' => $accountEntity->getUserEntity()->getId()
             ]);
