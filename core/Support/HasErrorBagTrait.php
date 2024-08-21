@@ -9,7 +9,7 @@ trait HasErrorBagTrait
 {
     private array $errorBag = [];
 
-    public function addError(string $key, string $message): void
+    protected function addError(string $key, string $message): void
     {
         $this->errorBag[$key][] = $message;
     }
@@ -17,7 +17,7 @@ trait HasErrorBagTrait
     /**
      * @throws OutputErrorException
      */
-    public function checkValidationErrors(
+    protected function checkValidationErrors(
         string $message = 'Validation error',
         ResponseStatusCodeEnum $errorCodeEnum = ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY
     ): void {

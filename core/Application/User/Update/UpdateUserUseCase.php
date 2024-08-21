@@ -29,6 +29,9 @@ class UpdateUserUseCase
      */
     public function execute(UpdateUserInput $input): UserEntity
     {
+        if (!filter_var($input->email, FILTER_VALIDATE_EMAIL)) {
+            $this->addError('email', 'Invalid email.');
+        }
         $recordedUser = $this->userRepository->findByUuid(uuid: $input->uuid);
         if (!$recordedUser) {
             throw new UserNotFountException(

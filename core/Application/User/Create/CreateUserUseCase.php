@@ -26,6 +26,9 @@ class CreateUserUseCase
      */
     public function execute(CreateUserInput $createUserInput): UserEntity
     {
+        if (!filter_var($createUserInput->email, FILTER_VALIDATE_EMAIL)) {
+            $this->addError('email', 'Invalid email');
+        }
         $this->processEmail($createUserInput);
 
         $userEntity = UserEntity::forCreate(
