@@ -28,7 +28,7 @@ class CreateAccountUseCase
      */
     public function execute(AccountInput $input): AccountEntity
     {
-        $accountEntity = $this->processAccount($input);
+        $accountEntity = $this->processAccountCreation($input);
 
         $userEntity = UserEntity::forIdentify($input->getUserId());
         $accountEntity->setUserEntity($userEntity);
@@ -45,13 +45,13 @@ class CreateAccountUseCase
     /**
      * @throws AccountNotFoundException
      */
-    private function processAccount(AccountInput $input): ?AccountEntity
+    private function processAccountCreation(AccountInput $input): ?AccountEntity
     {
         if (is_null($input->accessCode)) {
             return $this->createNewAccount($input);
         }
 
-        return $this->findAnAccount($input);
+        return $this->findAnAccountByAccessCode($input);
     }
 
     private function createNewAccount(AccountInput $input): AccountEntity
@@ -65,7 +65,7 @@ class CreateAccountUseCase
     /**
      * @throws AccountNotFoundException
      */
-    private function findAnAccount(AccountInput $accountInput): AccountEntity
+    private function findAnAccountByAccessCode(AccountInput $accountInput): AccountEntity
     {
         $accountEntity = $this->accountRepository->findByAccessCode($accountInput->accessCode);
         if (is_null($accountEntity)) {
