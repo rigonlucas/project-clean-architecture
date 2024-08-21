@@ -41,7 +41,6 @@ class CreateUserController extends Controller
         );
 
         $accountInput = new AccountInput(
-            name: $request->name,
             accessCode: $request->account_access_code
         );
         try {

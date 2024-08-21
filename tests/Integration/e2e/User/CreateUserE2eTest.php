@@ -33,10 +33,7 @@ class CreateUserE2eTest extends TestCase
         $response->assertStatus(201);
         $response->assertJsonStructure([
             'data' => [
-                'uuid',
-                'name',
-                'email',
-                'birthday',
+                'uuid'
             ]
         ]);
     }
@@ -65,9 +62,6 @@ class CreateUserE2eTest extends TestCase
         $response->assertJsonStructure([
             'data' => [
                 'uuid',
-                'name',
-                'email',
-                'birthday',
             ]
         ]);
     }

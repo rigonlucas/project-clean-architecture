@@ -13,10 +13,7 @@ class UserPresenter implements ToArrayPresenter, PresenterWithDataAttribute
     public function __construct(UserEntity $userEntity)
     {
         $this->data = [
-            'uuid' => $userEntity->getUuid()->toString(),
-            'name' => $userEntity->getName(),
-            'email' => $userEntity->getEmail(),
-            'birthday' => $userEntity->getBirthday()->format('Y-m-d'),
+            'uuid' => $userEntity->getUuid()->toString()
         ];
     }
 

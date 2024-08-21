@@ -15,7 +15,7 @@ class AccountCommand implements AccountCommandInterface
     public function createAccount(AccountEntity $accountEntity, UserEntity $userEntity): AccountEntity
     {
         $accountModel = new Account();
-        $accountModel->name = $accountEntity->getName();
+        $accountModel->name = $userEntity->getName();
         $accountModel->uuid = $accountEntity->getUuid();
         $accountModel->save();
 
@@ -24,7 +24,7 @@ class AccountCommand implements AccountCommandInterface
             ->update([
                 'account_id' => $accountModel->id
             ]);
-        
+
         return $accountEntity->setId($accountModel->id);
     }
 

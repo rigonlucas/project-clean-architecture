@@ -28,7 +28,7 @@ class CreateAccountUseCase
      */
     public function execute(AccountInput $input, UserEntity $userEntity): AccountEntity
     {
-        $accountEntity = $this->processAccount($input);
+        $accountEntity = $this->processAccount($input, $userEntity);
         if ($accountEntity->getJoinCodeEntity()) {
             $this->accountCommand->useAccountJoinCode($accountEntity, $userEntity);
             return $accountEntity;
@@ -40,19 +40,19 @@ class CreateAccountUseCase
     /**
      * @throws AccountNotFoundException
      */
-    private function processAccount(?AccountInput $input): ?AccountEntity
+    private function processAccount(?AccountInput $input, UserEntity $userEntity): ?AccountEntity
     {
         if (is_null($input->accessCode)) {
-            return $this->createNewAccount($input);
+            return $this->createNewAccount($userEntity);
         }
 
         return $this->findAnAccount($input);
     }
 
-    private function createNewAccount(?AccountInput $accountInput): AccountEntity
+    private function createNewAccount(UserEntity $userEntity): AccountEntity
     {
         return AccountEntity::forCreate(
-            name: $accountInput->name,
+            name: $userEntity->getName(),
             uuid: $this->framework->uuid()->uuid7Generate()
         );
     }

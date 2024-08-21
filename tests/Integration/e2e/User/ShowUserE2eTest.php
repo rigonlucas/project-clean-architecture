@@ -30,10 +30,7 @@ class ShowUserE2eTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
-                'uuid',
-                'name',
-                'email',
-                'birthday',
+                'uuid'
             ]
         ]);
     }
