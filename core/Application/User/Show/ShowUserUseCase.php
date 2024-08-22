@@ -6,7 +6,7 @@ use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatusCodeEnum;
 
 class ShowUserUseCase
 {

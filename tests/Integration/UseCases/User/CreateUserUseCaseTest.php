@@ -7,7 +7,7 @@ use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\ErrorBagValidation\HasErrorsInBagException;
+use Core\Support\Exceptions\HasErrorsInBagException;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 

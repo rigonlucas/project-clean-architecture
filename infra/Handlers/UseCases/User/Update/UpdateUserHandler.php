@@ -6,8 +6,8 @@ use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
-use Core\Generics\Exceptions\OutputErrorException;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Exceptions\OutputErrorException;
 
 class UpdateUserHandler
 {

@@ -3,7 +3,7 @@
 namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
-use Core\Tools\Http\HttpApiHeaders;
+use Core\Support\Http\HttpApiHeaders;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;

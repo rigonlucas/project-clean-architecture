@@ -4,11 +4,11 @@ namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
 use Core\Application\User\Show\ShowUserUseCase;
-use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserDetaisPresenter;
 use Core\Services\Framework\FrameworkContract;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Exceptions\OutputErrorException;
+use Core\Support\Http\ResponseStatusCodeEnum;
 use Infra\Database\User\Repository\UserRepository;
 
 class ShowUserController extends Controller

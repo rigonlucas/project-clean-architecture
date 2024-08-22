@@ -5,7 +5,7 @@ namespace Core\Domain\Entities\Account;
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Domain\Entities\Account\Traits\JoinCode\AccountJoinCodeAccessors;
 use Core\Domain\Entities\Account\Traits\JoinCode\AccountJoinCodeBuilder;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatusCodeEnum;
 use DateTime;
 use DateTimeInterface;
 

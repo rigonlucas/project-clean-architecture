@@ -3,22 +3,14 @@
 namespace Infra\Services\Framework\Adapters;
 
 use Core\Services\Framework\Contracts\UuidContract;
+use Core\Support\HasSingletonTrait;
 use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 class UuidAdapter implements UuidContract
 {
-    private static ?UuidAdapter $instance = null;
-
-    public static function getInstance(): UuidAdapter
-    {
-        if (self::$instance === null) {
-            self::$instance = new UuidAdapter();
-        }
-
-        return self::$instance;
-    }
+    use HasSingletonTrait;
 
     public function uuid7Generate(?DateTimeInterface $dateTime = null): UuidInterface
     {

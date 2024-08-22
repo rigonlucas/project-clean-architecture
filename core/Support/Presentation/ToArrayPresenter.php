@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Generics\Presenters;
+namespace Core\Support\Presentation;
 
 interface ToArrayPresenter
 {

@@ -9,8 +9,8 @@ use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\ErrorBagValidation\HasErrorBagTrait;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Validations\HasErrorBagTrait;
 
 class CreateAccountUseCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Generics\Exceptions;
+namespace Core\Support\Exceptions;
 
 class InvalidEmailException extends OutputErrorException
 {

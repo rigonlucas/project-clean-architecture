@@ -3,6 +3,7 @@
 namespace Core\Services\Framework;
 
 use Core\Services\Framework\Contracts\AuthContract;
+use Core\Services\Framework\Contracts\StrContract;
 use Core\Services\Framework\Contracts\TransactionManagerContract;
 use Core\Services\Framework\Contracts\UuidContract;
 
@@ -21,4 +22,6 @@ interface FrameworkContract
     public function isDevelopeMode(): bool;
 
     public function passwordHash(string $password): string;
+
+    public function Str(): StrContract;
 }

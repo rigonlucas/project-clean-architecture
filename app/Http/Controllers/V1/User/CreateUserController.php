@@ -11,12 +11,12 @@ use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
-use Core\Generics\Exceptions\OutputErrorException;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Services\Framework\Contracts\TransactionManagerContract;
 use Core\Services\Framework\FrameworkContract;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Exceptions\OutputErrorException;
+use Core\Support\Http\ResponseStatusCodeEnum;
 use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 
 class CreateUserController extends Controller

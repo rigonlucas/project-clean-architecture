@@ -3,19 +3,11 @@
 namespace Infra\Services\Framework\Adapters;
 
 use Core\Services\Framework\Contracts\AuthContract;
+use Core\Support\HasSingletonTrait;
 
 class AuthAdapter implements AuthContract
 {
-    private static ?AuthAdapter $instance = null;
-
-    public static function getInstance(): AuthAdapter
-    {
-        if (self::$instance === null) {
-            self::$instance = new AuthAdapter();
-        }
-
-        return self::$instance;
-    }
+    use HasSingletonTrait;
 
     public function login(string $email, string $password): void
     {

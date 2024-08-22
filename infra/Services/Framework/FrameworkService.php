@@ -3,17 +3,20 @@
 namespace Infra\Services\Framework;
 
 use Core\Services\Framework\Contracts\AuthContract;
+use Core\Services\Framework\Contracts\StrContract;
 use Core\Services\Framework\Contracts\TransactionManagerContract;
 use Core\Services\Framework\Contracts\UuidContract;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\HasSingletonTrait;
 use Illuminate\Support\Facades\Hash;
 use Infra\Services\Framework\Adapters\AuthAdapter;
+use Infra\Services\Framework\Adapters\StrAdapter;
 use Infra\Services\Framework\Adapters\TransactionManagerAdapter;
 use Infra\Services\Framework\Adapters\UuidAdapter;
 
 class FrameworkService implements FrameworkContract
 {
-    private static ?FrameworkService $instance = null;
+    use HasSingletonTrait;
 
     public function isDevelopeMode(): bool
     {
@@ -30,15 +33,6 @@ class FrameworkService implements FrameworkContract
         return AuthAdapter::getInstance();
     }
 
-    public static function getInstance(): FrameworkService
-    {
-        if (self::$instance === null) {
-            self::$instance = new FrameworkService();
-        }
-
-        return self::$instance;
-    }
-
     public function transactionManager(): TransactionManagerContract
     {
         return TransactionManagerAdapter::getInstance();
@@ -47,5 +41,10 @@ class FrameworkService implements FrameworkContract
     public function uuid(): UuidContract
     {
         return UuidAdapter::getInstance();
+    }
+
+    public function Str(): StrContract
+    {
+        return StrAdapter::getInstance();
     }
 }

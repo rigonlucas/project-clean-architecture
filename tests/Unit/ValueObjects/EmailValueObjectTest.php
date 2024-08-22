@@ -3,7 +3,7 @@
 namespace Tests\Unit\ValueObjects;
 
 use Core\Domain\ValueObjects\EmailValueObject;
-use Core\Generics\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalidEmailException;
 use Tests\TestCase;
 
 class EmailValueObjectTest extends TestCase

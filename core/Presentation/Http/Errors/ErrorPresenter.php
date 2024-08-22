@@ -2,7 +2,7 @@
 
 namespace Core\Presentation\Http\Errors;
 
-use Core\Generics\Presenters\ToArrayPresenter;
+use Core\Support\Presentation\ToArrayPresenter;
 
 readonly class ErrorPresenter implements ToArrayPresenter
 {

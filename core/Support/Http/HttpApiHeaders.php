@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Tools\Http;
+namespace Core\Support\Http;
 
 class HttpApiHeaders
 {

@@ -2,8 +2,8 @@
 
 namespace Core\Domain\ValueObjects;
 
-use Core\Generics\Exceptions\InvalidEmailException;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Http\ResponseStatusCodeEnum;
 
 class EmailValueObject
 {

@@ -6,7 +6,7 @@ use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
 use Core\Domain\Entities\Account\Traits\Account\AccountEntityAcessors;
 use Core\Domain\Entities\Account\Traits\Account\AccountEntityBuilder;
 use Core\Domain\Entities\User\UserEntity;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatusCodeEnum;
 
 class AccountEntity
 {

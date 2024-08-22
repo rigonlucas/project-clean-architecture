@@ -3,21 +3,12 @@
 namespace Infra\Services\Framework\Adapters;
 
 use Core\Services\Framework\Contracts\TransactionManagerContract;
+use Core\Support\HasSingletonTrait;
 use Illuminate\Support\Facades\DB;
 
 class TransactionManagerAdapter implements TransactionManagerContract
 {
-
-    private static ?TransactionManagerAdapter $instance = null;
-
-    public static function getInstance(): TransactionManagerAdapter
-    {
-        if (self::$instance === null) {
-            self::$instance = new TransactionManagerAdapter();
-        }
-
-        return self::$instance;
-    }
+    use HasSingletonTrait;
 
     public function beginTransaction(): void
     {

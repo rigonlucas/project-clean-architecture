@@ -7,10 +7,10 @@ use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Domain\Entities\User\UserEntity;
-use Core\Generics\Exceptions\OutputErrorException;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\ErrorBagValidation\HasErrorBagTrait;
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Exceptions\OutputErrorException;
+use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Validations\HasErrorBagTrait;
 
 class UpdateUserUseCase
 {

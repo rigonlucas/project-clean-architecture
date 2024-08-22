@@ -49,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(TransactionManagerContract::class, TransactionManagerAdapter::class);
         $this->app->bind(AuthContract::class, AuthAdapter::class);
         $this->app->bind(UuidContract::class, UuidAdapter::class);
+        $this->app->bind(StrContract::class, StrAdapter::class);
 
         $this->app->bind(UserCommandInterface::class, UserCommand::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);

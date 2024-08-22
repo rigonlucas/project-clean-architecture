@@ -2,7 +2,7 @@
 
 namespace Core\Application\Account\Commons\Exceptions;
 
-use Core\Generics\Exceptions\OutputErrorException;
+use Core\Support\Exceptions\OutputErrorException;
 
 class AccountNotFoundException extends OutputErrorException
 {

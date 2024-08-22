@@ -1,8 +1,9 @@
 <?php
 
-namespace Core\Support\ErrorBagValidation;
+namespace Core\Support\Validations;
 
-use Core\Tools\Http\ResponseStatusCodeEnum;
+use Core\Support\Exceptions\HasErrorsInBagException;
+use Core\Support\Http\ResponseStatusCodeEnum;
 
 trait HasErrorBagTrait
 {
