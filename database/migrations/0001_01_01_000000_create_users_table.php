@@ -17,6 +17,7 @@ return new class extends Migration {
                 ->default(null)
                 ->constrained()
                 ->onDelete('cascade');
+            $table->integer('role')->default(0);
             $table->string('name');
             $table->string('email')->unique();
             $table->date('birthday')->nullable();

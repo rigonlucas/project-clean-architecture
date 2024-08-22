@@ -42,8 +42,8 @@ readonly class CreateUserHandler
             accountRepository: $this->accountRepositoryInterface
         );
 
-        $accountInput->setUserNane($userEntity->getName());
-        $accountInput->setUserId($userEntity->getId());
+        $accountInput->setUserNane(userNane: $userEntity->getName());
+        $accountInput->setUserId(userId: $userEntity->getId());
 
         $accountEntity = $createAccountUseCase->execute(input: $accountInput);
 

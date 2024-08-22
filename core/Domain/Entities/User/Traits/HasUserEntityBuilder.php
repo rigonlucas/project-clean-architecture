@@ -23,6 +23,7 @@ trait HasUserEntityBuilder
         ?AccountEntity $account,
         UuidInterface $uuid = null,
         ?DateTimeInterface $birthday = null,
+        int $role = 0
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->setBirthday($birthday);
@@ -43,14 +44,18 @@ trait HasUserEntityBuilder
         string $name,
         string $email,
         UuidInterface $uuid,
-        ?DateTimeInterface $birthday = null
+        AccountEntity $account,
+        ?DateTimeInterface $birthday = null,
+        int $role = 0
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->setId($id);
         $userEntity->setName($name);
         $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setBirthday($birthday);
+        $userEntity->setAccount($account);
         $userEntity->setUuid($uuid);
+        $userEntity->setRole($role);
 
         return $userEntity;
     }
@@ -64,7 +69,8 @@ trait HasUserEntityBuilder
         string $email,
         #[SensitiveParameter]
         string $password,
-        ?DateTimeInterface $birthday = null
+        ?DateTimeInterface $birthday = null,
+        int $role = 0
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->setBirthday($birthday);
@@ -72,22 +78,25 @@ trait HasUserEntityBuilder
         $userEntity->setName($name);
         $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setPassword($password);
+        $userEntity->setRole($role);
 
         return $userEntity;
     }
 
-    public static function forDelete(int $id): UserEntity
+    public static function forDelete(int $id, int $role = 0): UserEntity
     {
         $userEntity = new UserEntity();
         $userEntity->setId($id);
+        $userEntity->setRole($role);
 
         return $userEntity;
     }
 
-    public static function forIdentify(int $id): UserEntity
+    public static function forIdentify(int $id, int $role = 0): UserEntity
     {
         $userEntity = new UserEntity();
         $userEntity->setId($id);
+        $userEntity->setRole($role);
 
         return $userEntity;
     }

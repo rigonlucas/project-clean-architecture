@@ -9,12 +9,12 @@ use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 
-class UpdateUserHandler
+readonly class UpdateUserHandler
 {
     public function __construct(
-        private readonly UserCommandInterface $userCommand,
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly FrameworkContract $frameworkService
+        private UserCommandInterface $userCommand,
+        private UserRepositoryInterface $userRepository,
+        private FrameworkContract $frameworkService
     ) {
     }
 
@@ -29,6 +29,8 @@ class UpdateUserHandler
             $this->userRepository,
             $this->userCommand
         );
-        return new UpdateUserOutput($useCase->execute($input));
+        $userEntity = $useCase->execute($input);
+
+        return new UpdateUserOutput($userEntity);
     }
 }

@@ -6,6 +6,7 @@ use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\Traits\HasUserEntityBuilder;
 use Core\Domain\Entities\User\Traits\UserEntityAcessors;
 use Core\Domain\ValueObjects\EmailValueObject;
+use Core\Support\Permissions\HasUserRoleTrait;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -14,6 +15,7 @@ class UserEntity
 {
     use HasUserEntityBuilder;
     use UserEntityAcessors;
+    use HasUserRoleTrait;
 
     private ?int $id = null;
     private string $name;
