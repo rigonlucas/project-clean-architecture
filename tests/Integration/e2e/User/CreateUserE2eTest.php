@@ -20,7 +20,7 @@ class CreateUserE2eTest extends TestCase
     public function test_create_user_success_case()
     {
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -47,7 +47,7 @@ class CreateUserE2eTest extends TestCase
         ]);
 
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -74,7 +74,7 @@ class CreateUserE2eTest extends TestCase
         ]);
 
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -97,7 +97,7 @@ class CreateUserE2eTest extends TestCase
         ]);
 
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -114,7 +114,7 @@ class CreateUserE2eTest extends TestCase
     public function test_create_user_join_into_an_account_code_not_found()
     {
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -134,7 +134,7 @@ class CreateUserE2eTest extends TestCase
             'email' => $this->faker->userName . '@gmail.com'
         ]);
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $userMoodel->name,
                 'email' => $userMoodel->email,
@@ -157,7 +157,7 @@ class CreateUserE2eTest extends TestCase
     public function test_create_user_fail_case_password_less_than_8_characters()
     {
         $response = $this->postJson(
-            route('v1.user.create'),
+            route('api.v1.user.create'),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',

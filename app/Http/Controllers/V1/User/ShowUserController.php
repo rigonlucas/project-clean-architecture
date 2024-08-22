@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
+use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
 use Core\Application\User\Show\ShowUserUseCase;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserDetaisPresenter;
@@ -15,6 +16,7 @@ class ShowUserController extends Controller
 {
     public function __construct(
         private readonly UserRepository $userRepository,
+        private readonly AccountRepositoryInterface $accountRepository,
         private readonly FrameworkContract $frameworkService
     ) {
     }
@@ -24,7 +26,8 @@ class ShowUserController extends Controller
         try {
             $useCase = new ShowUserUseCase(
                 framework: $this->frameworkService,
-                userRepository: $this->userRepository
+                userRepository: $this->userRepository,
+                accountRepository: $this->accountRepository
             );
             $userEntity = $useCase->execute(uuid: $uuid);
         } catch (OutputErrorException $outputErrorException) {

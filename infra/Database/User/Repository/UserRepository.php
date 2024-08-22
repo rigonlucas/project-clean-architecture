@@ -18,7 +18,7 @@ class UserRepository implements UserRepositoryInterface
     public function findById(int $id): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->find($id);
         if (!$userModel) {
             return null;
@@ -30,14 +30,18 @@ class UserRepository implements UserRepositoryInterface
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             account: AccountEntity::forIdentify($userModel->account_id),
-            birthday: new DateTime($userModel->birthday)
+            birthday: new DateTime($userModel->birthday),
+            role: $userModel->role
         );
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
     public function findByUuid(string $uuid): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('uuid', '=', $uuid)
             ->first();
         if (!$userModel) {
@@ -51,13 +55,17 @@ class UserRepository implements UserRepositoryInterface
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             account: AccountEntity::forIdentify($userModel->account_id),
             birthday: new DateTime($userModel->birthday),
+            role: $userModel->role
         );
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
     public function findByEmail(string $email): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('email', '=', $email)
             ->first();
         if (!$userModel) {
@@ -70,7 +78,8 @@ class UserRepository implements UserRepositoryInterface
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             account: AccountEntity::forIdentify($userModel->account_id),
-            birthday: new DateTime($userModel->birthday)
+            birthday: new DateTime($userModel->birthday),
+            role: $userModel->role
         );
     }
 

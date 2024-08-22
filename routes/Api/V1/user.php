@@ -11,8 +11,8 @@ Route::prefix('user')->group(function () {
     });
     Route::get('/show/{uuid}', [ShowUserController::class, '__invoke'])
         ->whereUuid('uuid')
-        ->name('v1.user.show');
+        ->name('api.v1.user.show');
     Route::put('/user/update/{uuid}', [UpdateUserController::class, '__invoke'])
         ->whereUuid('uuid')
-        ->name('v1.user.update');
+        ->name('api.v1.user.update');
 });

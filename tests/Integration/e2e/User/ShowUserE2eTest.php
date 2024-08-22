@@ -23,7 +23,7 @@ class ShowUserE2eTest extends TestCase
     {
         //update user
         $response = $this->getJson(
-            route('v1.user.show', ['uuid' => $this->user->uuid]),
+            route('api.v1.user.show', ['uuid' => $this->user->uuid]),
             HttpApiHeaders::$headersJson
         );
         //assert response

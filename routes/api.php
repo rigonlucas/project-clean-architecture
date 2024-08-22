@@ -1,14 +1,27 @@
 <?php
 
 use App\Http\Controllers\V1\User\CreateUserController;
+use App\Http\Controllers\V1\User\ShowUserController;
+use App\Http\Controllers\V1\User\UpdateUserController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('v1/register', [CreateUserController::class, '__invoke'])
-    ->name('v1.user.create');
+    ->name('api.v1.user.create');
 Route::prefix('v1')
     ->middleware('auth:sanctum')
     ->group(function () {
-        require __DIR__ . '/Api/V1/user.php';
+        Route::prefix('user')->group(function () {
+            Route::get('/auth', function (Request $request) {
+                return $request;
+            });
+            Route::get('/show/{uuid}', [ShowUserController::class, '__invoke'])
+                ->whereUuid('uuid')
+                ->name('api.v1.user.show');
+            Route::put('/user/update/{uuid}', [UpdateUserController::class, '__invoke'])
+                ->whereUuid('uuid')
+                ->name('api.v1.user.update');
+        });
     });
 
 

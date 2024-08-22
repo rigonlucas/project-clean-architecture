@@ -24,7 +24,7 @@ class UpdateUserE2eTest extends TestCase
     {
         //update user
         $response = $this->putJson(
-            route('v1.user.update', ['uuid' => $this->user->uuid]),
+            route('api.v1.user.update', ['uuid' => $this->user->uuid]),
             [
                 'name' => $this->faker->name . 'updated',
                 'email' => $this->faker->userName . 'email@gmail.com',
@@ -52,7 +52,7 @@ class UpdateUserE2eTest extends TestCase
 
         //update user
         $response = $this->putJson(
-            route('v1.user.update', ['uuid' => $this->user->uuid]),
+            route('api.v1.user.update', ['uuid' => $this->user->uuid]),
             [
                 'name' => $userMoodel->name,
                 'email' => $userMoodel->email,
@@ -76,7 +76,7 @@ class UpdateUserE2eTest extends TestCase
     {
         //update user
         $response = $this->putJson(
-            route('v1.user.update', ['uuid' => $this->user->uuid]),
+            route('api.v1.user.update', ['uuid' => $this->user->uuid]),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -105,7 +105,7 @@ class UpdateUserE2eTest extends TestCase
 
         //update user
         $response = $this->putJson(
-            route('v1.user.update', ['uuid' => $this->user->uuid]),
+            route('api.v1.user.update', ['uuid' => $this->user->uuid]),
             [
                 'name' => $otherUser->name,
                 'email' => $otherUser->email,
@@ -139,7 +139,7 @@ class UpdateUserE2eTest extends TestCase
 
         //update user
         $response = $this->putJson(
-            route('v1.user.update', ['uuid' => $this->user->uuid]),
+            route('api.v1.user.update', ['uuid' => $this->user->uuid]),
             [
                 'name' => $otherUser->name,
                 'email' => $this->faker->userName . '@gmail.com',
@@ -161,7 +161,7 @@ class UpdateUserE2eTest extends TestCase
     {
         //update user
         $response = $this->putJson(
-            route('v1.user.update', ['uuid' => $this->faker->uuid]),
+            route('api.v1.user.update', ['uuid' => $this->faker->uuid]),
             [
                 'name' => $this->faker->name,
                 'email' => $this->faker->userName . '@gmail.com',
