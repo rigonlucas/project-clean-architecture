@@ -10,6 +10,19 @@ use Core\Domain\Entities\Account\AccountJoinCodeEntity;
 
 class AccountRepository implements AccountRepositoryInterface
 {
+    public function findByid(int $id): ?AccountEntity
+    {
+        $accountModel = Account::query()->where('id', $id)->first();
+        if (!$accountModel) {
+            return null;
+        }
+
+        return AccountEntity::forDetail(
+            id: $accountModel->id,
+            name: $accountModel->name,
+            uuid: $accountModel->uuid
+        );
+    }
 
     public function findByUuid(string $uuid): ?AccountEntity
     {

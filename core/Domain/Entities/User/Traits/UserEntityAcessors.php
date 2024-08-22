@@ -48,7 +48,7 @@ trait UserEntityAcessors
         return $this->birthday;
     }
 
-    public function setBirthday(DateTimeInterface $birthday): self
+    public function setBirthday(?DateTimeInterface $birthday): self
     {
         $this->birthday = $birthday;
         return $this;

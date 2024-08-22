@@ -34,4 +34,13 @@ trait AccountEntityBuilder
 
         return $account;
     }
+
+    public static function forIdentify(
+        int $id
+    ): AccountEntity {
+        $account = new AccountEntity();
+        $account->setId($id);
+
+        return $account;
+    }
 }

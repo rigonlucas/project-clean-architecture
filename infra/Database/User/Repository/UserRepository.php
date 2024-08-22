@@ -4,12 +4,17 @@ namespace Infra\Database\User\Repository;
 
 use App\Models\User;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Support\Exceptions\InvalidEmailException;
 use DateTime;
 use Infra\Services\Framework\FrameworkService;
 
 class UserRepository implements UserRepositoryInterface
 {
+    /**
+     * @throws InvalidEmailException
+     */
     public function findById(int $id): ?UserEntity
     {
         $userModel = User::query()
@@ -24,6 +29,7 @@ class UserRepository implements UserRepositoryInterface
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            account: AccountEntity::forIdentify($userModel->account_id),
             birthday: new DateTime($userModel->birthday)
         );
     }
@@ -31,7 +37,7 @@ class UserRepository implements UserRepositoryInterface
     public function findByUuid(string $uuid): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id'])
             ->where('uuid', '=', $uuid)
             ->first();
         if (!$userModel) {
@@ -43,6 +49,7 @@ class UserRepository implements UserRepositoryInterface
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            account: AccountEntity::forIdentify($userModel->account_id),
             birthday: new DateTime($userModel->birthday),
         );
     }
@@ -62,6 +69,7 @@ class UserRepository implements UserRepositoryInterface
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            account: AccountEntity::forIdentify($userModel->account_id),
             birthday: new DateTime($userModel->birthday)
         );
     }
