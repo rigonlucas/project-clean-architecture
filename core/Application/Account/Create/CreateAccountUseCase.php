@@ -2,6 +2,7 @@
 
 namespace Core\Application\Account\Create;
 
+use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
 use Core\Application\Account\Commons\Exceptions\AccountNotFoundException;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
@@ -25,6 +26,7 @@ class CreateAccountUseCase
 
     /**
      * @throws AccountNotFoundException
+     * @throws AccountNameInvalidException
      */
     public function execute(AccountInput $input): AccountEntity
     {
@@ -44,6 +46,7 @@ class CreateAccountUseCase
 
     /**
      * @throws AccountNotFoundException
+     * @throws AccountNameInvalidException
      */
     private function processAccountCreation(AccountInput $input): AccountEntity
     {
@@ -54,10 +57,13 @@ class CreateAccountUseCase
         return $this->findAnAccountByAccessCode($input);
     }
 
+    /**
+     * @throws AccountNameInvalidException
+     */
     private function createNewAccount(AccountInput $input): AccountEntity
     {
         return AccountEntity::forCreate(
-            name: $input->getUserNane(),
+            name: $this->framework->Str()->title($input->getUserNane()),
             uuid: $this->framework->uuid()->uuid7Generate()
         );
     }
