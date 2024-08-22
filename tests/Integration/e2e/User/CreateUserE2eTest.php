@@ -108,7 +108,7 @@ class CreateUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
 
-        $response->assertStatus(404);
+        $response->assertStatus(400);
     }
 
     public function test_create_user_join_into_an_account_code_not_found()

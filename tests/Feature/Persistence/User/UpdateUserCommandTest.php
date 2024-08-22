@@ -3,9 +3,9 @@
 namespace Tests\Feature\Persistence\User;
 
 use App\Models\User;
+use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Domain\Entities\User\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Infra\Database\User\Command\UserCommand;
 use Tests\TestCase;
 
 class UpdateUserCommandTest extends TestCase
@@ -16,7 +16,7 @@ class UpdateUserCommandTest extends TestCase
     {
         // Arrange
         $userModel = User::factory()->create();
-        $userCommand = new UserCommand();
+        $userCommand = $this->app->make(UserCommandInterface::class);
 
         $userEntity = UserEntity::forUpdate(
             id: $userModel->id,

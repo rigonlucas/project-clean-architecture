@@ -30,7 +30,6 @@ class AccountRepository implements AccountRepositoryInterface
         $accountJoin = AccountJoinCode::query()
             ->where('code', '=', $code)
             ->whereNull('user_id')
-            ->where('expired_at', '>', now())
             ->with(['account:id,name,uuid'])
             ->first();
         if (!$accountJoin) {
@@ -42,11 +41,12 @@ class AccountRepository implements AccountRepositoryInterface
             accountid: $accountJoin->account_id,
             expiresAt: $accountJoin->expired_at
         );
-
-        return (AccountEntity::forDetail(
+        $accountEntity = AccountEntity::forDetail(
             id: $accountJoin->account->id,
             name: $accountJoin->account->name,
             uuid: $accountJoin->account->uuid,
-        ))->setJoinCodeEntity($accountJoinEntity);
+        );
+
+        return $accountEntity->setJoinCodeEntity($accountJoinEntity);
     }
 }

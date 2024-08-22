@@ -19,7 +19,7 @@ class UserRepository implements UserRepositoryInterface
             return null;
         }
 
-        return UserEntity::record(
+        return UserEntity::forDetail(
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
@@ -38,7 +38,7 @@ class UserRepository implements UserRepositoryInterface
             return null;
         }
 
-        return UserEntity::record(
+        return UserEntity::forDetail(
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
@@ -57,7 +57,7 @@ class UserRepository implements UserRepositoryInterface
             return null;
         }
 
-        return UserEntity::record(
+        return UserEntity::forDetail(
             id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,

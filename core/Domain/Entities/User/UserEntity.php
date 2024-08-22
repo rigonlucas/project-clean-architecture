@@ -5,6 +5,7 @@ namespace Core\Domain\Entities\User;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\Traits\HasUserEntityBuilder;
 use Core\Domain\Entities\User\Traits\UserEntityAcessors;
+use Core\Domain\ValueObjects\EmailValueObject;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -16,7 +17,7 @@ class UserEntity
 
     private ?int $id = null;
     private string $name;
-    private ?string $email;
+    private ?EmailValueObject $email;
     private ?string $password;
     private UuidInterface $uuid;
     private ?DateTimeInterface $birthday;

@@ -9,7 +9,7 @@ use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\HasErrorBagTrait;
+use Core\Support\ErrorBagValidation\HasErrorBagTrait;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 
 class UpdateUserUseCase

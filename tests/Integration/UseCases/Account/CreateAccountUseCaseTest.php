@@ -5,13 +5,14 @@ namespace Tests\Integration\UseCases\Account;
 use App\Models\Account;
 use App\Models\AccountJoinCode;
 use App\Models\User;
+use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Application\Account\Commons\Exceptions\AccountNotFoundException;
+use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
+use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
 use Core\Application\Account\Create\CreateAccountUseCase;
 use Core\Application\Account\Create\Inputs\AccountInput;
+use Core\Services\Framework\FrameworkContract;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Infra\Database\Account\Command\AccountCommand;
-use Infra\Database\Account\Repository\AccountRepository;
-use Infra\Services\Framework\FrameworkService;
 use Tests\TestCase;
 
 /**
@@ -21,16 +22,12 @@ class CreateAccountUseCaseTest extends TestCase
 {
     use DatabaseMigrations;
 
-    //create a new account success
+    protected CreateAccountUseCase $useCase;
+
     public function test_must_create_a_new_account_for_an_user_when_access_code_is_null()
     {
         $userFactory = User::factory()->create();
         // Arrange
-        $useCase = new CreateAccountUseCase(
-            framework: FrameworkService::getInstance(),
-            accountCommand: new AccountCommand(),
-            accountRepository: new AccountRepository()
-        );
         $input = new AccountInput(
             accessCode: null
         );
@@ -38,7 +35,7 @@ class CreateAccountUseCaseTest extends TestCase
         $input->setUserNane($userFactory->name);
 
         // Act
-        $accountEntity = $useCase->execute(input: $input);
+        $accountEntity = $this->useCase->execute(input: $input);
 
         // Assert
         $this->assertDatabaseHas('accounts', [
@@ -47,6 +44,7 @@ class CreateAccountUseCaseTest extends TestCase
         ]);
     }
 
+    //create a new account success
 
     public function test_must_create_associate_an_user_to_an_account_with_code_access()
     {
@@ -58,11 +56,6 @@ class CreateAccountUseCaseTest extends TestCase
             'user_id' => null
         ]);
         // Arrange
-        $useCase = new CreateAccountUseCase(
-            framework: FrameworkService::getInstance(),
-            accountCommand: new AccountCommand(),
-            accountRepository: new AccountRepository()
-        );
         $input = new AccountInput(
             accessCode: $accountJoinCode->code
         );
@@ -70,7 +63,7 @@ class CreateAccountUseCaseTest extends TestCase
         $input->setUserNane($userFactory->name);
 
         // Act
-        $accountEntity = $useCase->execute(input: $input);
+        $accountEntity = $this->useCase->execute(input: $input);
 
         // Assert
         $this->assertDatabaseHas('accounts', [
@@ -96,23 +89,18 @@ class CreateAccountUseCaseTest extends TestCase
         $this->expectException(AccountNotFoundException::class);
         $userFactory = User::factory()->create();
         // Arrange
-        $useCase = new CreateAccountUseCase(
-            framework: FrameworkService::getInstance(),
-            accountCommand: new AccountCommand(),
-            accountRepository: new AccountRepository()
-        );
         $input = new AccountInput(
             accessCode: 'ABCDEF'
         );
         $input->setUserId($userFactory->id);
 
         // Act
-        $useCase->execute(input: $input);
+        $this->useCase->execute(input: $input);
     }
 
     public function test_must_create_associate_an_user_to_an_account_with_code_access_expired()
     {
-        $this->expectException(AccountNotFoundException::class);
+        $this->expectException(AccountJoinCodeInvalidException::class);
         $userFactory = User::factory()->create();
         $accountFactory = Account::factory()->create();
         $accountJoinCode = AccountJoinCode::factory()->create([
@@ -123,17 +111,22 @@ class CreateAccountUseCaseTest extends TestCase
         ]);
 
         // Arrange
-        $useCase = new CreateAccountUseCase(
-            framework: FrameworkService::getInstance(),
-            accountCommand: new AccountCommand(),
-            accountRepository: new AccountRepository()
-        );
         $input = new AccountInput(
             accessCode: $accountJoinCode->code
         );
         $input->setUserId($userFactory->id);
 
         // Act
-        $useCase->execute(input: $input);
+        $this->useCase->execute(input: $input);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useCase = new CreateAccountUseCase(
+            framework: $this->app->make(FrameworkContract::class)::getInstance(),
+            accountCommand: $this->app->make(AccountCommandInterface::class),
+            accountRepository: $this->app->make(AccountRepositoryInterface::class)
+        );
     }
 }

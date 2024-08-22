@@ -1,8 +1,7 @@
 <?php
 
-namespace Core\Support;
+namespace Core\Support\ErrorBagValidation;
 
-use Core\Generics\Exceptions\OutputErrorException;
 use Core\Tools\Http\ResponseStatusCodeEnum;
 
 trait HasErrorBagTrait
@@ -15,14 +14,14 @@ trait HasErrorBagTrait
     }
 
     /**
-     * @throws OutputErrorException
+     * @throws HasErrorsInBagException
      */
     protected function checkValidationErrors(
         string $message = 'Validation error',
         ResponseStatusCodeEnum $errorCodeEnum = ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY
     ): void {
         if (!empty($this->errorBag)) {
-            throw new OutputErrorException(
+            throw new HasErrorsInBagException(
                 message: $message,
                 code: $errorCodeEnum->value,
                 errors: $this->getErrorBag()

@@ -4,12 +4,17 @@ namespace Core\Domain\Entities\User\Traits;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\ValueObjects\EmailValueObject;
+use Core\Generics\Exceptions\InvalidEmailException;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
 
 trait HasUserEntityBuilder
 {
+    /**
+     * @throws InvalidEmailException
+     */
     public static function forCreate(
         string $name,
         string $email,
@@ -22,7 +27,7 @@ trait HasUserEntityBuilder
         $userEntity = new UserEntity();
         $userEntity->setBirthday($birthday);
         $userEntity->setName($name);
-        $userEntity->setEmail($email);
+        $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setPassword($password);
         $userEntity->setUuid($uuid);
         $userEntity->setAccount($account);
@@ -30,7 +35,10 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    public static function record(
+    /**
+     * @throws InvalidEmailException
+     */
+    public static function forDetail(
         int $id,
         string $name,
         string $email,
@@ -40,13 +48,16 @@ trait HasUserEntityBuilder
         $userEntity = new UserEntity();
         $userEntity->setId($id);
         $userEntity->setName($name);
-        $userEntity->setEmail($email);
+        $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setBirthday($birthday);
         $userEntity->setUuid($uuid);
 
         return $userEntity;
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
     public static function forUpdate(
         int $id,
         string $name,
@@ -59,7 +70,7 @@ trait HasUserEntityBuilder
         $userEntity->setBirthday($birthday);
         $userEntity->setId($id);
         $userEntity->setName($name);
-        $userEntity->setEmail($email);
+        $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setPassword($password);
 
         return $userEntity;

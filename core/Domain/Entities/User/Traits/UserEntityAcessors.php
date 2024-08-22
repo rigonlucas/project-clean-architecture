@@ -3,6 +3,8 @@
 namespace Core\Domain\Entities\User\Traits;
 
 use Core\Domain\Entities\Account\AccountEntity;
+use Core\Domain\ValueObjects\EmailValueObject;
+use Core\Generics\Exceptions\InvalidEmailException;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
@@ -14,14 +16,17 @@ trait UserEntityAcessors
         return $this->name;
     }
 
-    public function getEmail(): string
+    public function getEmail(): EmailValueObject
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    /**
+     * @throws InvalidEmailException
+     */
+    public function setEmail(EmailValueObject $email): self
     {
-        $this->email = $email;
+        $this->email = new EmailValueObject($email, false);
         return $this;
     }
 

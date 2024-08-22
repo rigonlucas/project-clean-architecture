@@ -18,6 +18,7 @@ trait AccountJoinCodeBuilder
         $accountJoinCode->setCode($code);
         $accountJoinCode->setExpiresAt($expiresAt);
         $accountJoinCode->setAccountId($accountid);
+        $accountJoinCode->validateJoinCode();
 
         return $accountJoinCode;
     }

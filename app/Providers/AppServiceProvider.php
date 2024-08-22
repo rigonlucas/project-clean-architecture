@@ -10,6 +10,9 @@ use Core\Services\Framework\Contracts\AuthContract;
 use Core\Services\Framework\Contracts\TransactionManagerContract;
 use Core\Services\Framework\Contracts\UuidContract;
 use Core\Services\Framework\FrameworkContract;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Infra\Database\Account\Command\AccountCommand;
 use Infra\Database\Account\Repository\AccountRepository;
@@ -29,6 +32,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        if ($this->app->environment('local')) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
+
         $this->registerDataBaseBinds();
     }
 
@@ -56,5 +64,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RateLimiter::for('api', function (Request $request) {
+            /**
+             * lembrar de validar o ip para não bloquear o acesso de todos os usuários
+             * devido ao nginx ou load balancer passar o ip do servidor
+             */
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
     }
 }

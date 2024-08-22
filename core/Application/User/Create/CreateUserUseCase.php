@@ -8,7 +8,7 @@ use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Generics\Exceptions\OutputErrorException;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\HasErrorBagTrait;
+use Core\Support\ErrorBagValidation\HasErrorBagTrait;
 
 class CreateUserUseCase
 {
@@ -26,9 +26,6 @@ class CreateUserUseCase
      */
     public function execute(CreateUserInput $createUserInput): UserEntity
     {
-        if (!filter_var($createUserInput->email, FILTER_VALIDATE_EMAIL)) {
-            $this->addError('email', 'Invalid email');
-        }
         $this->processEmail($createUserInput);
 
         $userEntity = UserEntity::forCreate(
@@ -40,6 +37,9 @@ class CreateUserUseCase
             birthday: $createUserInput->birthday
         );
 
+        if ($userEntity->getEmail()->isInvalid()) {
+            $this->addError('email', 'Invalid email');
+        }
         $isUnderAge = $userEntity->underAge();
         if ($isUnderAge) {
             $this->addError('birthday', 'Idade inválida');
