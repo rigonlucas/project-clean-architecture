@@ -8,7 +8,7 @@ use Core\Support\Http\ResponseStatusCodeEnum;
 class EmailValueObject
 {
     private string $email;
-    private string $emailUnsuppressed = '';
+    private ?string $emailUnsuppressed = null;
 
     /**
      * @throws InvalidEmailException
@@ -52,7 +52,7 @@ class EmailValueObject
     public function unsupress(): self
     {
         $this->email = $this->emailUnsuppressed;
-        $this->emailUnsuppressed = '';
+        $this->emailUnsuppressed = null;
         return $this;
     }
 

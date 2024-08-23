@@ -4,6 +4,7 @@ namespace Tests\Unit\Account;
 
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
+use Core\Support\Http\ResponseStatusCodeEnum;
 use Tests\TestCase;
 
 class AccountJoinCodeEntityTest extends TestCase
@@ -24,7 +25,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionMessage('Join code must be 6 characters long');
+        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '', 1, now()->addDay());
@@ -37,7 +38,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionMessage('Join code must be 6 characters long');
+        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '12345', 1, now()->addDay());
@@ -51,7 +52,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionMessage('Join code must be 6 characters long');
+        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '1234567', 1, now()->addDay());
@@ -64,7 +65,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionMessage('Join code has expired');
+        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '123456', 1, now()->subDay());

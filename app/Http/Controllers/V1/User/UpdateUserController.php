@@ -8,9 +8,11 @@ use Carbon\Carbon;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
+use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Exceptions\InvalidEmailException;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatusCodeEnum;
 use Infra\Handlers\UseCases\User\Update\UpdateUserHandler;
@@ -25,12 +27,15 @@ class UpdateUserController extends Controller
     ) {
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
     public function __invoke(UpdateUserRequest $request, string $uuid)
     {
         $input = new UpdateUserInput(
             uuid: Uuid::fromString($uuid),
             name: $request->name,
-            email: $request->email,
+            email: new EmailValueObject($request->email, false),
             password: $request->password,
             birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
         );
@@ -55,7 +60,7 @@ class UpdateUserController extends Controller
                 ->rollBack();
             return response()->json(
                 data: (new ErrorPresenter(
-                    message: 'Contém erros de validação',
+                    message: $outputErrorException->getMessage(),
                     errors: $outputErrorException->getErrors()
                 ))->toArray(),
                 status: $outputErrorException->getCode()

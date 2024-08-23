@@ -29,7 +29,7 @@ class CreateUserUseCase
         $this->processEmail($createUserInput);
 
         $userEntity = UserEntity::forCreate(
-            name: $createUserInput->name,
+            name: $this->framework->Str()->title($createUserInput->name),
             email: $createUserInput->email,
             password: $this->framework->passwordHash($createUserInput->password),
             account: null,

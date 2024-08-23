@@ -6,13 +6,13 @@ use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Domain\Entities\User\UserEntity;
-use Core\Services\Framework\FrameworkContract;
 use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Permissions\Access\UserRoles;
+use Ramsey\Uuid\UuidInterface;
 
 class ShowUserUseCase
 {
     public function __construct(
-        private readonly FrameworkContract $framework,
         private readonly UserRepositoryInterface $userRepository,
         private readonly AccountRepositoryInterface $accountRepository
     ) {
@@ -21,8 +21,17 @@ class ShowUserUseCase
     /**
      * @throws UserNotFountException
      */
-    public function execute(string $uuid): UserEntity
+    public function execute(UuidInterface $uuid, UserEntity $userAuthenticaded): UserEntity
     {
+        if (
+            !$userAuthenticaded->getUuid()->equals($uuid) &&
+            $userAuthenticaded->hasNotPermission(UserRoles::ADMIN)
+        ) {
+            throw new UserNotFountException(
+                message: 'Forbidden access',
+                code: ResponseStatusCodeEnum::FORBIDDEN->value,
+            );
+        }
         $userEntity = $this->userRepository->findByUuid($uuid);
         if (!$userEntity) {
             throw new UserNotFountException(

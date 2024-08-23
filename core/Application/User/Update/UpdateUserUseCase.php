@@ -8,8 +8,10 @@ use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Permissions\Access\UserRoles;
 use Core\Support\Validations\HasErrorBagTrait;
 
 class UpdateUserUseCase
@@ -39,9 +41,19 @@ class UpdateUserUseCase
                 code: ResponseStatusCodeEnum::NOT_FOUND->value
             );
         }
-        if ($recordedUser->getEmail() != $input->email) {
-            $recordedUserByEmail = $this->userRepository->findByEmail(email: $input->email);
-            if ($recordedUserByEmail && $recordedUserByEmail->getUuid()->toString() != $input->uuid) {
+        if (
+            !$this->framework->auth()->user()->getUuid()->equals($input->uuid) &&
+            !$this->framework->auth()->user()->hasNotPermission(UserRoles::ADMIN)
+        ) {
+            throw new ForbidenException(
+                message: 'Você não tem permissão para alterar este usuário',
+                code: ResponseStatusCodeEnum::FORBIDDEN->value
+            );
+        }
+
+        if ($recordedUser->getEmail()->getEmail() !== $input->email->getEmail()) {
+            $recordedUserByEmail = $this->userRepository->findByEmail($input->email);
+            if ($recordedUserByEmail && !$recordedUserByEmail->getUuid()->equals($input->uuid)) {
                 $this->addError('email', 'Email já utilizado por outro usuário');
             }
         }

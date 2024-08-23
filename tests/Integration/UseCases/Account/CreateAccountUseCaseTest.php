@@ -12,6 +12,7 @@ use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
 use Core\Application\Account\Create\CreateAccountUseCase;
 use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -87,6 +88,7 @@ class CreateAccountUseCaseTest extends TestCase
     public function test_must_create_associate_an_user_to_an_account_with_code_access_not_existing()
     {
         $this->expectException(AccountNotFoundException::class);
+        $this->expectExceptionCode(ResponseStatusCodeEnum::NOT_FOUND->value);
         $userFactory = User::factory()->create();
         // Arrange
         $input = new AccountInput(
@@ -101,6 +103,7 @@ class CreateAccountUseCaseTest extends TestCase
     public function test_must_create_associate_an_user_to_an_account_with_code_access_expired()
     {
         $this->expectException(AccountJoinCodeInvalidException::class);
+        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
         $userFactory = User::factory()->create();
         $accountFactory = Account::factory()->create();
         $accountJoinCode = AccountJoinCode::factory()->create([

@@ -2,21 +2,24 @@
 
 namespace Infra\Services\Framework\Adapters;
 
+use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\Contracts\AuthContract;
 use Core\Support\HasSingletonTrait;
+use Exception;
+use Ramsey\Uuid\Uuid;
 
 class AuthAdapter implements AuthContract
 {
     use HasSingletonTrait;
 
-    public function login(string $email, string $password): void
+    public function loginFromApi(string $email, string $password): void
     {
-        // TODO: Implement login() method.
+        throw new Exception('Method not implemented');
     }
 
-    public function logout(): void
+    public function logoutFromApi(): void
     {
-        // TODO: Implement logout() method.
+        throw new Exception('Method not implemented');
     }
 
     public function userId(): ?int
@@ -24,8 +27,12 @@ class AuthAdapter implements AuthContract
         return auth()?->id();
     }
 
-    public function userAccountsIds(): array
+    public function user(): UserEntity
     {
-        return auth()->user()->accounts->toArray();
+        return UserEntity::forIdentify(
+            id: auth()->id(),
+            uuid: Uuid::fromString(auth()->user()->uuid),
+            role: auth()->user()->role
+        );
     }
 }

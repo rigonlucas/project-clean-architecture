@@ -55,7 +55,7 @@ trait HasUserEntityBuilder
         $userEntity->setBirthday($birthday);
         $userEntity->setAccount($account);
         $userEntity->setUuid($uuid);
-        $userEntity->setRole($role);
+        $userEntity->setPermissions($role);
 
         return $userEntity;
     }
@@ -78,7 +78,7 @@ trait HasUserEntityBuilder
         $userEntity->setName($name);
         $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setPassword($password);
-        $userEntity->setRole($role);
+        $userEntity->setPermissions($role);
 
         return $userEntity;
     }
@@ -87,16 +87,19 @@ trait HasUserEntityBuilder
     {
         $userEntity = new UserEntity();
         $userEntity->setId($id);
-        $userEntity->setRole($role);
+        $userEntity->setPermissions($role);
 
         return $userEntity;
     }
 
-    public static function forIdentify(int $id, int $role = 0): UserEntity
+    public static function forIdentify(int $id, ?UuidInterface $uuid = null, int $role = 0): UserEntity
     {
         $userEntity = new UserEntity();
         $userEntity->setId($id);
-        $userEntity->setRole($role);
+        $userEntity->setPermissions($role);
+        if ($uuid) {
+            $userEntity->setUuid($uuid);
+        }
 
         return $userEntity;
     }

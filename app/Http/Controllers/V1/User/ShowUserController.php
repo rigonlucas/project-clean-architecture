@@ -11,6 +11,7 @@ use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatusCodeEnum;
 use Infra\Database\User\Repository\UserRepository;
+use Ramsey\Uuid\Uuid;
 
 class ShowUserController extends Controller
 {
@@ -25,15 +26,17 @@ class ShowUserController extends Controller
     {
         try {
             $useCase = new ShowUserUseCase(
-                framework: $this->frameworkService,
                 userRepository: $this->userRepository,
                 accountRepository: $this->accountRepository
             );
-            $userEntity = $useCase->execute(uuid: $uuid);
+            $userEntity = $useCase->execute(
+                uuid: Uuid::fromString($uuid),
+                userAuthenticaded: $this->frameworkService->auth()->user()
+            );
         } catch (OutputErrorException $outputErrorException) {
             return response()->json(
                 data: (new ErrorPresenter(
-                    message: 'Contém erros de validação',
+                    message: $outputErrorException->getMessage(),
                     errors: $outputErrorException->getErrors()
                 ))->toArray(),
                 status: $outputErrorException->getCode()

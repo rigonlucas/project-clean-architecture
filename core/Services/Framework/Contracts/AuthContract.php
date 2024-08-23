@@ -2,13 +2,15 @@
 
 namespace Core\Services\Framework\Contracts;
 
+use Core\Domain\Entities\User\UserEntity;
+
 interface AuthContract
 {
-    public function login(string $email, string $password): void;
+    public function loginFromApi(string $email, string $password): void;
 
-    public function logout(): void;
+    public function logoutFromApi(): void;
 
     public function userId(): ?int;
 
-    public function userAccountsIds(): array;
+    public function user(): UserEntity;
 }

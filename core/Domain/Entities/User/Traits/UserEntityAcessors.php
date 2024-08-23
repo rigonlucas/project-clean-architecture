@@ -76,7 +76,7 @@ trait UserEntityAcessors
         return $this->uuid;
     }
 
-    public function setUuid(UuidInterface $uuid): void
+    public function setUuid(?UuidInterface $uuid): void
     {
         $this->uuid = $uuid;
     }

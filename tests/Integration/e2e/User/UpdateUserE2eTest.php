@@ -5,6 +5,7 @@ namespace Tests\Integration\e2e\User;
 use App\Models\User;
 use Core\Support\Http\HttpApiHeaders;
 use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Permissions\Access\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
@@ -130,7 +131,7 @@ class UpdateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_update_user_success_case_new_valid_email()
+    public function test_update_user_success_case_new_valid_email_when_user_change_the_address()
     {
         //create user with same email
         $otherUser = User::factory()->create([
@@ -148,7 +149,6 @@ class UpdateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        //assert response
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
@@ -172,6 +172,31 @@ class UpdateUserE2eTest extends TestCase
         );
         //assert response
         $response->assertStatus(ResponseStatusCodeEnum::NOT_FOUND->value);
+    }
+
+    public function test_update_user_fail_case_user_is_not_the_same_user_authenticated()
+    {
+        $user = User::factory()->create([
+            'role' => UserRoles::ADMIN
+        ]);
+        Sanctum::actingAs(
+            $user,
+            ['*']
+        );
+        //update user
+        $otherUser = User::factory()->create();
+        $response = $this->putJson(
+            route('api.v1.user.update', ['uuid' => $otherUser->uuid]),
+            [
+                'name' => $this->faker->name,
+                'email' => $this->faker->userName . '@gmail.com',
+                'password' => 'teste12345',
+                'birthday' => now()->subYears(18)->format('Y-m-d')
+            ],
+            HttpApiHeaders::$headersJson
+        );
+        //assert response
+        $response->assertStatus(ResponseStatusCodeEnum::FORBIDDEN->value);
     }
 
     protected function setUp(): void
