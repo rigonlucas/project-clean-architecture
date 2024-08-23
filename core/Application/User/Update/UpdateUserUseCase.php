@@ -11,7 +11,7 @@ use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatusCodeEnum;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 use Core\Support\Validations\HasErrorBagTrait;
 
 class UpdateUserUseCase

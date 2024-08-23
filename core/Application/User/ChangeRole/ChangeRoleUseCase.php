@@ -9,7 +9,7 @@ use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Exceptions\InvalidRoleException;
 use Core\Support\Http\ResponseStatusCodeEnum;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 
 readonly class ChangeRoleUseCase
 {

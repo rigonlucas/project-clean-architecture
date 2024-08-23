@@ -4,7 +4,7 @@ namespace Core\Domain\Entities\User\Traits;
 
 use Core\Support\Exceptions\InvalidRoleException;
 use Core\Support\Http\ResponseStatusCodeEnum;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 
 trait HasUserRoleTrait
 {

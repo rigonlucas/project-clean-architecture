@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Account;
 use App\Models\User;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

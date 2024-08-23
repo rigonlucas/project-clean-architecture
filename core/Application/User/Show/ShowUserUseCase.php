@@ -7,7 +7,7 @@ use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Http\ResponseStatusCodeEnum;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 use Ramsey\Uuid\UuidInterface;
 
 class ShowUserUseCase

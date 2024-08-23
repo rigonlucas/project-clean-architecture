@@ -4,7 +4,7 @@ namespace Tests\Unit\User\Entity;
 
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\ForbidenException;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace Core\Support\Permissions\Access;
+namespace Core\Support\Permissions;
+
+use Core\Support\Permissions\Access\GeneralPermissions;
 
 class UserRoles
 {

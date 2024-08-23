@@ -6,7 +6,7 @@ use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\InvalidRoleException;
 use Core\Support\Http\ResponseStatusCodeEnum;
 use Core\Support\Permissions\Access\GeneralPermissions;
-use Core\Support\Permissions\Access\UserRoles;
+use Core\Support\Permissions\UserRoles;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
