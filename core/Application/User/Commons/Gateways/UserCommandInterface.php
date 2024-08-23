@@ -9,4 +9,6 @@ interface UserCommandInterface
     public function create(UserEntity $userEntity): UserEntity;
 
     public function update(UserEntity $userEntity): UserEntity;
+
+    public function changeRole(UserEntity $userEntity): void;
 }

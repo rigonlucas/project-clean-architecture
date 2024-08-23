@@ -13,4 +13,9 @@ class UserRoles
         self::EDITOR,
         self::VIEWER,
     ];
+
+    public static function isValidRole(int $role): bool
+    {
+        return in_array($role, array_keys(self::ROLES));
+    }
 }

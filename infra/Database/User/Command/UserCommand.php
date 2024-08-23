@@ -23,6 +23,15 @@ class UserCommand implements UserCommandInterface
         return $userEntity->setId($userModel->id);
     }
 
+    public function changeRole(UserEntity $userEntity): void
+    {
+        User::query()
+            ->where('id', '=', $userEntity->getId())
+            ->update([
+                'role' => $userEntity->getPermissions()
+            ]);
+    }
+
     public function update(UserEntity $userEntity): UserEntity
     {
         User::query()

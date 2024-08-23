@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\User\ChangeUserRoleController;
 use App\Http\Controllers\V1\User\CreateUserController;
 use App\Http\Controllers\V1\User\ShowUserController;
 use App\Http\Controllers\V1\User\UpdateUserController;
@@ -21,6 +22,9 @@ Route::prefix('v1')
             Route::put('/user/update/{uuid}', [UpdateUserController::class, '__invoke'])
                 ->whereUuid('uuid')
                 ->name('api.v1.user.update');
+            Route::patch('/user/change-role/{uuid}', [ChangeUserRoleController::class, '__invoke'])
+                ->whereUuid('uuid')
+                ->name('api.v1.user.change-role');
         });
     });
 

@@ -5,6 +5,7 @@ namespace Tests\Integration\e2e\User;
 use App\Models\AccountJoinCode;
 use App\Models\User;
 use Core\Support\Http\HttpApiHeaders;
+use Core\Support\Http\ResponseStatusCodeEnum;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -30,7 +31,7 @@ class CreateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(201);
+        $response->assertStatus(ResponseStatusCodeEnum::CREATED->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'
@@ -58,7 +59,7 @@ class CreateUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
 
-        $response->assertStatus(201);
+        $response->assertStatus(ResponseStatusCodeEnum::CREATED->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid',

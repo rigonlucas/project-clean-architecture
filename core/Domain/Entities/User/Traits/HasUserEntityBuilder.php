@@ -92,13 +92,20 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    public static function forIdentify(int $id, ?UuidInterface $uuid = null, int $role = 0): UserEntity
-    {
+    public static function forIdentify(
+        int $id,
+        ?UuidInterface $uuid = null,
+        int $role = 0,
+        ?int $accountId = null
+    ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->setId($id);
         $userEntity->setPermissions($role);
         if ($uuid) {
             $userEntity->setUuid($uuid);
+        }
+        if ($accountId) {
+            $userEntity->setAccount(AccountEntity::forIdentify($accountId));
         }
 
         return $userEntity;

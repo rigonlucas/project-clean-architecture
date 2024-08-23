@@ -36,7 +36,7 @@ class UpdateUserE2eTest extends TestCase
         );
 
         //assert response
-        $response->assertStatus(200);
+        $response->assertStatus(ResponseStatusCodeEnum::OK->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'
@@ -149,7 +149,7 @@ class UpdateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(200);
+        $response->assertStatus(ResponseStatusCodeEnum::OK->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Support\Permissions;
+namespace Core\Domain\Entities\User\Traits;
 
 use Core\Support\Exceptions\InvalidRoleException;
 use Core\Support\Http\ResponseStatusCodeEnum;

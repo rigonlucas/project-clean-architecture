@@ -13,7 +13,6 @@ use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
-use Core\Services\Framework\Contracts\TransactionManagerContract;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatusCodeEnum;
@@ -22,7 +21,6 @@ use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 class CreateUserController extends Controller
 {
     public function __construct(
-        private readonly TransactionManagerContract $transactionManager,
         private readonly UserCommandInterface $userCommandInterface,
         private readonly UserRepositoryInterface $userRepositoryInterface,
         private readonly AccountCommandInterface $accountCommandInterface,
@@ -44,7 +42,7 @@ class CreateUserController extends Controller
             accessCode: $request->account_access_code
         );
         try {
-            $this->transactionManager->beginTransaction();
+            $this->frameworkService->transactionManager()->beginTransaction();
 
             $handler = (new CreateUserHandler(
                 userCommandInterface: $this->userCommandInterface,
@@ -58,9 +56,9 @@ class CreateUserController extends Controller
                 accountInput: $accountInput
             );
 
-            $this->transactionManager->commit();
+            $this->frameworkService->transactionManager()->commit();
         } catch (OutputErrorException $outputErrorException) {
-            $this->transactionManager->rollBack();
+            $this->frameworkService->transactionManager()->rollBack();
             return response()->json(
                 data: (new ErrorPresenter(
                     message: $outputErrorException->getMessage(),
