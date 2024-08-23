@@ -4,7 +4,7 @@ namespace Tests\Unit\Account;
 
 use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
 use Core\Domain\Entities\Account\AccountEntity;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Tests\TestCase;
 
 class AccountEntityTest extends TestCase
@@ -25,7 +25,7 @@ class AccountEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountNameInvalidException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
+        $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
 
         // Arrange and Act
         AccountEntity::forCreate(

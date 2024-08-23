@@ -10,7 +10,7 @@ use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Validations\HasErrorBagTrait;
 
 class CreateAccountUseCase
@@ -77,7 +77,7 @@ class CreateAccountUseCase
         if (is_null($accountEntity)) {
             throw new AccountNotFoundException(
                 message: 'Account join code not found',
-                code: ResponseStatusCodeEnum::NOT_FOUND->value
+                code: ResponseStatus::NOT_FOUND->value
             );
         }
 

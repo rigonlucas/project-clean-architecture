@@ -4,13 +4,13 @@ namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\ChangeUserRoleRequest;
-use Core\Application\User\ChangeRole\Inputs\ChangeRoleInput;
+use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Infra\Handlers\UseCases\User\ChangeRole\ChangeRoleUserHandler;
 
 class ChangeUserRoleController extends Controller
@@ -25,7 +25,7 @@ class ChangeUserRoleController extends Controller
     public function __invoke(ChangeUserRoleRequest $request, string $userUuid)
     {
         $userAutenticated = $this->frameworkService->auth()->user();
-        $changeRoleInput = new ChangeRoleInput(
+        $changeRoleInput = new ChangeUserRoleInput(
             authenticatedUser: $userAutenticated,
             userUuid: $userUuid,
             role: $request->role
@@ -52,7 +52,7 @@ class ChangeUserRoleController extends Controller
         }
 
         return response()->json(
-            status: ResponseStatusCodeEnum::NO_CONTENT->value
+            status: ResponseStatus::NO_CONTENT->value
         );
     }
 }

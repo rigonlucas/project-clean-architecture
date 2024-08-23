@@ -2,7 +2,7 @@
 
 namespace Core\Support\Http;
 
-enum ResponseStatusCodeEnum: int
+enum ResponseStatus: int
 {
     case CONTINUE = 100;
     case SWITCHING_PROTOCOLS = 101;

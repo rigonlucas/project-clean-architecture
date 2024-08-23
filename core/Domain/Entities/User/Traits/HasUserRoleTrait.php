@@ -3,7 +3,7 @@
 namespace Core\Domain\Entities\User\Traits;
 
 use Core\Support\Exceptions\InvalidRoleException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 
 trait HasUserRoleTrait
@@ -41,7 +41,7 @@ trait HasUserRoleTrait
             UserRoles::VIEWER => 'VIEWER',
             default => throw new InvalidRoleException(
                 "Invalid role",
-                ResponseStatusCodeEnum::INTERNAL_SERVER_ERROR->value
+                ResponseStatus::INTERNAL_SERVER_ERROR->value
             ),
         };
     }

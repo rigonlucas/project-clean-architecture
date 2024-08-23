@@ -4,7 +4,7 @@ namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
 use Core\Support\Http\HttpApiHeaders;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -42,7 +42,7 @@ class ChangeUserRoleE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::NO_CONTENT->value);
+        $response->assertStatus(ResponseStatus::NO_CONTENT->value);
     }
 
     public function test_success_case_for_change_role_when_is_the_same_already_defined(): void
@@ -68,7 +68,7 @@ class ChangeUserRoleE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::NO_CONTENT->value);
+        $response->assertStatus(ResponseStatus::NO_CONTENT->value);
     }
 
     public function test_fail_case_for_change_role_from_any_user_when_authenticated_user_as_viewer_admin(): void
@@ -93,7 +93,7 @@ class ChangeUserRoleE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::FORBIDDEN->value);
+        $response->assertStatus(ResponseStatus::FORBIDDEN->value);
     }
 
     public function test_fail_case_for_change_role_from_any_user_when_authenticated_user_as_editor_admin(): void
@@ -118,7 +118,7 @@ class ChangeUserRoleE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::FORBIDDEN->value);
+        $response->assertStatus(ResponseStatus::FORBIDDEN->value);
     }
 
     public function test_fail_role_field_is_required(): void
@@ -141,7 +141,7 @@ class ChangeUserRoleE2eTest extends TestCase
             [],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
+        $response->assertStatus(ResponseStatus::UNPROCESSABLE_ENTITY->value);
         $response->assertJsonStructure([
             'message',
             'errors' => [
@@ -167,7 +167,7 @@ class ChangeUserRoleE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::NOT_FOUND->value);
+        $response->assertStatus(ResponseStatus::NOT_FOUND->value);
     }
 
     public function test_tail_if_users_arent_from_same_account(): void
@@ -192,6 +192,6 @@ class ChangeUserRoleE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::FORBIDDEN->value);
+        $response->assertStatus(ResponseStatus::FORBIDDEN->value);
     }
 }

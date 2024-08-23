@@ -39,6 +39,9 @@ RUN mkdir -p /home/$user/.composer && \
     
 USER $user
 
+RUN echo "alias pest='./vendor/bin/pest'" >> ~/.bashrc
+RUN echo "alias test='php artisan test'" >> ~/.bashrc
+
 CMD [ "php-fpm" ]
 # # Set the working directory
 # WORKDIR /var/www/html

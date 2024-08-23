@@ -4,7 +4,7 @@ namespace Tests\Unit\Account;
 
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Tests\TestCase;
 
 class AccountJoinCodeEntityTest extends TestCase
@@ -25,7 +25,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
+        $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '', 1, now()->addDay());
@@ -38,7 +38,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
+        $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '12345', 1, now()->addDay());
@@ -52,7 +52,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
+        $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '1234567', 1, now()->addDay());
@@ -65,7 +65,7 @@ class AccountJoinCodeEntityTest extends TestCase
     {
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::BAD_REQUEST->value);
+        $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
 
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(1, '123456', 1, now()->subDay());

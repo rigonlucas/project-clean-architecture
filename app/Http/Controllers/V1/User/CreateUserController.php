@@ -15,7 +15,7 @@ use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 
 class CreateUserController extends Controller
@@ -70,7 +70,7 @@ class CreateUserController extends Controller
 
         return response()->json(
             data: (new UserPresenter($output->userEntity))->withDataAttribute()->toArray(),
-            status: ResponseStatusCodeEnum::CREATED->value
+            status: ResponseStatus::CREATED->value
         );
     }
 }

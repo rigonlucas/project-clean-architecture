@@ -8,10 +8,11 @@ use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
+use Core\Domain\Entities\User\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;
 use Ramsey\Uuid\Uuid;
@@ -38,9 +39,13 @@ class UpdateUserUseCaseTest extends TestCase
         $input = new UpdateUserInput(
             uuid: Uuid::fromString($this->user->uuid),
             name: 'name 2',
-            email: new EmailValueObject('email3@email.com', false),
+            email: new EmailValueObject('email3@email.com'),
             password: 'password',
-            birthday: now()->subYears(18)
+            birthday: now()->subYears(18),
+            authenticableUser: UserEntity::forIdentify(
+                id: $this->user->id,
+                uuid: Uuid::fromString($this->user->uuid)
+            )
         );
 
         // Act
@@ -60,7 +65,7 @@ class UpdateUserUseCaseTest extends TestCase
     public function test_must_not_update_a_user_with_invalid_email_and_birthday(): void
     {
         $this->expectException(OutputErrorException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
+        $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
 
         // Arrange
         $userFactory = User::factory()->create([
@@ -70,48 +75,34 @@ class UpdateUserUseCaseTest extends TestCase
         $input = new UpdateUserInput(
             uuid: Uuid::fromString($userFactory->uuid),
             name: 'name 2',
-            email: new EmailValueObject('email3', false),
+            email: new EmailValueObject('email3'),
             password: 'password',
-            birthday: now()->subYears(17)
+            birthday: now()->subYears(17),
+            authenticableUser: UserEntity::forIdentify(
+                id: $this->user->id,
+                uuid: Uuid::fromString($this->user->uuid)
+            )
         );
 
         $this->useCase->execute($input);
     }
-
-    public function test_must_not_update_a_user_with_invalid_email(): void
-    {
-        $this->expectException(OutputErrorException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
-
-        // Arrange
-        $userFactory = User::factory()->create([
-            'birthday' => now()->subYears(19)
-        ]);
-
-        $input = new UpdateUserInput(
-            uuid: Uuid::fromString($userFactory->uuid),
-            name: 'name 2',
-            email: new EmailValueObject('email3', false),
-            password: 'password',
-            birthday: now()->subYears(18)
-        );
-
-        $this->useCase->execute($input);
-    }
-
 
     public function test_user_not_found_must_throw_an_exception(): void
     {
         $this->expectException(UserNotFountException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::NOT_FOUND->value);
+        $this->expectExceptionCode(ResponseStatus::NOT_FOUND->value);
 
         // Arrange
         $input = new UpdateUserInput(
             uuid: Uuid::uuid7(),
             name: 'name 2',
-            email: new EmailValueObject('email3@gmail.com', false),
+            email: new EmailValueObject('email3@gmail.com'),
             password: 'password',
-            birthday: now()->subYears(18)
+            birthday: now()->subYears(18),
+            authenticableUser: UserEntity::forIdentify(
+                id: $this->user->id,
+                uuid: Uuid::fromString($this->user->uuid)
+            )
         );
 
         $this->useCase->execute($input);
@@ -120,7 +111,7 @@ class UpdateUserUseCaseTest extends TestCase
     public function test_must_not_update_a_user_with_invalid_birthday(): void
     {
         $this->expectException(OutputErrorException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
+        $this->expectExceptionCode(ResponseStatus::UNPROCESSABLE_ENTITY->value);
 
         // Arrange
         $userFactory = User::factory()->create([
@@ -130,9 +121,13 @@ class UpdateUserUseCaseTest extends TestCase
         $input = new UpdateUserInput(
             uuid: Uuid::fromString($userFactory->uuid),
             name: 'name 2',
-            email: new EmailValueObject('email3@gmail.com', false),
+            email: new EmailValueObject('email3@gmail.com'),
             password: 'password',
-            birthday: now()->subYears(17)
+            birthday: now()->subYears(17),
+            authenticableUser: UserEntity::forIdentify(
+                id: $this->user->id,
+                uuid: Uuid::fromString($this->user->uuid)
+            )
         );
 
         $useCase = new UpdateUserUseCase(

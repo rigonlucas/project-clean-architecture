@@ -10,7 +10,7 @@ use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Exceptions\OutputErrorException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use Core\Support\Validations\HasErrorBagTrait;
 
@@ -31,23 +31,13 @@ class UpdateUserUseCase
      */
     public function execute(UpdateUserInput $input): UserEntity
     {
-        if (!filter_var($input->email, FILTER_VALIDATE_EMAIL)) {
-            $this->addError('email', 'Invalid email.');
-        }
+        $this->validateAccessPolicies($input);
+
         $recordedUser = $this->userRepository->findByUuid(uuid: $input->uuid);
         if (!$recordedUser) {
             throw new UserNotFountException(
                 message: 'Contém erros de validação',
-                code: ResponseStatusCodeEnum::NOT_FOUND->value
-            );
-        }
-        if (
-            !$this->framework->auth()->user()->getUuid()->equals($input->uuid) &&
-            !$this->framework->auth()->user()->hasNotPermission(UserRoles::ADMIN)
-        ) {
-            throw new ForbidenException(
-                message: 'Você não tem permissão para alterar este usuário',
-                code: ResponseStatusCodeEnum::FORBIDDEN->value
+                code: ResponseStatus::NOT_FOUND->value
             );
         }
 
@@ -75,5 +65,17 @@ class UpdateUserUseCase
 
         $userEntity->setUuid($recordedUser->getUuid());
         return $this->userCommand->update($userEntity);
+    }
+
+    private function validateAccessPolicies(UpdateUserInput $input): void
+    {
+        if (
+            !$input->authenticableUser->getUuid()->equals($input->uuid) &&
+            !$input->authenticableUser->hasNotPermission(UserRoles::ADMIN)
+        ) {
+            throw new ForbidenException(
+                message: 'Você não tem permissão para alterar este usuário'
+            );
+        }
     }
 }

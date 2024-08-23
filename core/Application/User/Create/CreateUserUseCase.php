@@ -26,7 +26,10 @@ class CreateUserUseCase
      */
     public function execute(CreateUserInput $createUserInput): UserEntity
     {
-        $this->processEmail($createUserInput);
+        $emailAlreadyExists = $this->userRepository->existsEmail($createUserInput->email);
+        if ($emailAlreadyExists) {
+            $this->addError('email', 'Email já utilizado por outro usuário');
+        }
 
         $userEntity = UserEntity::forCreate(
             name: $this->framework->Str()->title($createUserInput->name),
@@ -36,25 +39,24 @@ class CreateUserUseCase
             uuid: $this->framework->uuid()->uuid7Generate(),
             birthday: $createUserInput->birthday
         );
+        $this->processValidations($userEntity);
+        $this->checkValidationErrors();
 
+        return $this->createUserInterface->create($userEntity);
+    }
+
+    /**
+     * @param UserEntity $userEntity
+     * @return void
+     */
+    private function processValidations(UserEntity $userEntity): void
+    {
         if ($userEntity->getEmail()->isInvalid()) {
             $this->addError('email', 'Invalid email');
         }
         $isUnderAge = $userEntity->underAge();
         if ($isUnderAge) {
             $this->addError('birthday', 'Idade inválida');
-        }
-
-        $this->checkValidationErrors();
-
-        return $this->createUserInterface->create($userEntity);
-    }
-
-    private function processEmail(CreateUserInput $createUserInput): void
-    {
-        $emailAlreadyExists = $this->userRepository->existsEmail($createUserInput->email);
-        if ($emailAlreadyExists) {
-            $this->addError('email', 'Email já utilizado por outro usuário');
         }
     }
 

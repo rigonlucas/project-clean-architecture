@@ -4,7 +4,7 @@ namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
 use Core\Support\Http\HttpApiHeaders;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -29,7 +29,7 @@ class ShowUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
         //assert response
-        $response->assertStatus(ResponseStatusCodeEnum::OK->value);
+        $response->assertStatus(ResponseStatus::OK->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'
@@ -67,7 +67,7 @@ class ShowUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
         //assert response
-        $response->assertStatus(ResponseStatusCodeEnum::OK->value);
+        $response->assertStatus(ResponseStatus::OK->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'

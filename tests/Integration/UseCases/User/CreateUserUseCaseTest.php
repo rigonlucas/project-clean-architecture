@@ -8,7 +8,7 @@ use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\HasErrorsInBagException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
@@ -48,7 +48,7 @@ class CreateUserUseCaseTest extends TestCase
     public function test_must_not_create_a_user_with_invalid_email_and_birthday(): void
     {
         $this->expectException(HasErrorsInBagException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
+        $this->expectExceptionCode(ResponseStatus::UNPROCESSABLE_ENTITY->value);
 
         // Arrange
         $input = new CreateUserInput(
@@ -65,7 +65,7 @@ class CreateUserUseCaseTest extends TestCase
     public function test_must_not_create_a_user_with_invalid_email(): void
     {
         $this->expectException(HasErrorsInBagException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
+        $this->expectExceptionCode(ResponseStatus::UNPROCESSABLE_ENTITY->value);
 
         // Arrange
         $input = new CreateUserInput(
@@ -82,7 +82,7 @@ class CreateUserUseCaseTest extends TestCase
     public function test_must_not_create_a_user_with_invalid_age(): void
     {
         $this->expectException(HasErrorsInBagException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY->value);
+        $this->expectExceptionCode(ResponseStatus::UNPROCESSABLE_ENTITY->value);
 
         // Arrange
         $input = new CreateUserInput(

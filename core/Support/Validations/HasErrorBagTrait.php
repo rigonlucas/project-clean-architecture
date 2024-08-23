@@ -3,7 +3,7 @@
 namespace Core\Support\Validations;
 
 use Core\Support\Exceptions\HasErrorsInBagException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 
 trait HasErrorBagTrait
 {
@@ -19,7 +19,7 @@ trait HasErrorBagTrait
      */
     protected function checkValidationErrors(
         string $message = 'Validation error',
-        ResponseStatusCodeEnum $errorCodeEnum = ResponseStatusCodeEnum::UNPROCESSABLE_ENTITY
+        ResponseStatus $errorCodeEnum = ResponseStatus::UNPROCESSABLE_ENTITY
     ): void {
         if (!empty($this->errorBag)) {
             throw new HasErrorsInBagException(

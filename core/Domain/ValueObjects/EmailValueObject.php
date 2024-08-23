@@ -3,7 +3,7 @@
 namespace Core\Domain\ValueObjects;
 
 use Core\Support\Exceptions\InvalidEmailException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 
 class EmailValueObject
 {
@@ -19,7 +19,7 @@ class EmailValueObject
         if ($autoValidete && $this->isInvalid()) {
             throw new InvalidEmailException(
                 'Invalid email format',
-                ResponseStatusCodeEnum::BAD_REQUEST->value
+                ResponseStatus::BAD_REQUEST->value
             );
         }
     }

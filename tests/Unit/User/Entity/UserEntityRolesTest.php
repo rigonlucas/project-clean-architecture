@@ -4,7 +4,7 @@ namespace Tests\Unit\User\Entity;
 
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\InvalidRoleException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\Access\GeneralPermissions;
 use Core\Support\Permissions\UserRoles;
 use Ramsey\Uuid\Uuid;
@@ -88,7 +88,7 @@ class UserEntityRolesTest extends TestCase
     public function test_user_entity_roles_as_invalid()
     {
         $this->expectException(InvalidRoleException::class);
-        $this->expectExceptionCode(ResponseStatusCodeEnum::INTERNAL_SERVER_ERROR->value);
+        $this->expectExceptionCode(ResponseStatus::INTERNAL_SERVER_ERROR->value);
         $this->expectExceptionMessage('Invalid role');
 
         $userEntity = UserEntity::forIdentify(

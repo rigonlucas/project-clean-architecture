@@ -9,7 +9,7 @@ use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserDetaisPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Infra\Database\User\Repository\UserRepository;
 use Ramsey\Uuid\Uuid;
 
@@ -45,7 +45,7 @@ class ShowUserController extends Controller
 
         return response()->json(
             data: (new UserDetaisPresenter($userEntity))->withDataAttribute()->toArray(),
-            status: ResponseStatusCodeEnum::OK->value
+            status: ResponseStatus::OK->value
         );
     }
 }

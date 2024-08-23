@@ -14,7 +14,7 @@ use Core\Presentation\Http\User\UserPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\InvalidEmailException;
 use Core\Support\Exceptions\OutputErrorException;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Infra\Handlers\UseCases\User\Update\UpdateUserHandler;
 use Ramsey\Uuid\Uuid;
 
@@ -35,9 +35,10 @@ class UpdateUserController extends Controller
         $input = new UpdateUserInput(
             uuid: Uuid::fromString($uuid),
             name: $request->name,
-            email: new EmailValueObject($request->email, false),
+            email: new EmailValueObject($request->email),
             password: $request->password,
-            birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
+            birthday: Carbon::createFromFormat('Y-m-d', $request->birthday),
+            authenticableUser: $this->frameworkService->auth()->user()
         );
 
         try {
@@ -69,7 +70,7 @@ class UpdateUserController extends Controller
 
         return response()->json(
             data: (new UserPresenter($output->userEntity))->withDataAttribute()->toArray(),
-            status: ResponseStatusCodeEnum::OK->value
+            status: ResponseStatus::OK->value
         );
     }
 }

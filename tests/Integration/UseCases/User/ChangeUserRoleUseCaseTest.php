@@ -3,8 +3,8 @@
 namespace Tests\Integration\UseCases\User;
 
 use App\Models\User;
-use Core\Application\User\ChangeRole\ChangeRoleUseCase;
-use Core\Application\User\ChangeRole\Inputs\ChangeRoleInput;
+use Core\Application\User\ChangeRole\ChangeUserRoleUseCase;
+use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
@@ -25,7 +25,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
     use DatabaseMigrations;
     use WithFaker;
 
-    private ChangeRoleUseCase $useCase;
+    private ChangeUserRoleUseCase $useCase;
 
     public function test_success_case_for_change_role_from_any_user_when_authenticated_user_is_admin(): void
     {
@@ -43,7 +43,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
                 'account_id' => $userAuth->account_id
             ]
         );
-        $input = new ChangeRoleInput(
+        $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
                 id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
@@ -77,7 +77,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
                 'account_id' => $userAuth->account_id
             ]
         );
-        $input = new ChangeRoleInput(
+        $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
                 id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
@@ -113,7 +113,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
                 'account_id' => $userAuth->account_id
             ]
         );
-        $input = new ChangeRoleInput(
+        $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
                 id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
@@ -144,7 +144,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
                 'account_id' => $userAuth->account_id
             ]
         );
-        $input = new ChangeRoleInput(
+        $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
                 id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
@@ -169,7 +169,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
             ['*']
         );
 
-        $input = new ChangeRoleInput(
+        $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
                 id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
@@ -199,7 +199,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
                 'role' => UserRoles::VIEWER
             ]
         );
-        $input = new ChangeRoleInput(
+        $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
                 id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
@@ -215,7 +215,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->useCase = new ChangeRoleUseCase(
+        $this->useCase = new ChangeUserRoleUseCase(
             $this->app->make(UserCommandInterface::class),
             $this->app->make(UserRepositoryInterface::class)
         );

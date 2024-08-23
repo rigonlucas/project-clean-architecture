@@ -6,7 +6,7 @@ use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
 use Core\Domain\Entities\Account\Traits\Account\AccountEntityAcessors;
 use Core\Domain\Entities\Account\Traits\Account\AccountEntityBuilder;
 use Core\Domain\Entities\User\UserEntity;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 
 class AccountEntity
 {
@@ -32,7 +32,7 @@ class AccountEntity
         if (is_null($this->name) || strlen($this->name) <= 0) {
             throw new AccountNameInvalidException(
                 'Account name is required',
-                ResponseStatusCodeEnum::BAD_REQUEST->value
+                ResponseStatus::BAD_REQUEST->value
             );
         }
     }

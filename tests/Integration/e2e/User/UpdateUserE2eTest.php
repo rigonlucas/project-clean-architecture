@@ -4,7 +4,7 @@ namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
 use Core\Support\Http\HttpApiHeaders;
-use Core\Support\Http\ResponseStatusCodeEnum;
+use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -36,7 +36,7 @@ class UpdateUserE2eTest extends TestCase
         );
 
         //assert response
-        $response->assertStatus(ResponseStatusCodeEnum::OK->value);
+        $response->assertStatus(ResponseStatus::OK->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'
@@ -149,7 +149,7 @@ class UpdateUserE2eTest extends TestCase
             ],
             HttpApiHeaders::$headersJson
         );
-        $response->assertStatus(ResponseStatusCodeEnum::OK->value);
+        $response->assertStatus(ResponseStatus::OK->value);
         $response->assertJsonStructure([
             'data' => [
                 'uuid'
@@ -171,7 +171,7 @@ class UpdateUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
         //assert response
-        $response->assertStatus(ResponseStatusCodeEnum::NOT_FOUND->value);
+        $response->assertStatus(ResponseStatus::NOT_FOUND->value);
     }
 
     public function test_update_user_fail_case_user_is_not_the_same_user_authenticated()
@@ -196,7 +196,7 @@ class UpdateUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
         //assert response
-        $response->assertStatus(ResponseStatusCodeEnum::FORBIDDEN->value);
+        $response->assertStatus(ResponseStatus::FORBIDDEN->value);
     }
 
     protected function setUp(): void
