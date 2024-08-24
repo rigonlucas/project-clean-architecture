@@ -25,8 +25,38 @@ services:
     volumes:
       - ./:/var/www/html/
       - ./storage/logs/php.log:/var/log/fpm-php.www.log
+    depends_on:
+      - redis
     expose:
       - "9000"
+  #  horizon:
+  #    build:
+  #      context: ./docker/php
+  #      dockerfile: Dockerfile
+  #      args:
+  #        user: ${USER}
+  #        uid: 1000
+  #    container_name: horizon
+  #    command: php artisan horizon
+  #    volumes:
+  #      - ./:/var/www/html/
+  #    depends_on:
+  #      - php_project_xxx
+  #      - nginx_project_xxx
+  #      - redis
+  #    networks:
+  #      - internal
+  redis:
+    image: redis
+    command: redis-server
+    #    hostname: redis.project-x.test
+    container_name: redis_project_xxxx
+    tty: true
+    restart: on-failure
+    networks:
+      - internal
+    ports:
+      - "6379:6379"
 #  mysql:
 #    image: 'mysql/mysql-server:8.0'
 #    container_name: 'db_project_xxxx'
