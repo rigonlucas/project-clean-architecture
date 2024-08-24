@@ -2,6 +2,8 @@
 
 namespace Core\Application\User\Commons\Gateways;
 
+use Core\Domain\Collections\User\UserCollection;
+use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 
 interface UserRepositoryInterface
@@ -15,4 +17,6 @@ interface UserRepositoryInterface
     public function existsEmail(string $email): bool;
 
     public function existsId(int $id): bool;
+
+    public function accountUserList(AccountEntity $account): UserCollection;
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\V1\User\ChangeUserRoleController;
 use App\Http\Controllers\V1\User\CreateUserController;
 use App\Http\Controllers\V1\User\ShowUserController;
 use App\Http\Controllers\V1\User\UpdateUserController;
+use App\Http\Controllers\V1\Users\AccountUserListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,8 @@ Route::prefix('v1')
             Route::patch('/user/change-role/{uuid}', [ChangeUserRoleController::class, '__invoke'])
                 ->whereUuid('uuid')
                 ->name('api.v1.user.change-role');
+            Route::get('/user/list', [AccountUserListController::class, '__invoke'])
+                ->name('api.v1.user.list');
         });
     });
 
