@@ -4,6 +4,7 @@ namespace Core\Domain\Entities\Account\Traits\Account;
 
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Ramsey\Uuid\UuidInterface;
 
 trait AccountEntityAcessors
 {
@@ -33,7 +34,7 @@ trait AccountEntityAcessors
         return $this->uuid;
     }
 
-    public function setUuid(string $uuid): void
+    public function setUuid(UuidInterface $uuid): void
     {
         $this->uuid = $uuid;
     }

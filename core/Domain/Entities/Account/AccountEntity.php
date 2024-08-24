@@ -7,6 +7,7 @@ use Core\Domain\Entities\Account\Traits\Account\AccountEntityAcessors;
 use Core\Domain\Entities\Account\Traits\Account\AccountEntityBuilder;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Http\ResponseStatus;
+use Ramsey\Uuid\UuidInterface;
 
 class AccountEntity
 {
@@ -15,7 +16,7 @@ class AccountEntity
 
     private ?int $id = null;
     private ?string $name = null;
-    private ?string $uuid = null;
+    private ?UuidInterface $uuid = null;
     private ?AccountJoinCodeEntity $joinCodeEntity = null;
 
     private UserEntity $userEntity;
