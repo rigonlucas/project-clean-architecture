@@ -5,6 +5,7 @@ namespace Tests\Unit\Account;
 use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Support\Http\ResponseStatus;
+use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class AccountEntityTest extends TestCase
@@ -14,7 +15,7 @@ class AccountEntityTest extends TestCase
         // Arrange and Act
         AccountEntity::forCreate(
             name: '1',
-            uuid: 'uuid'
+            uuid: Uuid::uuid7()
         );
 
         // Assert
@@ -30,7 +31,7 @@ class AccountEntityTest extends TestCase
         // Arrange and Act
         AccountEntity::forCreate(
             name: '',
-            uuid: 'uuid'
+            uuid: Uuid::uuid7()
         );
     }
 }

@@ -4,6 +4,7 @@ namespace Infra\Database\User\Repository;
 
 use App\Models\User;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\InvalidEmailException;
@@ -91,5 +92,48 @@ class UserRepository implements UserRepositoryInterface
     public function existsId(int $id): bool
     {
         return User::query()->where('id', '=', $id)->exists();
+    }
+
+    public function accountUserList(AccountEntity $account): UserCollection
+    {
+        $userModels = User::query()
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->where('account_id', '=', $account->getId())
+            ->with('account')
+            ->paginate();
+
+        $userCollection = new UserCollection();
+        foreach ($userModels->items() as $userModel) {
+            $userCollection->add(
+                UserEntity::forDetail(
+                    id: $userModel->id,
+                    name: $userModel->name,
+                    email: $userModel->email,
+                    uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
+                    account: AccountEntity::forDetail(
+                        $userModel->account->id,
+                        $userModel->account->name,
+                        FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account->uuid)
+                    ),
+                    birthday: new DateTime($userModel->birthday),
+                    role: $userModel->role
+                )
+            );
+        }
+
+
+        return $userCollection
+            ->setCurrentPage($userModels->currentPage())
+            ->setFirstPageUrl($userModels->firstItem())
+            //->setFrom($userModels->from())
+            ->setLastPage($userModels->lastPage())
+            ->setLastPageUrl($userModels->lastPage())
+            //->setLinks($userModels->links)
+            ->setNextPageUrl($userModels->nextPageUrl())
+            ->setPath($userModels->path())
+            ->setPerPage($userModels->perPage())
+            ->setPrevPageUrl($userModels->previousPageUrl())
+            //->setTo($userModels->to)
+            ->setTotal($userModels->total());
     }
 }

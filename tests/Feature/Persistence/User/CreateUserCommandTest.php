@@ -8,6 +8,7 @@ use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class CreateUserCommandTest extends TestCase
@@ -26,7 +27,7 @@ class CreateUserCommandTest extends TestCase
             account: AccountEntity::forDetail(
                 id: $accountModel->id,
                 name: $accountModel->name,
-                uuid: $accountModel->uuid
+                uuid: Uuid::fromString($accountModel->uuid)
             ),
             uuid: $this->app->make(FrameworkContract::class)::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)
