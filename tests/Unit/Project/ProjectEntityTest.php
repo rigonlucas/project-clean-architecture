@@ -20,7 +20,7 @@ class ProjectEntityTest extends TestCase
 {
     public function test_create_project_success_without_dates()
     {
-        ProjectEntity::create(
+        ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -41,7 +41,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_success_with_dates()
     {
         $this->expectNotToPerformAssertions();
-        ProjectEntity::create(
+        ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -62,7 +62,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_success_with_date_start_at_null_and_finished_at_now()
     {
         $this->expectException(DateRequiredException::class);
-        ProjectEntity::create(
+        ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -82,7 +82,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_date_start_at_after_finished_at()
     {
         $this->expectException(DateMustBeBeforeOtherException::class);
-        ProjectEntity::create(
+        ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -103,7 +103,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_date_start_at_equal_finished_at()
     {
         $this->expectException(DatesMustBeDifferntsException::class);
-        ProjectEntity::create(
+        ProjectEntity::forCreate(
             'Project Name',
             'Project Description',
             UserEntity::forIdentify(
@@ -124,7 +124,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_date_start_at_before_now()
     {
         $this->expectException(DateMustBeInCurrentDayException::class);
-        ProjectEntity::create(
+        ProjectEntity::forCreate(
             'Project Name',
             'Project Description',
             UserEntity::forIdentify(

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
+use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Services\Framework\Contracts\AuthContract;
@@ -17,6 +19,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Infra\Database\Account\Command\AccountCommand;
 use Infra\Database\Account\Mapper\AccountMapper;
+use Infra\Database\Project\Command\ProjectCommand;
+use Infra\Database\Project\Mapper\ProjectMapper;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Mapper\UserMapper;
 use Infra\Services\Framework\Adapters\AuthAdapter;
@@ -58,6 +62,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(AccountCommandInterface::class, AccountCommand::class);
         $this->app->bind(AccountMapperInterface::class, AccountMapper::class);
+
+        $this->app->bind(ProjectCommandInterface::class, ProjectCommand::class);
+        $this->app->bind(ProjectMapperInterface::class, ProjectMapper::class);
     }
 
     /**

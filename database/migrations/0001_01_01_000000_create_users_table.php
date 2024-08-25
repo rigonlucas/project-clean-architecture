@@ -12,12 +12,8 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('account_id')
-                ->nullable()
-                ->default(null)
-                ->constrained()
-                ->onDelete('cascade');
-            $table->integer('role')->default(0);
+            $table->foreignId('account_id')->nullable()->default(null);
+            $table->smallInteger('role')->default(0);
             $table->string('name');
             $table->string('email')->unique();
             $table->date('birthday')->nullable();
