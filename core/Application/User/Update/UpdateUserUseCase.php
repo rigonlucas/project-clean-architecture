@@ -39,7 +39,7 @@ class UpdateUserUseCase
         }
 
         if ($recordedUser->getEmail()->get() !== $input->email->get()) {
-            $recordedUserByEmail = $this->userMapper->findByEmailAndUuid($input->email, $input->uuid);
+            $recordedUserByEmail = $this->userMapper->findByEmail($input->email);
             if ($recordedUserByEmail) {
                 $this->addError('email', 'The email has already been taken.');
             }
