@@ -7,6 +7,9 @@ use Core\Support\Exceptions\InvalidEmailException;
 use Core\Support\Http\ResponseStatus;
 use Tests\TestCase;
 
+/**
+ * @group email_value_objects
+ */
 class EmailValueObjectTest extends TestCase
 {
     public function test_valid_email()
@@ -33,5 +36,23 @@ class EmailValueObjectTest extends TestCase
         $email = new EmailValueObject('test@example.com');
         $this->assertEquals('te**@ex*********', $email->supress());
         $this->assertEquals('test@example.com', $email->unsupress());
+    }
+
+    public function test_is_email_suppressed()
+    {
+        $this->assertTrue(EmailValueObject::isEmailSuppressed('te**@ex*********'));
+        $this->assertFalse(EmailValueObject::isEmailSuppressed('email@emailc.omc'));
+    }
+
+    public function test_is_valid_email()
+    {
+        $this->assertTrue((new EmailValueObject('email@email.com', false))->isValid());
+        $this->assertFalse((new EmailValueObject('invalid-email', false))->isValid());
+    }
+
+    public function test_is_invalid_email()
+    {
+        $this->assertFalse((new EmailValueObject('email@email.com', false))->isInvalid());
+        $this->assertTrue((new EmailValueObject('invalid-email', false))->isInvalid());
     }
 }

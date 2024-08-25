@@ -8,7 +8,7 @@ use Core\Support\Permissions\UserRoles;
 
 trait HasUserRoleTrait
 {
-    private int $permissions = 0;
+    private ?int $permissions = null;
 
     public function hasNotPermission(int $permission): bool
     {
@@ -20,7 +20,7 @@ trait HasUserRoleTrait
         return ($this->permissions & $permission) === $permission;
     }
 
-    public function getPermissions(): int
+    public function getPermissions(): ?int
     {
         return $this->permissions;
     }
@@ -28,6 +28,22 @@ trait HasUserRoleTrait
     public function setPermissions(int $permissions): void
     {
         $this->permissions = $permissions;
+    }
+
+    public function hasNotAnyPermissionFromArray(array $permissions): bool
+    {
+        return !$this->hasAnyPermissionFromArray($permissions);
+    }
+
+    public function hasAnyPermissionFromArray(array $permissions): bool
+    {
+        foreach ($permissions as $permission) {
+            if ($this->hasPermission($permission)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

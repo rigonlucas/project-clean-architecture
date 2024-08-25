@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Users;
+namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class AccountUserListController extends Controller
 {
+    private array $userRoles = [
+        UserRoles::ADMIN,
+        UserRoles::EDITOR,
+    ];
+
     public function __construct(
         private readonly FrameworkContract $framework,
         private readonly UserRepositoryInterface $userRepository
@@ -26,7 +31,7 @@ class AccountUserListController extends Controller
     public function __invoke(Request $request)
     {
         $user = $this->framework->auth()->user();
-        if ($user->hasNotPermission(UserRoles::ADMIN)) {
+        if ($user->hasNotAnyPermissionFromArray($this->userRoles)) {
             abort(ResponseStatus::FORBIDDEN->value);
         }
         $accountEntity = $user->getAccount();

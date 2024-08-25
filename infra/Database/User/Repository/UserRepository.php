@@ -10,12 +10,15 @@ use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 use Core\Support\Exceptions\InvalidEmailException;
 use DateTime;
+use Exception;
+use Infra\Services\Framework\DefaultPaginationConverter;
 use Infra\Services\Framework\FrameworkService;
 
 class UserRepository implements UserRepositoryInterface
 {
     /**
      * @throws InvalidEmailException
+     * @throws Exception
      */
     public function findById(int $id): ?UserEntity
     {
@@ -39,6 +42,7 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * @throws InvalidEmailException
+     * @throws Exception
      */
     public function findByUuid(string $uuid): ?UserEntity
     {
@@ -63,6 +67,7 @@ class UserRepository implements UserRepositoryInterface
 
     /**
      * @throws InvalidEmailException
+     * @throws Exception
      */
     public function findByEmail(string $email): ?UserEntity
     {
@@ -95,6 +100,9 @@ class UserRepository implements UserRepositoryInterface
         return User::query()->where('id', '=', $id)->exists();
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
     public function paginatedAccountUserList(
         AccountEntity $account,
         DefaultPaginationData $paginationData
@@ -104,7 +112,7 @@ class UserRepository implements UserRepositoryInterface
             ->where('account_id', '=', $account->getId())
             ->with('account:id,name,uuid')
             ->paginate(perPage: $paginationData->perPage, page: $paginationData->page);
-
+        
         $userCollection = new UserCollection();
         foreach ($userModels->items() as $userModel) {
             $userCollection->add(
@@ -124,18 +132,6 @@ class UserRepository implements UserRepositoryInterface
             );
         }
 
-        return $userCollection
-            ->setCurrentPage($userModels->currentPage())
-            ->setFirstPageUrl($userModels->url(1))
-            ->setFrom($userModels->firstItem())
-            ->setLastPage($userModels->lastPage())
-            ->setLastPageUrl($userModels->url($userModels->lastPage()))
-            ->setLinks($userModels->linkCollection()->toArray())
-            ->setNextPageUrl($userModels->nextPageUrl())
-            ->setPath($userModels->path())
-            ->setPerPage($userModels->perPage())
-            ->setPrevPageUrl($userModels->previousPageUrl())
-            ->setTo($userModels->lastItem())
-            ->setTotal($userModels->total());
+        return DefaultPaginationConverter::convert($userCollection, $userModels);
     }
 }

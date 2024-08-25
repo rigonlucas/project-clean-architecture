@@ -34,6 +34,16 @@ class EmailValueObject
         return filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false;
     }
 
+    public function isSuppressed(): bool
+    {
+        return static::isEmailSuppressed($this->email);
+    }
+
+    public static function isEmailSuppressed(string $email): bool
+    {
+        return str_contains($email, '*');
+    }
+
     public function supress(): self
     {
         $this->emailUnsuppressed = $this->getEmail();

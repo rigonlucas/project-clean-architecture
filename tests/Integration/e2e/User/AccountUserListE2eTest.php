@@ -3,6 +3,7 @@
 namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
+use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -26,6 +27,7 @@ class AccountUserListE2eTest extends TestCase
         $data = json_decode($response->content());
         $this->assertEquals(1, $data->total);
         $this->assertCount(1, $data->data);
+        $this->assertFalse(EmailValueObject::isEmailSuppressed($data->data[0]->email));
 
 
         $response->assertJsonStructure([
@@ -35,10 +37,6 @@ class AccountUserListE2eTest extends TestCase
                     'uuid',
                     'name',
                     'email',
-                    'account' => [
-                        'uuid',
-                        'name',
-                    ],
                     'birthday',
                     'role',
                 ],
@@ -55,6 +53,24 @@ class AccountUserListE2eTest extends TestCase
             'to',
             'total',
         ]);
+    }
+
+    public function test_success_case_user_list_with_authenticated_user_as_editor()
+    {
+        Sanctum::actingAs(
+            User::factory()->create([
+                'role' => UserRoles::EDITOR,
+            ]),
+            ['*']
+        );
+        $response = $this->getJson(route('api.v1.user.list'));
+        $data = json_decode($response->content());
+        $this->assertEquals(1, $data->total);
+        $this->assertCount(1, $data->data);
+        $this->assertTrue(EmailValueObject::isEmailSuppressed($data->data[0]->email));
+
+
+        $response->assertStatus(ResponseStatus::OK->value);
     }
 
     public function test_success_case_for_paginated_user_list_with_authenticated_admin()
@@ -75,10 +91,6 @@ class AccountUserListE2eTest extends TestCase
                     'uuid',
                     'name',
                     'email',
-                    'account' => [
-                        'uuid',
-                        'name',
-                    ],
                     'birthday',
                     'role',
                 ],
@@ -97,24 +109,11 @@ class AccountUserListE2eTest extends TestCase
         ]);
     }
 
-    public function test_fail_case_user_list_with_unauthenticated_user_as_viewer()
+    public function test_fail_case_user_list_with_authenticated_user_as_viewer()
     {
         Sanctum::actingAs(
             User::factory()->create([
                 'role' => UserRoles::VIEWER,
-            ]),
-            ['*']
-        );
-        $response = $this->getJson(route('api.v1.user.list'));
-
-        $response->assertStatus(ResponseStatus::FORBIDDEN->value);
-    }
-
-    public function test_fail_case_user_list_with_unauthenticated_user_as_editor()
-    {
-        Sanctum::actingAs(
-            User::factory()->create([
-                'role' => UserRoles::EDITOR,
             ]),
             ['*']
         );

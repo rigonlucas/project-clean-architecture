@@ -22,11 +22,7 @@ class UserCollection extends CollectionBase
             fn(UserEntity $user) => [
                 'uuid' => $user->getUuid(),
                 'name' => $user->getName(),
-                'email' => $user->getEmail(),
-                'account' => [
-                    'uuid' => $user->getAccount()->getUuid(),
-                    'name' => $user->getAccount()->getName(),
-                ],
+                'email' => $user->getEmail()->getEmail(),
                 'birthday' => $user->getBirthday()->getTimestamp(),
                 'role' => $user->getRoleName(),
             ],

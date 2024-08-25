@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\V1\User\AccountUserListController;
 use App\Http\Controllers\V1\User\ChangeUserRoleController;
 use App\Http\Controllers\V1\User\CreateUserController;
 use App\Http\Controllers\V1\User\ShowUserController;
 use App\Http\Controllers\V1\User\UpdateUserController;
-use App\Http\Controllers\V1\Users\AccountUserListController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
