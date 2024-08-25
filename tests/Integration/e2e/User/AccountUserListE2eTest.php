@@ -23,6 +23,51 @@ class AccountUserListE2eTest extends TestCase
         $response = $this->getJson(route('api.v1.user.list'));
 
         $response->assertStatus(ResponseStatus::OK->value);
+        $data = json_decode($response->content());
+        $this->assertEquals(1, $data->total);
+        $this->assertCount(1, $data->data);
+
+
+        $response->assertJsonStructure([
+            'current_page',
+            'data' => [
+                '*' => [
+                    'uuid',
+                    'name',
+                    'email',
+                    'account' => [
+                        'uuid',
+                        'name',
+                    ],
+                    'birthday',
+                    'role',
+                ],
+            ],
+            'first_page_url',
+            'from',
+            'last_page',
+            'last_page_url',
+            'links',
+            'next_page_url',
+            'path',
+            'per_page',
+            'prev_page_url',
+            'to',
+            'total',
+        ]);
+    }
+
+    public function test_success_case_for_paginated_user_list_with_authenticated_admin()
+    {
+        User::factory()->count(15)->create([
+            'account_id' => $this->user->account_id,
+        ]);
+        $response = $this->getJson(route('api.v1.user.list', ['page' => 2, 'per_page' => 5]));
+
+        $response->assertStatus(ResponseStatus::OK->value);
+        $data = json_decode($response->content());
+        $this->assertEquals(16, $data->total);
+        $this->assertCount(5, $data->data);
         $response->assertJsonStructure([
             'current_page',
             'data' => [

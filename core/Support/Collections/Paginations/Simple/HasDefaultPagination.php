@@ -9,7 +9,7 @@ trait HasDefaultPagination
 {
     private int $currentPage = 1;
     private ?string $firstPageUrl = null;
-    private int $from = 1;
+    private ?int $from = null;
     private int $lastPage = 1;
     private ?string $lastPageUrl = null;
     private array $links = [];
@@ -17,7 +17,7 @@ trait HasDefaultPagination
     private ?string $path = null;
     private int $perPage = 15;
     private ?string $prevPageUrl = null;
-    private int $to = 1;
+    private ?int $to = null;
     private int $total = 0;
 
     /**
@@ -29,6 +29,7 @@ trait HasDefaultPagination
         if (!method_exists($this, 'toArray')) {
             throw new MentodMustBeImplementedException('Method toArray() not found in class ' . get_class($this));
         }
+
         return [
             'current_page' => $this->getCurrentPage(),
             'data' => $this->toArray(),
@@ -68,12 +69,12 @@ trait HasDefaultPagination
         return $this;
     }
 
-    public function getFrom(): int
+    public function getFrom(): ?int
     {
         return $this->from;
     }
 
-    public function setFrom(int $from): self
+    public function setFrom(?int $from): self
     {
         $this->from = $from;
         return $this;
@@ -156,12 +157,12 @@ trait HasDefaultPagination
         return $this;
     }
 
-    public function getTo(): int
+    public function getTo(): ?int
     {
         return $this->to;
     }
 
-    public function setTo(int $to): self
+    public function setTo(?int $to): self
     {
         $this->to = $to;
         return $this;

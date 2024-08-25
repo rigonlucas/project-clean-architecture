@@ -5,6 +5,7 @@ namespace Core\Application\User\Commons\Gateways;
 use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 
 interface UserRepositoryInterface
 {
@@ -18,5 +19,8 @@ interface UserRepositoryInterface
 
     public function existsId(int $id): bool;
 
-    public function accountUserList(AccountEntity $account): UserCollection;
+    public function paginatedAccountUserList(
+        AccountEntity $account,
+        DefaultPaginationData $paginationData
+    ): UserCollection;
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Users;
 use App\Http\Controllers\Controller;
 use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 use Core\Support\Exceptions\MentodMustBeImplementedException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
@@ -30,7 +31,13 @@ class AccountUserListController extends Controller
         }
         $accountEntity = $user->getAccount();
 
-        $users = $this->userRepository->accountUserList($accountEntity);
+        $users = $this->userRepository->paginatedAccountUserList(
+            $accountEntity,
+            new DefaultPaginationData(
+                $request->query('page', 1),
+                $request->query('per_page', 10)
+            )
+        );
 
         return response()->json($users->paginated());
     }

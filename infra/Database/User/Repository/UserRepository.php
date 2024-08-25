@@ -7,6 +7,7 @@ use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
 use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 use Core\Support\Exceptions\InvalidEmailException;
 use DateTime;
 use Infra\Services\Framework\FrameworkService;
@@ -94,13 +95,15 @@ class UserRepository implements UserRepositoryInterface
         return User::query()->where('id', '=', $id)->exists();
     }
 
-    public function accountUserList(AccountEntity $account): UserCollection
-    {
+    public function paginatedAccountUserList(
+        AccountEntity $account,
+        DefaultPaginationData $paginationData
+    ): UserCollection {
         $userModels = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('account_id', '=', $account->getId())
-            ->with('account')
-            ->paginate();
+            ->with('account:id,name,uuid')
+            ->paginate(perPage: $paginationData->perPage, page: $paginationData->page);
 
         $userCollection = new UserCollection();
         foreach ($userModels->items() as $userModel) {
@@ -121,19 +124,18 @@ class UserRepository implements UserRepositoryInterface
             );
         }
 
-
         return $userCollection
             ->setCurrentPage($userModels->currentPage())
-            ->setFirstPageUrl($userModels->firstItem())
-            //->setFrom($userModels->from())
+            ->setFirstPageUrl($userModels->url(1))
+            ->setFrom($userModels->firstItem())
             ->setLastPage($userModels->lastPage())
-            ->setLastPageUrl($userModels->lastPage())
-            //->setLinks($userModels->links)
+            ->setLastPageUrl($userModels->url($userModels->lastPage()))
+            ->setLinks($userModels->linkCollection()->toArray())
             ->setNextPageUrl($userModels->nextPageUrl())
             ->setPath($userModels->path())
             ->setPerPage($userModels->perPage())
             ->setPrevPageUrl($userModels->previousPageUrl())
-            //->setTo($userModels->to)
+            ->setTo($userModels->lastItem())
             ->setTotal($userModels->total());
     }
 }
