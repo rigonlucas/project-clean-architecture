@@ -7,6 +7,7 @@ use Core\Support\Http\ResponseStatus;
 
 class EmailValueObject
 {
+    public const DEFAULT_MASK_SUPPRESSED_EMAIL = '**********@**********.***';
     private string $email;
     private ?string $emailUnsuppressed = null;
 
@@ -51,6 +52,10 @@ class EmailValueObject
 
     public function supress(): self
     {
+        if ($this->email == '') {
+            $this->email = static::DEFAULT_MASK_SUPPRESSED_EMAIL;
+            return $this;
+        }
         $this->emailUnsuppressed = $this->getEmail();
         [$localPart, $domainPart] = explode('@', $this->email);
         $suppress = fn($part) => substr($part, 0, 2) . str_repeat('*', strlen($part) - 2);

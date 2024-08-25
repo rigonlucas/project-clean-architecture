@@ -4,6 +4,7 @@ namespace Tests\Unit\User\Entity;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Permissions\UserRoles;
 use Infra\Services\Framework\FrameworkService;
 use Tests\TestCase;
@@ -95,5 +96,18 @@ class UserEntityTest extends TestCase
             role: UserRoles::VIEWER
         );
         $this->assertTrue($userEntity->getEmail()->isSuppressed());
+    }
+
+    public function test_must_throw_exception_forbiden_when_no_email_defined()
+    {
+        $userEntity = UserEntity::forIdentify(
+            id: 1,
+            uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
+            role: UserRoles::VIEWER
+        );
+        $this->assertEquals(
+            EmailValueObject::DEFAULT_MASK_SUPPRESSED_EMAIL,
+            $userEntity->getEmail()->supress()
+        );
     }
 }

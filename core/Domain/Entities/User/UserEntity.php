@@ -23,7 +23,7 @@ class UserEntity
 
     private ?int $id = null;
     private string $name;
-    private ?EmailValueObject $email;
+    private ?EmailValueObject $email = null;
     private ?string $password;
     private UuidInterface $uuid;
     private ?DateTimeInterface $birthday;
@@ -48,6 +48,10 @@ class UserEntity
      */
     public function getEmail(): EmailValueObject
     {
+        if (is_null($this->email)) {
+            return new EmailValueObject('', false);
+        }
+
         if (is_null($this->getPermissions())) {
             throw new ForbidenException(
                 message: 'You do not have permission to see the email. No permission defined'
