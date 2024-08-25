@@ -5,7 +5,6 @@ namespace Core\Domain\Entities\User\Traits;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Exceptions\InvalidEmailException;
-use Core\Support\Permissions\UserRoles;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
@@ -15,17 +14,6 @@ trait UserEntityAcessors
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getEmail(): EmailValueObject
-    {
-        if ($this->getPermissions()) {
-            if ($this->hasNotPermission(UserRoles::ADMIN)) {
-                return $this->email->supress();
-            }
-        }
-        
-        return $this->email;
     }
 
     /**

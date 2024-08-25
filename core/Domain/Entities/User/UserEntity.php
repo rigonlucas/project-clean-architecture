@@ -10,6 +10,7 @@ use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Exceptions\InvalidComparationException;
 use Core\Support\Http\ResponseStatus;
+use Core\Support\Permissions\UserRoles;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
@@ -35,6 +36,29 @@ class UserEntity
     public function underAge(): bool
     {
         return $this->birthday->diff(new DateTime())->y < 18;
+    }
+
+    /**
+     * Business rule:
+     * This method is used to check if the user has permission to see the email
+     *      - If the user is an admin, he can see the email
+     *      - If the user is not an admin, he can not see the email
+     *      - If the user has no permission defined, he can not see the email
+     * @throws ForbidenException
+     */
+    public function getEmail(): EmailValueObject
+    {
+        if (is_null($this->getPermissions())) {
+            throw new ForbidenException(
+                message: 'You do not have permission to see the email. No permission defined'
+            );
+        }
+
+        if ($this->hasNotPermission(UserRoles::ADMIN)) {
+            return $this->email->supress();
+        }
+
+        return $this->email;
     }
 
     /**

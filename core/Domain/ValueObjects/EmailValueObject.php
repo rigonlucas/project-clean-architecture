@@ -44,6 +44,11 @@ class EmailValueObject
         return str_contains($email, '*');
     }
 
+    public function isNoSuppressedNot(): bool
+    {
+        return !static::isEmailSuppressed($this->email);
+    }
+
     public function supress(): self
     {
         $this->emailUnsuppressed = $this->getEmail();
