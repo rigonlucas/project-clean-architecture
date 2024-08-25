@@ -5,7 +5,7 @@ namespace Core\Application\Account\Create;
 use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
 use Core\Application\Account\Commons\Exceptions\AccountNotFoundException;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
@@ -20,7 +20,7 @@ class CreateAccountUseCase
     public function __construct(
         private readonly FrameworkContract $framework,
         private readonly AccountCommandInterface $accountCommand,
-        private readonly AccountRepositoryInterface $accountRepository
+        private readonly AccountMapperInterface $accountMapper
     ) {
     }
 
@@ -73,7 +73,7 @@ class CreateAccountUseCase
      */
     private function findAnAccountByAccessCode(AccountInput $accountInput): AccountEntity
     {
-        $accountEntity = $this->accountRepository->findByAccessCode($accountInput->accessCode);
+        $accountEntity = $this->accountMapper->findByAccessCode($accountInput->accessCode);
         if (is_null($accountEntity)) {
             throw new AccountNotFoundException(
                 message: 'Account join code not found',

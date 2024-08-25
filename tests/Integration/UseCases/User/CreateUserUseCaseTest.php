@@ -3,7 +3,7 @@
 namespace Tests\Integration\UseCases\User;
 
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Services\Framework\FrameworkContract;
@@ -101,8 +101,8 @@ class CreateUserUseCaseTest extends TestCase
         parent::setUp();
         $this->useCase = new CreateUserUseCase(
             framework: $this->app->make(FrameworkContract::class)::getInstance(),
-            createUserInterface: $this->app->make(UserCommandInterface::class),
-            userRepository: $this->app->make(UserRepositoryInterface::class)
+            userCommand: $this->app->make(UserCommandInterface::class),
+            userMapper: $this->app->make(UserMapperInterface::class)
         );
     }
 }

@@ -8,7 +8,7 @@ use App\Models\User;
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Application\Account\Commons\Exceptions\AccountNotFoundException;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Account\Create\CreateAccountUseCase;
 use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Services\Framework\FrameworkContract;
@@ -129,7 +129,7 @@ class CreateAccountUseCaseTest extends TestCase
         $this->useCase = new CreateAccountUseCase(
             framework: $this->app->make(FrameworkContract::class)::getInstance(),
             accountCommand: $this->app->make(AccountCommandInterface::class),
-            accountRepository: $this->app->make(AccountRepositoryInterface::class)
+            accountMapper: $this->app->make(AccountMapperInterface::class)
         );
     }
 }

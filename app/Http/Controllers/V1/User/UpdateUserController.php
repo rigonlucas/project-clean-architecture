@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\UpdateUserRequest;
 use Carbon\Carbon;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Presentation\Http\Errors\ErrorPresenter;
@@ -23,7 +23,7 @@ class UpdateUserController extends Controller
     public function __construct(
         private readonly FrameworkContract $frameworkService,
         private readonly UserCommandInterface $userCommand,
-        private readonly UserRepositoryInterface $userRepository
+        private readonly UserMapperInterface $userMapper
     ) {
     }
 
@@ -48,7 +48,7 @@ class UpdateUserController extends Controller
 
             $output = (new UpdateUserHandler(
                 $this->userCommand,
-                $this->userRepository,
+                $this->userMapper,
                 $this->frameworkService
             ))->handle(input: $input);
 

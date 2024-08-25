@@ -7,7 +7,7 @@ use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 
-interface UserRepositoryInterface
+interface UserMapperInterface
 {
     public function findById(int $id): ?UserEntity;
 

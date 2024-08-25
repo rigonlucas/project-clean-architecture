@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\CreateUserRequest;
 use Carbon\Carbon;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
@@ -21,10 +21,10 @@ use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
 class CreateUserController extends Controller
 {
     public function __construct(
-        private readonly UserCommandInterface $userCommandInterface,
-        private readonly UserRepositoryInterface $userRepositoryInterface,
-        private readonly AccountCommandInterface $accountCommandInterface,
-        private readonly AccountRepositoryInterface $accountRepositoryInterface,
+        private readonly UserCommandInterface $userCommand,
+        private readonly UserMapperInterface $userMapper,
+        private readonly AccountCommandInterface $accountCommand,
+        private readonly AccountMapperInterface $accountMapper,
         private readonly FrameworkContract $frameworkService
     ) {
     }
@@ -45,10 +45,10 @@ class CreateUserController extends Controller
             $this->frameworkService->transactionManager()->beginTransaction();
 
             $handler = (new CreateUserHandler(
-                userCommandInterface: $this->userCommandInterface,
-                userRepositoryInterface: $this->userRepositoryInterface,
-                accountCommandInterface: $this->accountCommandInterface,
-                accountRepositoryInterface: $this->accountRepositoryInterface,
+                userCommand: $this->userCommand,
+                userMapper: $this->userMapper,
+                accountCommand: $this->accountCommand,
+                accountMapper: $this->accountMapper,
                 frameworkService: $this->frameworkService
             ));
             $output = $handler->handle(

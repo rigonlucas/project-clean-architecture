@@ -3,7 +3,7 @@
 namespace Infra\Handlers\UseCases\User\Update;
 
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Services\Framework\FrameworkContract;
@@ -13,7 +13,7 @@ readonly class UpdateUserHandler
 {
     public function __construct(
         private UserCommandInterface $userCommand,
-        private UserRepositoryInterface $userRepository,
+        private UserMapperInterface $userMapper,
         private FrameworkContract $frameworkService
     ) {
     }
@@ -26,7 +26,7 @@ readonly class UpdateUserHandler
     {
         $useCase = new UpdateUserUseCase(
             $this->frameworkService,
-            $this->userRepository,
+            $this->userMapper,
             $this->userCommand
         );
         $userEntity = $useCase->execute($input);

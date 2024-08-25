@@ -4,7 +4,7 @@ namespace Core\Application\Account\Commons\Gateways;
 
 use Core\Domain\Entities\Account\AccountEntity;
 
-interface AccountRepositoryInterface
+interface AccountMapperInterface
 {
     public function findByid(int $id): ?AccountEntity;
 

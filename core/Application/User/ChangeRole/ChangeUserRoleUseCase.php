@@ -5,7 +5,7 @@ namespace Core\Application\User\ChangeRole;
 use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Exceptions\InvalidRoleException;
 use Core\Support\Http\ResponseStatus;
@@ -15,7 +15,7 @@ readonly class ChangeUserRoleUseCase
 {
     public function __construct(
         private UserCommandInterface $userCommand,
-        private UserRepositoryInterface $userRepository,
+        private UserMapperInterface $userMapper,
     ) {
     }
 
@@ -35,7 +35,7 @@ readonly class ChangeUserRoleUseCase
             );
         }
 
-        $userForChange = $this->userRepository->findByUuid($input->userUuid);
+        $userForChange = $this->userMapper->findByUuid($input->userUuid);
         if (!$userForChange) {
             throw new UserNotFountException(
                 message: 'User not found',

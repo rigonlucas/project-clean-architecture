@@ -5,13 +5,13 @@ namespace Infra\Handlers\UseCases\User\ChangeRole;
 use Core\Application\User\ChangeRole\ChangeUserRoleUseCase;
 use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 
 readonly class ChangeRoleUserHandler
 {
     public function __construct(
         private UserCommandInterface $userCommand,
-        private UserRepositoryInterface $userRepository,
+        private UserMapperInterface $userMapper,
     ) {
     }
 
@@ -19,7 +19,7 @@ readonly class ChangeRoleUserHandler
     {
         $changeRoleUseCase = new ChangeUserRoleUseCase(
             userCommand: $this->userCommand,
-            userRepository: $this->userRepository
+            userMapper: $this->userMapper
         );
         $changeRoleUseCase->execute($input);
     }

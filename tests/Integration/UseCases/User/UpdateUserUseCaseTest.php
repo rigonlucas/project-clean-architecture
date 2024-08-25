@@ -5,7 +5,7 @@ namespace Tests\Integration\UseCases\User;
 use App\Models\User;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Application\User\Update\UpdateUserUseCase;
 use Core\Domain\Entities\User\UserEntity;
@@ -132,7 +132,7 @@ class UpdateUserUseCaseTest extends TestCase
 
         $useCase = new UpdateUserUseCase(
             $this->app->make(FrameworkContract::class)::getInstance(),
-            $this->app->make(UserRepositoryInterface::class),
+            $this->app->make(UserMapperInterface::class),
             $this->app->make(UserCommandInterface::class)
         );
 
@@ -144,7 +144,7 @@ class UpdateUserUseCaseTest extends TestCase
         parent::setUp();
         $this->useCase = new UpdateUserUseCase(
             $this->app->make(FrameworkContract::class)::getInstance(),
-            $this->app->make(UserRepositoryInterface::class),
+            $this->app->make(UserMapperInterface::class),
             $this->app->make(UserCommandInterface::class)
         );
         $this->user = User::factory()->create();

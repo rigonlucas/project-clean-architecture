@@ -7,7 +7,7 @@ use Core\Application\User\ChangeRole\ChangeUserRoleUseCase;
 use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Permissions\UserRoles;
@@ -217,7 +217,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         parent::setUp();
         $this->useCase = new ChangeUserRoleUseCase(
             $this->app->make(UserCommandInterface::class),
-            $this->app->make(UserRepositoryInterface::class)
+            $this->app->make(UserMapperInterface::class)
         );
     }
 }

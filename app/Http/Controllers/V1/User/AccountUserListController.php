@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 use Core\Support\Exceptions\MentodMustBeImplementedException;
@@ -20,10 +20,9 @@ class AccountUserListController extends Controller
 
     public function __construct(
         private readonly FrameworkContract $framework,
-        private readonly UserRepositoryInterface $userRepository
+        private readonly UserMapperInterface $userMapper
     ) {
     }
-
 
     /**
      * @throws MentodMustBeImplementedException
@@ -36,7 +35,7 @@ class AccountUserListController extends Controller
         }
         $accountEntity = $user->getAccount();
 
-        $users = $this->userRepository->paginatedAccountUserList(
+        $users = $this->userMapper->paginatedAccountUserList(
             $accountEntity,
             new DefaultPaginationData(
                 $request->query('page', 1),

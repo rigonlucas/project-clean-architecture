@@ -1,15 +1,15 @@
 <?php
 
-namespace Infra\Database\Account\Repository;
+namespace Infra\Database\Account\Mapper;
 
 use App\Models\Account;
 use App\Models\AccountJoinCode;
-use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
 use Ramsey\Uuid\Uuid;
 
-class AccountRepository implements AccountRepositoryInterface
+class AccountMapper implements AccountMapperInterface
 {
     public function findByid(int $id): ?AccountEntity
     {

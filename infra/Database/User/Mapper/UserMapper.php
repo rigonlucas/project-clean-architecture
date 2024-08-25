@@ -1,9 +1,9 @@
 <?php
 
-namespace Infra\Database\User\Repository;
+namespace Infra\Database\User\Mapper;
 
 use App\Models\User;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
@@ -14,7 +14,7 @@ use Exception;
 use Infra\Services\Framework\DefaultPaginationConverter;
 use Infra\Services\Framework\FrameworkService;
 
-class UserRepository implements UserRepositoryInterface
+class UserMapper implements UserMapperInterface
 {
     /**
      * @throws InvalidEmailException

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\User\ChangeUserRoleRequest;
 use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
@@ -16,8 +16,8 @@ use Infra\Handlers\UseCases\User\ChangeRole\ChangeRoleUserHandler;
 class ChangeUserRoleController extends Controller
 {
     public function __construct(
-        private readonly UserCommandInterface $userCommandInterface,
-        private readonly UserRepositoryInterface $userRepositoryInterface,
+        private readonly UserCommandInterface $userCommand,
+        private readonly UserMapperInterface $userMapper,
         private readonly FrameworkContract $frameworkService
     ) {
     }
@@ -34,8 +34,8 @@ class ChangeUserRoleController extends Controller
             $this->frameworkService->transactionManager()->beginTransaction();
 
             $handler = new ChangeRoleUserHandler(
-                userCommand: $this->userCommandInterface,
-                userRepository: $this->userRepositoryInterface
+                userCommand: $this->userCommand,
+                userMapper: $this->userMapper
             );
             $handler->handle($changeRoleInput);
 

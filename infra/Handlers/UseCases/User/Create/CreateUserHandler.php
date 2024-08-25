@@ -3,11 +3,11 @@
 namespace Infra\Handlers\UseCases\User\Create;
 
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountRepositoryInterface;
+use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Account\Create\CreateAccountUseCase;
 use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
 use Core\Services\Framework\FrameworkContract;
@@ -16,10 +16,10 @@ use Core\Support\Exceptions\OutputErrorException;
 readonly class CreateUserHandler
 {
     public function __construct(
-        private UserCommandInterface $userCommandInterface,
-        private UserRepositoryInterface $userRepositoryInterface,
-        private AccountCommandInterface $accountCommandInterface,
-        private AccountRepositoryInterface $accountRepositoryInterface,
+        private UserCommandInterface $userCommand,
+        private UserMapperInterface $userMapper,
+        private AccountCommandInterface $accountCommand,
+        private AccountMapperInterface $accountMapper,
         private FrameworkContract $frameworkService
     ) {
     }
@@ -31,15 +31,15 @@ readonly class CreateUserHandler
     {
         $createUserUseCase = new CreateUserUseCase(
             framework: $this->frameworkService,
-            createUserInterface: $this->userCommandInterface,
-            userRepository: $this->userRepositoryInterface
+            userCommand: $this->userCommand,
+            userMapper: $this->userMapper
         );
         $userEntity = $createUserUseCase->execute(createUserInput: $createUserInput);
 
         $createAccountUseCase = new CreateAccountUseCase(
             framework: $this->frameworkService,
-            accountCommand: $this->accountCommandInterface,
-            accountRepository: $this->accountRepositoryInterface
+            accountCommand: $this->accountCommand,
+            accountMapper: $this->accountMapper
         );
 
         $accountInput->setUserNane(userNane: $userEntity->getName());

@@ -4,7 +4,7 @@ namespace Core\Application\User\Update;
 
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserRepositoryInterface;
+use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Update\Inputs\UpdateUserInput;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
@@ -21,7 +21,7 @@ class UpdateUserUseCase
 
     public function __construct(
         private readonly FrameworkContract $framework,
-        private readonly UserRepositoryInterface $userRepository,
+        private readonly UserMapperInterface $userMapper,
         private readonly UserCommandInterface $userCommand
     ) {
     }
@@ -33,7 +33,7 @@ class UpdateUserUseCase
     {
         $this->validateAccessPolicies($input);
 
-        $recordedUser = $this->userRepository->findByUuid(uuid: $input->uuid);
+        $recordedUser = $this->userMapper->findByUuid(uuid: $input->uuid);
         if (!$recordedUser) {
             throw new UserNotFountException(
                 message: 'Contém erros de validação',
@@ -42,7 +42,7 @@ class UpdateUserUseCase
         }
 
         if ($recordedUser->getEmail()->getEmail() !== $input->email->getEmail()) {
-            $recordedUserByEmail = $this->userRepository->findByEmail($input->email);
+            $recordedUserByEmail = $this->userMapper->findByEmail($input->email);
             if ($recordedUserByEmail && !$recordedUserByEmail->getUuid()->equals($input->uuid)) {
                 $this->addError('email', 'Email já utilizado por outro usuário');
             }
