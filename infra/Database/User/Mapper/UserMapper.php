@@ -13,6 +13,7 @@ use DateTime;
 use Exception;
 use Infra\Services\Framework\DefaultPaginationConverter;
 use Infra\Services\Framework\FrameworkService;
+use Ramsey\Uuid\UuidInterface;
 
 class UserMapper implements UserMapperInterface
 {
@@ -74,6 +75,32 @@ class UserMapper implements UserMapperInterface
         $userModel = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('email', '=', $email)
+            ->first();
+        if (!$userModel) {
+            return null;
+        }
+
+        return UserEntity::forDetail(
+            id: $userModel->id,
+            name: $userModel->name,
+            email: $userModel->email,
+            uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
+            account: AccountEntity::forIdentify($userModel->account_id),
+            birthday: new DateTime($userModel->birthday),
+            role: $userModel->role
+        );
+    }
+
+    /**
+     * @throws InvalidEmailException
+     * @throws Exception
+     */
+    public function findByEmailAndUuid(string $email, UuidInterface $uuid): ?UserEntity
+    {
+        $userModel = User::query()
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->where('email', '=', $email)
+            ->where('uuid', '=', $uuid->toString())
             ->first();
         if (!$userModel) {
             return null;

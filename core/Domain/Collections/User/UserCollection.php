@@ -31,7 +31,7 @@ class UserCollection extends CollectionBase
             fn(UserEntity $user) => [
                 'uuid' => $user->getUuid(),
                 'name' => $user->getName(),
-                'email' => $user->getEmailWithAccessControl($this->requireUserEntity)->getEmail(),
+                'email' => $user->getEmailWithAccessControl($this->requireUserEntity)->get(),
                 'birthday' => $user->getBirthday()->getTimestamp(),
                 'role' => $user->getRoleName(),
             ],

@@ -62,7 +62,7 @@ class EmailValueObject
             $this->email = static::DEFAULT_MASK_SUPPRESSED_EMAIL;
             return $this;
         }
-        $this->emailUnsuppressed = $this->getEmail();
+        $this->emailUnsuppressed = $this->get();
         [$localPart, $domainPart] = explode('@', $this->email);
         $suppress = fn($part) => substr($part, 0, 2) . str_repeat('*', strlen($part) - 2);
 
@@ -70,7 +70,7 @@ class EmailValueObject
         return $this;
     }
 
-    public function getEmail(): string
+    public function get(): string
     {
         return $this->email;
     }

@@ -6,6 +6,7 @@ use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
+use Ramsey\Uuid\UuidInterface;
 
 interface UserMapperInterface
 {
@@ -14,6 +15,8 @@ interface UserMapperInterface
     public function findByUuid(string $uuid): ?UserEntity;
 
     public function findByEmail(string $email): ?UserEntity;
+
+    public function findByEmailAndUuid(string $email, UuidInterface $uuid): ?UserEntity;
 
     public function existsEmail(string $email): bool;
 

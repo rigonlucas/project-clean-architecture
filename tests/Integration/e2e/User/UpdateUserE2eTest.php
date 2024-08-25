@@ -127,7 +127,7 @@ class UpdateUserE2eTest extends TestCase
 
 
         $response->assertJsonFragment([
-            'email' => ['Email já utilizado por outro usuário']
+            'email' => ['The email has already been taken.']
         ]);
     }
 

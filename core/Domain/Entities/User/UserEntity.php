@@ -48,7 +48,7 @@ class UserEntity
 
         return $this->email;
     }
-    
+
     public function getEmailWithAccessControl(UserEntity $requireUserEntity): EmailValueObject
     {
         $permissions = [
@@ -78,6 +78,18 @@ class UserEntity
             throw new InvalidComparationException(
                 message: 'You can not compare the same user',
                 code: ResponseStatus::INTERNAL_SERVER_ERROR->value
+            );
+        }
+    }
+
+    /**
+     * @throws ForbidenException
+     */
+    public function canUpateAnUser(UuidInterface $uuid): void
+    {
+        if (!$this->getUuid()->equals($uuid) && !$this->hasNotPermission(UserRoles::ADMIN)) {
+            throw new ForbidenException(
+                message: 'You do not have permission to update this user',
             );
         }
     }
