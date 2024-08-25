@@ -41,7 +41,8 @@ class AccountUserListController extends Controller
             new DefaultPaginationData(
                 $request->query('page', 1),
                 $request->query('per_page', 10)
-            )
+            ),
+            $this->framework->auth()->user()
         );
 
         return response()->json($users->paginated());

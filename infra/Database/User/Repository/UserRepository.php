@@ -105,15 +105,16 @@ class UserRepository implements UserRepositoryInterface
      */
     public function paginatedAccountUserList(
         AccountEntity $account,
-        DefaultPaginationData $paginationData
+        DefaultPaginationData $paginationData,
+        UserEntity $authUser
     ): UserCollection {
         $userModels = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('account_id', '=', $account->getId())
             ->with('account:id,name,uuid')
             ->paginate(perPage: $paginationData->perPage, page: $paginationData->page);
-        
-        $userCollection = new UserCollection();
+
+        $userCollection = new UserCollection($authUser);
         foreach ($userModels->items() as $userModel) {
             $userCollection->add(
                 UserEntity::forDetail(

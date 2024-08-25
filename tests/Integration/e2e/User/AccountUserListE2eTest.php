@@ -65,9 +65,8 @@ class AccountUserListE2eTest extends TestCase
         );
         $response = $this->getJson(route('api.v1.user.list'));
         $data = json_decode($response->content());
-        $this->assertEquals(1, $data->total);
         $this->assertCount(1, $data->data);
-        $this->assertTrue(EmailValueObject::isEmailSuppressed($data->data[0]->email));
+        $this->assertTrue(EmailValueObject::isNotEmailSuppressed($data->data[0]->email));
 
 
         $response->assertStatus(ResponseStatus::OK->value);

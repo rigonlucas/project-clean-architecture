@@ -29,6 +29,8 @@ class UserEntity
     private ?DateTimeInterface $birthday;
     private ?AccountEntity $account;
 
+    private bool $userOwner = false;
+
     private function __construct()
     {
     }
@@ -38,28 +40,23 @@ class UserEntity
         return $this->birthday->diff(new DateTime())->y < 18;
     }
 
-    /**
-     * Business rule:
-     * This method is used to check if the user has permission to see the email
-     *      - If the user is an admin, he can see the email
-     *      - If the user is not an admin, he can not see the email
-     *      - If the user has no permission defined, he can not see the email
-     * @throws ForbidenException
-     */
     public function getEmail(): EmailValueObject
     {
         if (is_null($this->email)) {
             return new EmailValueObject('', false);
         }
 
-        if (is_null($this->getPermissions())) {
-            throw new ForbidenException(
-                message: 'You do not have permission to see the email. No permission defined'
-            );
-        }
-
-        if ($this->hasNotPermission(UserRoles::ADMIN)) {
-            return $this->email->supress();
+        return $this->email;
+    }
+    
+    public function getEmailWithAccessControl(UserEntity $requireUserEntity): EmailValueObject
+    {
+        $permissions = [
+            UserRoles::ADMIN,
+            UserRoles::EDITOR,
+        ];
+        if ($requireUserEntity->hasNotAnyPermissionFromArray($permissions) && !$this->isUserOwner()) {
+            return new EmailValueObject('', false);
         }
 
         return $this->email;

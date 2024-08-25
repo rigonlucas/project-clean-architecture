@@ -21,6 +21,7 @@ interface UserRepositoryInterface
 
     public function paginatedAccountUserList(
         AccountEntity $account,
-        DefaultPaginationData $paginationData
+        DefaultPaginationData $paginationData,
+        UserEntity $authUser
     ): UserCollection;
 }

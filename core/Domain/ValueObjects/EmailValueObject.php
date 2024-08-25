@@ -7,7 +7,7 @@ use Core\Support\Http\ResponseStatus;
 
 class EmailValueObject
 {
-    public const DEFAULT_MASK_SUPPRESSED_EMAIL = '**********@**********.***';
+    public const string DEFAULT_MASK_SUPPRESSED_EMAIL = '**********@**********.***';
     private string $email;
     private ?string $emailUnsuppressed = null;
 
@@ -35,20 +35,26 @@ class EmailValueObject
         return filter_var($this->email, FILTER_VALIDATE_EMAIL) !== false;
     }
 
+    public static function isNotEmailSuppressed(string $email): bool
+    {
+        return !static::isEmailSuppressed($email);
+    }
+
+    public static function isEmailSuppressed(string $email): bool
+    {
+        return str_contains($email, '*') || $email == '';
+    }
+
     public function isSuppressed(): bool
     {
         return static::isEmailSuppressed($this->email);
     }
 
-    public static function isEmailSuppressed(string $email): bool
-    {
-        return str_contains($email, '*');
-    }
-
-    public function isNoSuppressedNot(): bool
+    public function isNotSuppressed(): bool
     {
         return !static::isEmailSuppressed($this->email);
     }
+
 
     public function supress(): self
     {

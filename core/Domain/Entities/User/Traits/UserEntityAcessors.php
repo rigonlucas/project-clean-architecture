@@ -86,4 +86,15 @@ trait UserEntityAcessors
         $this->account = $account;
         return $this;
     }
+
+    public function setUserOwner(bool $userOwner): self
+    {
+        $this->userOwner = $userOwner;
+        return $this;
+    }
+
+    public function isUserOwner(): bool
+    {
+        return $this->userOwner;
+    }
 }

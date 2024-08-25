@@ -66,7 +66,14 @@ class UserEntityTest extends TestCase
             birthday: now(),
             role: UserRoles::ADMIN
         );
-        $this->assertTrue($userEntity->getEmail()->isNoSuppressedNot());
+
+        $requireUserEntity = UserEntity::forIdentify(
+            id: 1,
+            uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
+            role: UserRoles::ADMIN
+        );
+
+        $this->assertTrue($userEntity->getEmailWithAccessControl($requireUserEntity)->isNotSuppressed());
     }
 
 
@@ -81,7 +88,7 @@ class UserEntityTest extends TestCase
             birthday: now(),
             role: UserRoles::EDITOR
         );
-        $this->assertTrue($userEntity->getEmail()->isSuppressed());
+        $this->assertTrue($userEntity->getEmail()->isNotSuppressed());
     }
 
     public function test_userviewer_can_access_email_suppresed()
@@ -95,7 +102,14 @@ class UserEntityTest extends TestCase
             birthday: now(),
             role: UserRoles::VIEWER
         );
-        $this->assertTrue($userEntity->getEmail()->isSuppressed());
+
+        $requireUserEntity = UserEntity::forIdentify(
+            id: 1,
+            uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
+            role: UserRoles::VIEWER
+        );
+
+        $this->assertTrue($userEntity->getEmailWithAccessControl($requireUserEntity)->isSuppressed());
     }
 
     public function test_must_throw_exception_forbiden_when_no_email_defined()
