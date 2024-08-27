@@ -11,9 +11,11 @@ use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatus;
 use Infra\Handlers\UseCases\User\Create\CreateUserHandler;
@@ -29,13 +31,16 @@ class CreateUserController extends Controller
     ) {
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
     public function __invoke(CreateUserRequest $request)
     {
         $createUserInput = new CreateUserInput(
             name: $request->name,
-            email: $request->email,
+            email: new EmailValueObject(email: $request->email, autoValidete: false),
             password: $request->password,
-            birthday: Carbon::createFromFormat('Y-m-d', $request->birthday)
+            birthday: Carbon::createFromFormat(format: 'Y-m-d', time: $request->birthday)
         );
 
         $accountInput = new AccountInput(

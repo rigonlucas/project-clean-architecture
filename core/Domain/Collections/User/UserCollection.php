@@ -5,7 +5,7 @@ namespace Core\Domain\Collections\User;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Collections\CollectionBase;
 use Core\Support\Collections\Paginations\Simple\HasDefaultPagination;
-use Core\Support\Exceptions\InvalidRoleException;
+use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
 
 class UserCollection extends CollectionBase
 {

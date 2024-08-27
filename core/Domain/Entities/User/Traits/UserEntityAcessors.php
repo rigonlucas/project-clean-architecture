@@ -4,7 +4,7 @@ namespace Core\Domain\Entities\User\Traits;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
-use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;

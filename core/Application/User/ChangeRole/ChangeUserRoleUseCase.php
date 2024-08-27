@@ -6,8 +6,9 @@ use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
 use Core\Application\User\Commons\Exceptions\UserNotFountException;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserMapperInterface;
-use Core\Support\Exceptions\ForbidenException;
-use Core\Support\Exceptions\InvalidRoleException;
+use Core\Support\Exceptions\Access\ForbidenException;
+use Core\Support\Exceptions\InvalideRules\InvalidComparationException;
+use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 
@@ -20,15 +21,17 @@ readonly class ChangeUserRoleUseCase
     }
 
     /**
-     * @throws UserNotFountException
-     * @throws InvalidRoleException
+     * @param ChangeUserRoleInput $input
      * @throws ForbidenException
+     * @throws InvalidRoleException
+     * @throws UserNotFountException
+     * @throws InvalidComparationException
      */
     public function execute(ChangeUserRoleInput $input): void
     {
         $this->validateAccessPolicies($input);
 
-        if (UserRoles::isValidRole($input->role)) {
+        if (UserRoles::isInvalidRole($input->role)) {
             throw new InvalidRoleException(
                 message: 'Invalid role',
                 code: ResponseStatus::BAD_REQUEST->value
@@ -43,8 +46,7 @@ readonly class ChangeUserRoleUseCase
             );
         }
         $userForChange->checkUsersAreFromSameAccount($input->authenticatedUser);
-
-        if ($input->role === $userForChange->getPermissions()) {
+        if ($userForChange->getPermissions() === $input->role) {
             return;
         }
 

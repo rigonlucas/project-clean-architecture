@@ -2,7 +2,7 @@
 
 namespace Core\Support\Validations;
 
-use Core\Support\Exceptions\HasErrorsInBagException;
+use Core\Support\Exceptions\InvalideRules\HasErrorsInBagException;
 use Core\Support\Http\ResponseStatus;
 
 trait HasErrorBagTrait

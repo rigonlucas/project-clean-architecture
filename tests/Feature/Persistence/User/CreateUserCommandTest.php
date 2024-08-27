@@ -6,6 +6,7 @@ use App\Models\Account;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Services\Framework\FrameworkContract;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Ramsey\Uuid\Uuid;
@@ -22,7 +23,7 @@ class CreateUserCommandTest extends TestCase
         $userCommand = $this->app->make(UserCommandInterface::class);
         $userEntity = UserEntity::forCreate(
             name: 'name 2',
-            email: 'email3@email.com',
+            email: new EmailValueObject('email3@email.com', false),
             password: 'password',
             account: AccountEntity::forDetail(
                 id: $accountModel->id,

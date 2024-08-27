@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Entities\User\Traits;
 
-use Core\Support\Exceptions\InvalidRoleException;
+use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 

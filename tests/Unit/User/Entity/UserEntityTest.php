@@ -19,7 +19,7 @@ class UserEntityTest extends TestCase
         // Arrange
         $userEntity = UserEntity::forCreate(
             name: 'John Doe',
-            email: 'email@email.com',
+            email: new EmailValueObject('email@email.com', false),
             password: 'password',
             account: AccountEntity::forDetail(
                 id: 1,
@@ -37,7 +37,7 @@ class UserEntityTest extends TestCase
         // Arrange
         $userEntity = UserEntity::forCreate(
             name: 'John Doe',
-            email: 'john@email.com',
+            email: new EmailValueObject('john@email.com', false),
             password: 'password',
             account: AccountEntity::forDetail(
                 id: 1,

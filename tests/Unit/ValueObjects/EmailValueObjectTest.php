@@ -3,7 +3,7 @@
 namespace Tests\Unit\ValueObjects;
 
 use Core\Domain\ValueObjects\EmailValueObject;
-use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use Core\Support\Http\ResponseStatus;
 use Tests\TestCase;
 

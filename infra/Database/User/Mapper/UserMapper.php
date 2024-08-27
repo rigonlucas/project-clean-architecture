@@ -8,7 +8,7 @@ use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
-use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use DateTime;
 use Exception;
 use Infra\Services\Framework\DefaultPaginationConverter;

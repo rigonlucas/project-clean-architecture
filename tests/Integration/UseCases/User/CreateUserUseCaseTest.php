@@ -6,8 +6,9 @@ use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\Exceptions\HasErrorsInBagException;
+use Core\Support\Exceptions\InvalideRules\HasErrorsInBagException;
 use Core\Support\Http\ResponseStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
@@ -26,7 +27,7 @@ class CreateUserUseCaseTest extends TestCase
         // Arrange
         $input = new CreateUserInput(
             name: 'name 2',
-            email: 'email3@email.com',
+            email: new EmailValueObject('email3@email.com', false),
             password: 'password',
             birthday: now()->subYears(18)
         );
@@ -53,7 +54,7 @@ class CreateUserUseCaseTest extends TestCase
         // Arrange
         $input = new CreateUserInput(
             name: 'name 2',
-            email: 'email3',
+            email: new EmailValueObject('email3', false),
             password: 'password',
             birthday: now()->subYears(17)
         );
@@ -70,7 +71,7 @@ class CreateUserUseCaseTest extends TestCase
         // Arrange
         $input = new CreateUserInput(
             name: 'name 2',
-            email: 'email3',
+            email: new EmailValueObject('email3', false),
             password: 'password',
             birthday: now()->subYears(18)
         );
@@ -87,7 +88,7 @@ class CreateUserUseCaseTest extends TestCase
         // Arrange
         $input = new CreateUserInput(
             name: 'name 2',
-            email: 'email3@gmail.com',
+            email: new EmailValueObject('email3@gmail.com', false),
             password: 'password',
             birthday: now()->subYears(17)
         );

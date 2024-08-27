@@ -1,7 +1,8 @@
 <?php
 
-namespace Core\Support\Exceptions;
+namespace Core\Support\Exceptions\Access;
 
+use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatus;
 use Exception;
 

@@ -4,7 +4,7 @@ namespace Core\Support\Exceptions;
 
 use Exception;
 
-class MentodMustBeImplementedException extends Exception
+class MethodMustBeImplementedException extends Exception
 {
 
 }

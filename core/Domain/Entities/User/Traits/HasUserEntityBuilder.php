@@ -5,7 +5,7 @@ namespace Core\Domain\Entities\User\Traits;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
-use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 use SensitiveParameter;
@@ -17,7 +17,7 @@ trait HasUserEntityBuilder
      */
     public static function forCreate(
         string $name,
-        string $email,
+        EmailValueObject $email,
         #[SensitiveParameter]
         string $password,
         ?AccountEntity $account,
@@ -28,7 +28,7 @@ trait HasUserEntityBuilder
         $userEntity = new UserEntity();
         $userEntity->setBirthday($birthday);
         $userEntity->setName($name);
-        $userEntity->setEmail(new EmailValueObject($email, false));
+        $userEntity->setEmail($email);
         $userEntity->setPassword($password);
         $userEntity->setUuid($uuid);
         $userEntity->setAccount($account);

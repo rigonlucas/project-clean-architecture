@@ -63,7 +63,7 @@ class CreateAccountUseCase
     private function createNewAccount(AccountInput $input): AccountEntity
     {
         return AccountEntity::forCreate(
-            name: $this->framework->Str()->title($input->getUserNane()),
+            name: $this->framework->str()->title($input->getUserNane()),
             uuid: $this->framework->uuid()->uuid7Generate()
         );
     }

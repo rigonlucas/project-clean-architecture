@@ -2,7 +2,7 @@
 
 namespace Core\Domain\ValueObjects;
 
-use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use Core\Support\Http\ResponseStatus;
 
 class EmailValueObject

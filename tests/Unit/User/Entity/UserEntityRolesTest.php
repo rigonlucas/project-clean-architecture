@@ -3,7 +3,7 @@
 namespace Tests\Unit\User\Entity;
 
 use Core\Domain\Entities\User\UserEntity;
-use Core\Support\Exceptions\InvalidRoleException;
+use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\Access\GeneralPermissions;
 use Core\Support\Permissions\UserRoles;

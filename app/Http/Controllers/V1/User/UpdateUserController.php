@@ -12,7 +12,7 @@ use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserPresenter;
 use Core\Services\Framework\FrameworkContract;
-use Core\Support\Exceptions\InvalidEmailException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatus;
 use Infra\Handlers\UseCases\User\Update\UpdateUserHandler;
@@ -47,9 +47,9 @@ class UpdateUserController extends Controller
                 ->beginTransaction();
 
             $output = (new UpdateUserHandler(
-                $this->userCommand,
-                $this->userMapper,
-                $this->frameworkService
+                userCommand: $this->userCommand,
+                userMapper: $this->userMapper,
+                frameworkService: $this->frameworkService
             ))->handle(input: $input);
 
             $this->frameworkService

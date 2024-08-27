@@ -7,8 +7,8 @@ use Core\Domain\Entities\User\Traits\HasUserEntityBuilder;
 use Core\Domain\Entities\User\Traits\HasUserRoleTrait;
 use Core\Domain\Entities\User\Traits\UserEntityAcessors;
 use Core\Domain\ValueObjects\EmailValueObject;
-use Core\Support\Exceptions\ForbidenException;
-use Core\Support\Exceptions\InvalidComparationException;
+use Core\Support\Exceptions\Access\ForbidenException;
+use Core\Support\Exceptions\InvalideRules\InvalidComparationException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use DateTime;
@@ -85,9 +85,9 @@ class UserEntity
     /**
      * @throws ForbidenException
      */
-    public function canUpateAnUser(UuidInterface $uuid): void
+    public function canUpateAnUser(UuidInterface $informedUuid): void
     {
-        if (!$this->getUuid()->equals($uuid) && !$this->hasNotPermission(UserRoles::ADMIN)) {
+        if (!$this->getUuid()->equals($informedUuid) && $this->hasPermission(UserRoles::ADMIN)) {
             throw new ForbidenException(
                 message: 'You do not have permission to update this user',
             );

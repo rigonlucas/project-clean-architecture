@@ -43,7 +43,7 @@ class FrameworkService implements FrameworkContract
         return UuidAdapter::getInstance();
     }
 
-    public function Str(): StrContract
+    public function str(): StrContract
     {
         return StrAdapter::getInstance();
     }

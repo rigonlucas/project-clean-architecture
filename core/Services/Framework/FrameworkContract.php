@@ -23,5 +23,5 @@ interface FrameworkContract
 
     public function passwordHash(string $password): string;
 
-    public function Str(): StrContract;
+    public function str(): StrContract;
 }

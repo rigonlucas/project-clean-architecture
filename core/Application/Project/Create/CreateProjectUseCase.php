@@ -9,11 +9,11 @@ use Core\Application\Project\Create\inputs\CreateProjectInput;
 use Core\Domain\Entities\Project\ProjectEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\Dates\DateMustBeBeforeOtherException;
 use Core\Support\Exceptions\Dates\DateMustBeInCurrentDayException;
 use Core\Support\Exceptions\Dates\DateRequiredException;
 use Core\Support\Exceptions\Dates\DatesMustBeDifferntsException;
-use Core\Support\Exceptions\ForbidenException;
 use Core\Support\Http\ResponseStatus;
 
 class CreateProjectUseCase
@@ -53,7 +53,6 @@ class CreateProjectUseCase
             uuid: $this->framework->uuid()->uuid7Generate(),
             startAt: $createProjectInput->startAt,
             finishAt: $createProjectInput->finishAt
-
         );
 
         return $this->projectCommand->create($projectEntity);

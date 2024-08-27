@@ -10,7 +10,7 @@ class OutputErrorException extends Exception
         string $message,
         int $code,
         Exception $previous = null,
-        private ?array $errors = []
+        private readonly ?array $errors = []
     ) {
         parent::__construct($message, $code, $previous);
     }

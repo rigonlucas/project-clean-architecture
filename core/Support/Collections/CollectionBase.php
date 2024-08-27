@@ -4,7 +4,7 @@ namespace Core\Support\Collections;
 
 use ArrayIterator;
 use Core\Support\Collections\Paginations\toArrayInterface;
-use Core\Support\Exceptions\MentodMustBeImplementedException;
+use Core\Support\Exceptions\MethodMustBeImplementedException;
 use Countable;
 use IteratorAggregate;
 use Traversable;
@@ -39,10 +39,10 @@ class CollectionBase implements IteratorAggregate, Countable, toArrayInterface
     }
 
     /**
-     * @throws MentodMustBeImplementedException
+     * @throws MethodMustBeImplementedException
      */
     public function toArray(): array
     {
-        throw new MentodMustBeImplementedException('Method toArray not implemented');
+        throw new MethodMustBeImplementedException('Method toArray not implemented');
     }
 }

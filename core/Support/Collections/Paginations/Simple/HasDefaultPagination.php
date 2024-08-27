@@ -2,7 +2,7 @@
 
 namespace Core\Support\Collections\Paginations\Simple;
 
-use Core\Support\Exceptions\MentodMustBeImplementedException;
+use Core\Support\Exceptions\MethodMustBeImplementedException;
 use Exception;
 
 trait HasDefaultPagination
@@ -21,13 +21,13 @@ trait HasDefaultPagination
     private int $total = 0;
 
     /**
-     * @throws MentodMustBeImplementedException
+     * @throws MethodMustBeImplementedException
      * @throws Exception
      */
     public function paginated(): array
     {
         if (!method_exists($this, 'toArray')) {
-            throw new MentodMustBeImplementedException('Method toArray() not found in class ' . get_class($this));
+            throw new MethodMustBeImplementedException('Method toArray() not found in class ' . get_class($this));
         }
 
         return [

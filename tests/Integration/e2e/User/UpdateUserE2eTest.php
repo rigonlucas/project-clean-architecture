@@ -63,7 +63,7 @@ class UpdateUserE2eTest extends TestCase
             HttpApiHeaders::$headersJson
         );
         //assert response
-        $response->assertStatus(422);
+        $response->assertStatus(ResponseStatus::UNPROCESSABLE_ENTITY->value);
 
         $response->assertJsonStructure([
             'message',
