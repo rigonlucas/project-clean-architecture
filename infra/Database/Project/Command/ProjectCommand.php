@@ -17,7 +17,7 @@ class ProjectCommand implements ProjectCommandInterface
         $project->description = $projectEntity->getDescription();
         $project->account_id = $projectEntity->getAccount()->getId();
         $project->created_by_user_id = $projectEntity->getUser()->getId();
-        $project->status = null;
+        $project->status = $projectEntity->getStatus()->value;
         $project->start_at = $projectEntity->getStartAt()?->startOfDay();
         $project->finish_at = $projectEntity->getFinishAt()?->startOfDay();
         $project->uuid = $projectEntity->getUuid()->toString();
