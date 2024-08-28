@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Project\CreateProjectController;
 use App\Http\Controllers\V1\User\ChangeUserRoleController;
 use App\Http\Controllers\V1\User\CreateUserController;
 use App\Http\Controllers\V1\User\ShowUserController;
@@ -28,6 +29,10 @@ Route::prefix('v1')
                 ->name('api.v1.user.change-role');
             Route::get('/user/list', [UserListFromAccountController::class, '__invoke'])
                 ->name('api.v1.user.list');
+        });
+        Route::prefix('project')->group(function () {
+            Route::post('/create', [CreateProjectController::class, '__invoke'])
+                ->name('api.v1.project.create');
         });
     });
 

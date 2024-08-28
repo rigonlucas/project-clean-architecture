@@ -24,13 +24,13 @@ class ChangeUserRoleController extends Controller
 
     public function __invoke(ChangeUserRoleRequest $request, string $userUuid)
     {
-        $userAutenticated = $this->frameworkService->auth()->user();
-        $changeRoleInput = new ChangeUserRoleInput(
-            authenticatedUser: $userAutenticated,
-            userUuid: $userUuid,
-            role: $request->role
-        );
         try {
+            $userAutenticated = $this->frameworkService->auth()->user();
+            $changeRoleInput = new ChangeUserRoleInput(
+                authenticatedUser: $userAutenticated,
+                userUuid: $userUuid,
+                role: $request->role
+            );
             $this->frameworkService->transactionManager()->beginTransaction();
 
             $handler = new ChangeRoleUserHandler(

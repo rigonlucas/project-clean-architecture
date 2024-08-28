@@ -5,6 +5,7 @@ namespace Core\Domain\Entities\Project\Traits;
 use Carbon\CarbonInterface;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Enum\Project\StatusProjectEnum;
 use Ramsey\Uuid\UuidInterface;
 
 trait ProjectEntityAcessors
@@ -89,5 +90,15 @@ trait ProjectEntityAcessors
     public function setFinishAt(?CarbonInterface $finishAt): void
     {
         $this->finishAt = $finishAt;
+    }
+
+    public function getStatus(): StatusProjectEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(StatusProjectEnum $status): void
+    {
+        $this->status = $status;
     }
 }

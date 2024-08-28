@@ -3,10 +3,12 @@
 namespace Core\Domain\Entities\Project;
 
 use Carbon\CarbonInterface;
+use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\Project\Traits\HasProjectEntityBuilder;
 use Core\Domain\Entities\Project\Traits\ProjectEntityAcessors;
 use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\Dates\DateMustBeBeforeOtherException;
 use Core\Support\Exceptions\Dates\DateMustBeInCurrentDayException;
@@ -28,6 +30,12 @@ class ProjectEntity
     private ?AccountEntity $account = null;
     private ?CarbonInterface $startAt = null;
     private ?CarbonInterface $finishAt = null;
+    private StatusProjectEnum $status;
+    private array $allowedStatusToCreateProject = [
+        StatusProjectEnum::BACKLOG->value,
+        StatusProjectEnum::PENDING->value,
+        StatusProjectEnum::IN_PROGRESS->value
+    ];
 
     private function __construct()
     {
@@ -35,6 +43,7 @@ class ProjectEntity
 
     /**
      * @throws ForbidenException
+     * @throws ProjectStatusUnableException
      */
     private function canCreateProject(): void
     {
@@ -52,6 +61,12 @@ class ProjectEntity
 
         if ($this->account->getId() !== $this->user->getAccount()->getId()) {
             throw new ForbidenException('Your account is not allowed to create a project in this account');
+        }
+
+        if ($this->status->isNotIn($this->allowedStatusToCreateProject)) {
+            throw new ProjectStatusUnableException(
+                "Only BACKLOG, IN PROGRESS and PENDING status are allowed to create a project, " . $this->status->value . " given"
+            );
         }
     }
 

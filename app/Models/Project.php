@@ -25,4 +25,15 @@ class Project extends Model
     use SoftDeletes;
 
     protected $table = 'projects';
+
+    protected $fillable = [
+        'name',
+        'description',
+        'account_id',
+        'created_by_user_id',
+        'status',
+        'start_at',
+        'finish_at',
+        'uuid',
+    ];
 }
