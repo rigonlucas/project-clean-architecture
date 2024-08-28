@@ -22,6 +22,15 @@ class ProjectEntity
     use ProjectEntityAcessors;
     use HasProjectEntityBuilder;
 
+    public const array PERMISSIONS_TO_MANAGEMEMT = [
+        UserRoles::ADMIN,
+        UserRoles::EDITOR
+    ];
+    private const array STATUS_TO_CREATE = [
+        StatusProjectEnum::BACKLOG->value,
+        StatusProjectEnum::PENDING->value,
+        StatusProjectEnum::IN_PROGRESS->value
+    ];
     private int $id;
     private UuidInterface $uuid;
     private string $name;
@@ -31,11 +40,6 @@ class ProjectEntity
     private ?CarbonInterface $startAt = null;
     private ?CarbonInterface $finishAt = null;
     private StatusProjectEnum $status;
-    private array $allowedStatusToCreateProject = [
-        StatusProjectEnum::BACKLOG->value,
-        StatusProjectEnum::PENDING->value,
-        StatusProjectEnum::IN_PROGRESS->value
-    ];
 
     private function __construct()
     {
@@ -51,7 +55,7 @@ class ProjectEntity
             throw new ForbidenException('An user is required to create a project');
         }
 
-        if ($this->user->hasNotAnyPermissionFromArray([UserRoles::ADMIN, UserRoles::EDITOR])) {
+        if ($this->user->hasNotAnyPermissionFromArray(self::PERMISSIONS_TO_MANAGEMEMT)) {
             throw new ForbidenException('You do not have permission to create a project');
         }
 
@@ -63,7 +67,7 @@ class ProjectEntity
             throw new ForbidenException('Your account is not allowed to create a project in this account');
         }
 
-        if ($this->status->isNotIn($this->allowedStatusToCreateProject)) {
+        if ($this->status->isNotIn(self::STATUS_TO_CREATE)) {
             throw new ProjectStatusUnableException(
                 "Only BACKLOG, IN PROGRESS and PENDING status are allowed to create a project, " . $this->status->value . " given"
             );
