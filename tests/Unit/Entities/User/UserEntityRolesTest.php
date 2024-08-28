@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\User\Entity;
+namespace Tests\Unit\Entities\User;
 
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\InvalideRules\InvalidRoleException;

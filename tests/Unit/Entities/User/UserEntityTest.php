@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\User\Entity;
+namespace Tests\Unit\Entities\User;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\User\UserEntity;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Account;
+namespace Tests\Unit\Entities\Account;
 
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;

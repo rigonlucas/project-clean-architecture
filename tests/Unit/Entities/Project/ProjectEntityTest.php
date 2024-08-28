@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Project;
+namespace Tests\Unit\Entities\Project;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\Project\ProjectEntity;
@@ -104,20 +104,20 @@ class ProjectEntityTest extends TestCase
     {
         $this->expectException(DatesMustBeDifferntsException::class);
         ProjectEntity::forCreate(
-            'Project Name',
-            'Project Description',
-            UserEntity::forIdentify(
-                1,
-                Uuid::uuid7(),
-                UserRoles::ADMIN,
-                1
+            name: 'Project Name',
+            description: 'Project Description',
+            user: UserEntity::forIdentify(
+                id: 1,
+                uuid: Uuid::uuid7(),
+                role: UserRoles::ADMIN,
+                accountId: 1
             ),
-            AccountEntity::forIdentify(
-                1
+            account: AccountEntity::forIdentify(
+                id: 1
             ),
-            Uuid::uuid7(),
-            now(),
-            now()
+            uuid: Uuid::uuid7(),
+            startAt: now(),
+            finishAt: now()
         );
     }
 
@@ -125,20 +125,20 @@ class ProjectEntityTest extends TestCase
     {
         $this->expectException(DateMustBeInCurrentDayException::class);
         ProjectEntity::forCreate(
-            'Project Name',
-            'Project Description',
-            UserEntity::forIdentify(
-                1,
-                Uuid::uuid7(),
-                UserRoles::ADMIN,
+            name: 'Project Name',
+            description: 'Project Description',
+            user: UserEntity::forIdentify(
+                id: 1,
+                uuid: Uuid::uuid7(),
+                role: UserRoles::ADMIN,
+                accountId: 1
+            ),
+            account: AccountEntity::forIdentify(
                 1
             ),
-            AccountEntity::forIdentify(
-                1
-            ),
-            Uuid::uuid7(),
-            now()->subDay(),
-            now()
+            uuid: Uuid::uuid7(),
+            startAt: now()->subDay(),
+            finishAt: now()
         );
     }
 }
