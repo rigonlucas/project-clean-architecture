@@ -19,8 +19,8 @@ class CreateProjectRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:500'],
             'status' => ['required', new Enum(StatusProjectEnum::class)],
-            'start_at' => ['nullable', 'date:d/m/Y'],
-            'finish_at' => ['nullable', 'dated/m/Y'],
+            'start_at' => ['nullable', 'date', 'date_format:Y-m-d'],
+            'finish_at' => ['nullable', 'date', 'date_format:Y-m-d'],
         ];
     }
 }

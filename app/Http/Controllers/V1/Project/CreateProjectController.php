@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Create\inputs\CreateProjectInput;
+use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\Project\ProjectCreatedPresenter;
 use Core\Services\Framework\FrameworkContract;
@@ -29,9 +30,9 @@ class CreateProjectController extends Controller
         $input = new CreateProjectInput(
             name: $request->name,
             description: $request->description,
-            startAt: Carbon::createFromFormat('d/m/y', $request->start_at),
-            finishAt: Carbon::createFromFormat('d/m/y', $request->finish_at),
-            status: $request->status
+            startAt: Carbon::createFromFormat('Y-m-d', $request->start_at),
+            finishAt: Carbon::createFromFormat('Y-m-d', $request->finish_at),
+            status: StatusProjectEnum::from($request->status)
         );
         try {
             $this->framework->transactionManager()->beginTransaction();

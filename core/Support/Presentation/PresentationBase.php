@@ -8,7 +8,7 @@ class PresentationBase
 
     public function withDataAttribute(): self
     {
-        $this->data['data'] = $this->data;
+        $this->data = ['data' => $this->data];
         return $this;
     }
 
