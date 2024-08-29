@@ -3,6 +3,7 @@
 namespace Tests\Integration\e2e\User;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
@@ -28,7 +29,21 @@ class AccountUserListE2eTest extends TestCase
         $this->assertEquals(1, $data->total);
         $this->assertCount(1, $data->data);
         $this->assertFalse(EmailValueObject::isEmailSuppressed($data->data[0]->email));
-
+        $firstRow = $data->data[0];
+        $this->assertEquals($this->user->uuid, $firstRow->uuid);
+        $this->assertEquals($this->user->name, $firstRow->name);
+        $this->assertEquals($this->user->email, $firstRow->email);
+        $this->assertEquals(
+            Carbon::createFromFormat('Y-m-d', $this->user->birthday)->startOfDay()->getTimestamp(),
+            $firstRow->birthday
+        );
+        $this->assertEquals(UserRoles::ADMIN, $firstRow->role->value);
+        $this->assertEquals([
+            1 => 'READ',
+            2 => 'WRITE',
+            4 => 'DELETE',
+            8 => 'EXECUTE'
+        ], (array)$firstRow->role->permissions);
 
         $response->assertJsonStructure([
             'current_page',
@@ -38,7 +53,10 @@ class AccountUserListE2eTest extends TestCase
                     'name',
                     'email',
                     'birthday',
-                    'role',
+                    'role' => [
+                        'name',
+                        'permissions',
+                    ],
                 ],
             ],
             'first_page_url',

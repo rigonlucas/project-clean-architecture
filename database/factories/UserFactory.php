@@ -35,6 +35,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'uuid' => fake()->uuid(),
             'role' => UserRoles::VIEWER,
+            'birthday' => fake()->date(),
         ];
     }
 

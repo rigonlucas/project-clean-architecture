@@ -35,7 +35,7 @@ class ProjectEntityTest extends TestCase
             [StatusProjectEnum::ON_HOLD],
             [StatusProjectEnum::ARCHIVED],
             [StatusProjectEnum::REVIEW],
-            [StatusProjectEnum::DEPLOYED],
+            [StatusProjectEnum::DELIVERED],
         ];
     }
 

@@ -6,6 +6,7 @@ use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Collections\CollectionBase;
 use Core\Support\Collections\Paginations\Simple\HasDefaultPagination;
 use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
+use Core\Support\Permissions\UserRoles;
 
 class UserCollection extends CollectionBase
 {
@@ -32,8 +33,12 @@ class UserCollection extends CollectionBase
                 'uuid' => $user->getUuid(),
                 'name' => $user->getName(),
                 'email' => $user->getEmailWithAccessControl($this->requireUserEntity)->get(),
-                'birthday' => $user->getBirthday()->getTimestamp(),
-                'role' => $user->getRoleName(),
+                'birthday' => $user->getBirthday()?->getTimestamp(),
+                'role' => [
+                    'name' => $user->getRoleName(),
+                    'value' => $user->getPermissions(),
+                    'permissions' => UserRoles::getPermissionsForRole($user->getPermissions()),
+                ],
             ],
             $this->items
         );

@@ -31,6 +31,7 @@ return new class extends Migration {
             $table->timestamps();
             $table->softDeletes();
             $table->uuid()->unique();
+            $table->index(['account_id', 'uuid']);
         });
     }
 

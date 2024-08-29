@@ -13,7 +13,7 @@ enum StatusProjectEnum: string
     case ON_HOLD = 'ON _HOLD';
     case ARCHIVED = 'ARCHIVED';
     case REVIEW = 'REVIEW';
-    case DEPLOYED = 'DELIVERED';
+    case DELIVERED = 'DELIVERED';
 
     public function isNotIn(array $array): bool
     {
