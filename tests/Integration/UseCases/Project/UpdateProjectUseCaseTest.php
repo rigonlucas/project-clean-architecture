@@ -72,7 +72,7 @@ class UpdateProjectUseCaseTest extends TestCase
             description: 'Desc',
             startAt: now(),
             finishAt: now()->addYears(),
-            status: StatusProjectEnum::PENDING
+            status: StatusProjectEnum::ON_HOLD
         );
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,

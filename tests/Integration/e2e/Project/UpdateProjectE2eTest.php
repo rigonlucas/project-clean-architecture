@@ -29,7 +29,7 @@ class UpdateProjectE2eTest extends TestCase
             [
                 'name' => 'Project Name',
                 'description' => 'Project Description',
-                'status' => StatusProjectEnum::IN_PROGRESS->value,
+                'status' => StatusProjectEnum::ON_HOLD->value,
                 'start_at' => now()->addDay()->format('Y-m-d'),
                 'finish_at' => now()->addMonths(2)->format('Y-m-d'),
             ]
@@ -46,7 +46,7 @@ class UpdateProjectE2eTest extends TestCase
             'description' => 'Project Description',
             'start_at' => now()->addDay()->startOfDay()->format('Y-m-d H:i:s'),
             'finish_at' => now()->addMonths(2)->startOfDay()->format('Y-m-d H:i:s'),
-            'status' => StatusProjectEnum::IN_PROGRESS->value,
+            'status' => StatusProjectEnum::ON_HOLD->value,
         ]);
     }
 
