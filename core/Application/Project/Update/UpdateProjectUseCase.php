@@ -4,12 +4,12 @@ namespace Core\Application\Project\Update;
 
 use Core\Application\Project\Commons\Exceptions\ProjectAlreadyExistsException;
 use Core\Application\Project\Commons\Exceptions\ProjectNotFoundException;
-use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
 use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Commons\Validations\HasProjectWithSameNameValidation;
 use Core\Application\Project\Update\inputs\UpdateProjectInput;
 use Core\Domain\Entities\Project\ProjectEntity;
+use Core\Domain\Entities\Project\StatusValidation\StatusValidationFactory;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\Dates\DateMustBeBeforeOtherException;
@@ -35,7 +35,6 @@ readonly class UpdateProjectUseCase
      * @return ProjectEntity
      * @throws ProjectAlreadyExistsException
      * @throws ProjectNotFoundException
-     * @throws ProjectStatusUnableException
      * @throws ForbidenException
      * @throws DateMustBeBeforeOtherException
      * @throws DateMustBeInCurrentDayException
@@ -68,6 +67,8 @@ readonly class UpdateProjectUseCase
 
         $recordedProjectEntity->canChangeProject();
         $recordedProjectEntity->datesValidation();
+
+        StatusValidationFactory::make($recordedProjectEntity)->validateWithThrowException();
 
 
         return $this->projectCommand->update($recordedProjectEntity);
