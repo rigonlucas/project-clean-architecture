@@ -26,7 +26,7 @@ class ProjectEntity
         UserRoles::ADMIN,
         UserRoles::EDITOR
     ];
-    private const array STATUS_TO_CREATE = [
+    public const array STATUS_TO_CREATE = [
         StatusProjectEnum::BACKLOG->value,
         StatusProjectEnum::PENDING->value,
         StatusProjectEnum::IN_PROGRESS->value
@@ -47,7 +47,6 @@ class ProjectEntity
 
     /**
      * @throws ForbidenException
-     * @throws ProjectStatusUnableException
      */
     public function canChangeProject(): void
     {
@@ -65,12 +64,6 @@ class ProjectEntity
 
         if ($this->account->getId() !== $this->user->getAccount()->getId()) {
             throw new ForbidenException('Your account is not allowed to create a project in this account');
-        }
-
-        if ($this->status->isNotIn(self::STATUS_TO_CREATE)) {
-            throw new ProjectStatusUnableException(
-                "Only BACKLOG, IN PROGRESS and PENDING status are allowed to create a project, " . $this->status->value . " given"
-            );
         }
     }
 
@@ -102,6 +95,18 @@ class ProjectEntity
             if ($this->startAt->isBefore(now()->startOfDay())) {
                 throw new DateMustBeInCurrentDayException('The start date must be before the current day');
             }
+        }
+    }
+
+    /**
+     * @throws ProjectStatusUnableException
+     */
+    public function canCreate(): void
+    {
+        if ($this->status->isNotIn(ProjectEntity::STATUS_TO_CREATE)) {
+            throw new ProjectStatusUnableException(
+                "Only BACKLOG, IN PROGRESS and PENDING status are allowed to create a project, " . $this->status->value . " given"
+            );
         }
     }
 }

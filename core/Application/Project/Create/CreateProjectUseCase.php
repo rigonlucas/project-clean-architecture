@@ -60,6 +60,7 @@ readonly class CreateProjectUseCase
         );
 
         $projectEntity->canChangeProject();
+        $projectEntity->canCreate();
         $projectEntity->datesValidation();
 
         return $this->projectCommand->create($projectEntity);

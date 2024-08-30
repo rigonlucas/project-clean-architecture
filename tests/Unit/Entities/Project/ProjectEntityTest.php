@@ -23,13 +23,13 @@ class ProjectEntityTest extends TestCase
     public static function statusInvalidForCreationProvider(): array
     {
         return [
-            [StatusProjectEnum::FINISHED],
-            [StatusProjectEnum::CANCELED],
-            [StatusProjectEnum::VALIDATION],
-            [StatusProjectEnum::ON_HOLD],
-            [StatusProjectEnum::ARCHIVED],
-            [StatusProjectEnum::REVIEW],
-            [StatusProjectEnum::DELIVERED],
+            'finished' => [StatusProjectEnum::FINISHED],
+            'canceled' => [StatusProjectEnum::CANCELED],
+            'validation' => [StatusProjectEnum::VALIDATION],
+            'on hold' => [StatusProjectEnum::ON_HOLD],
+            'archived' => [StatusProjectEnum::ARCHIVED],
+            'review' => [StatusProjectEnum::REVIEW],
+            'delivered' => [StatusProjectEnum::DELIVERED],
         ];
     }
 
@@ -244,5 +244,6 @@ class ProjectEntityTest extends TestCase
         );
         $projectEntity->canChangeProject();
         $projectEntity->datesValidation();
+        $projectEntity->canCreate();
     }
 }
