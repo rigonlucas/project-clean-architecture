@@ -11,12 +11,7 @@ readonly class DefaultValidation implements StatusValidationInterface
     {
     }
 
-    public function validate(): bool
-    {
-        return true;
-    }
-
-    public function validateWithThrowException(): void
+    public function validate(): void
     {
     }
 }

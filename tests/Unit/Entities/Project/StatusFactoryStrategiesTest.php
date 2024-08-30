@@ -7,6 +7,7 @@ use Core\Domain\Entities\Project\ProjectEntity;
 use Core\Domain\Entities\Project\StatusValidation\StatusValidationFactory;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
+use Core\Support\Exceptions\Dates\DateNotAllowedException;
 use Core\Support\Exceptions\Dates\DateRequiredException;
 use Core\Support\Permissions\UserRoles;
 use Ramsey\Uuid\Uuid;
@@ -48,7 +49,8 @@ class StatusFactoryStrategiesTest extends TestCase
                     account: AccountEntity::forIdentify(1),
                     uuid: Uuid::uuid7(),
                     status: StatusProjectEnum::IN_PROGRESS,
-                    finishAt: now()
+                    startAt: now()->addDay(),
+                    finishAt: now()->addDays(2)
                 )
             ]
         ];
@@ -57,30 +59,69 @@ class StatusFactoryStrategiesTest extends TestCase
     /**
      * @dataProvider projectEntityProvider
      */
-    public function test_default_strategy_from_factory(ProjectEntity $projectEntity)
+    public function test_default_strategy_from_factory_has_only_success_case(ProjectEntity $projectEntity)
     {
         $this->expectNotToPerformAssertions();
         $projectEntity->setStatus(StatusProjectEnum::BACKLOG);
-        StatusValidationFactory::make($projectEntity)->validateWithThrowException();
+        StatusValidationFactory::make($projectEntity)->validate();
     }
 
     /**
      * @dataProvider projectEntityProvider
      */
-    public function test_pending_strategy_from_factory(projectentity $projectEntity)
-    {
+    public function test_pending_strategy_from_factory_success_case_when_finish_date_are_null(
+        projectentity $projectEntity
+    ) {
         $this->expectNotToPerformAssertions();
         $projectEntity->setStatus(StatusProjectEnum::PENDING);
-        StatusValidationFactory::make($projectEntity)->validateWithThrowException();
+        $projectEntity->setFinishAt(null);
+        StatusValidationFactory::make($projectEntity)->validate();
     }
 
     /**
      * @dataProvider projectEntityProvider
      */
-    public function test_in_progress_strategy_from_factory(ProjectEntity $projectEntity)
+    public function test_pending_strategy_from_factory_throw_case_when_finish_date_are_not_null(
+        projectentity $projectEntity
+    ) {
+        $this->expectException(DateNotAllowedException::class);
+        $projectEntity->setStatus(StatusProjectEnum::PENDING);
+        StatusValidationFactory::make($projectEntity)->validate();
+    }
+
+    /**
+     * @dataProvider projectEntityProvider
+     */
+    public function test_in_progress_strategy_from_factory_fail_case_without_started_date(ProjectEntity $projectEntity)
     {
         $this->expectException(DateRequiredException::class);
         $projectEntity->setStatus(StatusProjectEnum::IN_PROGRESS);
-        StatusValidationFactory::make($projectEntity)->validateWithThrowException();
+        $projectEntity->setStartAt(null);
+        StatusValidationFactory::make($projectEntity)->validate();
+    }
+
+    /**
+     * @dataProvider projectEntityProvider
+     */
+    public function test_in_progress_strategy_from_factory_fail_case_when_finished_date_are_setted(
+        ProjectEntity $projectEntity
+    ) {
+        $this->expectException(DateNotAllowedException::class);
+        $projectEntity->setStatus(StatusProjectEnum::IN_PROGRESS);
+        $projectEntity->setStartAt(now());
+        $projectEntity->setFinishAt(now());
+        StatusValidationFactory::make($projectEntity)->validate();
+    }
+
+    /**
+     * @dataProvider projectEntityProvider
+     */
+    public function test_in_progress_strategy_from_factory_success_case(ProjectEntity $projectEntity)
+    {
+        $this->expectNotToPerformAssertions();
+        $projectEntity->setStatus(StatusProjectEnum::IN_PROGRESS);
+        $projectEntity->setStartAt(now());
+        $projectEntity->setFinishAt(null);
+        StatusValidationFactory::make($projectEntity)->validate();
     }
 }

@@ -68,7 +68,7 @@ readonly class UpdateProjectUseCase
         $recordedProjectEntity->canChangeProject();
         $recordedProjectEntity->datesValidation();
 
-        StatusValidationFactory::make($recordedProjectEntity)->validateWithThrowException();
+        StatusValidationFactory::make($recordedProjectEntity)->validate();
 
 
         return $this->projectCommand->update($recordedProjectEntity);

@@ -5,6 +5,7 @@ namespace Core\Domain\Entities\Project\StatusValidation;
 use Core\Domain\Entities\Project\ProjectEntity;
 use Core\Domain\Entities\Project\StatusValidation\Strategies\DefaultValidation;
 use Core\Domain\Entities\Project\StatusValidation\Strategies\InProgressValidation;
+use Core\Domain\Entities\Project\StatusValidation\Strategies\PendingValidation;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 
 class StatusValidationFactory
@@ -13,6 +14,7 @@ class StatusValidationFactory
     {
         return match ($projectEntity->getStatus()) {
             StatusProjectEnum::IN_PROGRESS => new InProgressValidation($projectEntity),
+            StatusProjectEnum::PENDING => new PendingValidation($projectEntity),
             default => new DefaultValidation($projectEntity),
         };
     }

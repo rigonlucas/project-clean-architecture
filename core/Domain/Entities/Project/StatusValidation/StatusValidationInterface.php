@@ -8,7 +8,5 @@ interface StatusValidationInterface
 {
     public function __construct(ProjectEntity $projectEntity);
 
-    public function validate(): bool;
-
-    public function validateWithThrowException(): void;
+    public function validate(): void;
 }
