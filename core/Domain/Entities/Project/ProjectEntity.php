@@ -49,10 +49,10 @@ class ProjectEntity
      * @throws ForbidenException
      * @throws ProjectStatusUnableException
      */
-    private function canCreateProject(): void
+    public function canChangeProject(): void
     {
         if (is_null($this->user)) {
-            throw new ForbidenException('An user is required to create a project');
+            throw new ForbidenException('An user is required to change a project');
         }
 
         if ($this->user->hasNotAnyPermissionFromArray(self::PERMISSIONS_TO_MANAGEMEMT)) {
@@ -80,7 +80,7 @@ class ProjectEntity
      * @throws DateRequiredException
      * @throws DatesMustBeDifferntsException
      */
-    private function datesValidation(): void
+    public function datesValidation(): void
     {
         if (!is_null($this->startAt) && !is_null($this->finishAt)) {
             if ($this->startAt->isAfter($this->finishAt)) {

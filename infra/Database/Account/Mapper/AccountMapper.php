@@ -16,6 +16,7 @@ class AccountMapper implements AccountMapperInterface
         $accountModel = Account::query()
             ->select(['id', 'name', 'uuid'])
             ->where('id', $id)
+            ->toBase()
             ->first();
         if (!$accountModel) {
             return null;
@@ -33,6 +34,7 @@ class AccountMapper implements AccountMapperInterface
         $accountModel = Account::query()
             ->select(['id', 'name', 'uuid'])
             ->where('uuid', $uuid)
+            ->toBase()
             ->first();
         if (!$accountModel) {
             return null;

@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\V1\Project;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\V1\Project\CreateProjectRequest;
+use App\Http\Requests\V1\Project\UpdateProjectRequest;
 use Carbon\Carbon;
 use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
-use Core\Application\Project\Create\inputs\CreateProjectInput;
+use Core\Application\Project\Update\inputs\UpdateProjectInput;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Presentation\Http\Common\OnlyUuidPresenter;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatus;
-use Infra\Handlers\UseCases\Project\Create\CreateProjectHandler;
+use Infra\Handlers\UseCases\Project\Update\UpdateProjectHandler;
+use Ramsey\Uuid\Uuid;
 
-class CreateProjectController extends Controller
+class UpdateProjectController extends Controller
 {
     public function __construct(
         private readonly FrameworkContract $framework,
@@ -25,9 +26,10 @@ class CreateProjectController extends Controller
     ) {
     }
 
-    public function __invoke(CreateProjectRequest $request)
+    public function __invoke(UpdateProjectRequest $request, string $uuid)
     {
-        $input = new CreateProjectInput(
+        $input = new UpdateProjectInput(
+            uuid: Uuid::fromString($uuid),
             name: $request->name,
             description: $request->description,
             startAt: Carbon::createFromFormat('Y-m-d', $request->start_at),
@@ -37,9 +39,8 @@ class CreateProjectController extends Controller
         try {
             $this->framework->transactionManager()->beginTransaction();
 
-            $projectHandler = new CreateProjectHandler(
+            $projectHandler = new UpdateProjectHandler(
                 userAuth: $this->framework->auth()->user(),
-                framework: $this->framework,
                 projectCommand: $this->projectCommand,
                 projectMapper: $this->projectMapper
             );

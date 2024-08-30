@@ -3,10 +3,14 @@
 namespace Infra\Database\Project\Mapper;
 
 use App\Models\Project;
+use Carbon\Carbon;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\Project\ProjectEntity;
+use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Enum\Project\StatusProjectEnum;
 use Exception;
+use Ramsey\Uuid\Uuid;
 
 class ProjectMapper implements ProjectMapperInterface
 {
@@ -16,9 +20,27 @@ class ProjectMapper implements ProjectMapperInterface
         throw new Exception('Method not implemented');
     }
 
-    public function findByUuid(string $uuid): ?ProjectEntity
+    public function findByUuid(string $uuid, UserEntity $userEntity): ?ProjectEntity
     {
-        throw new Exception('Method not implemented');
+        $projectModel = Project::query()
+            ->where('uuid', '=', $uuid)
+            ->toBase()
+            ->first();
+        if (!$projectModel) {
+            return null;
+        }
+
+        return ProjectEntity::forUpdate(
+            id: $projectModel->id,
+            name: $projectModel->name,
+            description: $projectModel->description,
+            user: $userEntity,
+            account: $userEntity->getAccount(),
+            uuid: Uuid::fromString($projectModel->uuid),
+            status: StatusProjectEnum::from($projectModel->status),
+            startAt: Carbon::make($projectModel->start_at),
+            finishAt: Carbon::make($projectModel->finish_at)
+        );
     }
 
     public function notExistsByName(string $name, AccountEntity $accountEntity): bool

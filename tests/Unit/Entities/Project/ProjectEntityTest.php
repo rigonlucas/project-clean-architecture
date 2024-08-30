@@ -22,12 +22,6 @@ class ProjectEntityTest extends TestCase
 {
     public static function statusInvalidForCreationProvider(): array
     {
-        $statuses = StatusProjectEnum::cases();
-        $statuses = array_filter([$statuses], fn($status) => !in_array($status, [
-            StatusProjectEnum::BACKLOG,
-            StatusProjectEnum::PENDING,
-            StatusProjectEnum::IN_PROGRESS
-        ]));
         return [
             [StatusProjectEnum::FINISHED],
             [StatusProjectEnum::CANCELED],
@@ -41,7 +35,7 @@ class ProjectEntityTest extends TestCase
 
     public function test_create_project_success_without_dates()
     {
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -56,6 +50,8 @@ class ProjectEntityTest extends TestCase
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
 
         $this->expectNotToPerformAssertions();
     }
@@ -63,7 +59,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_success_with_dates()
     {
         $this->expectNotToPerformAssertions();
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -80,12 +76,14 @@ class ProjectEntityTest extends TestCase
             startAt: now(),
             finishAt: now()->addDays(1)
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
     }
 
     public function test_create_project_success_with_date_start_at_null_and_finished_at_now()
     {
         $this->expectException(DateRequiredException::class);
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -101,12 +99,14 @@ class ProjectEntityTest extends TestCase
             status: StatusProjectEnum::BACKLOG,
             finishAt: now()
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
     }
 
     public function test_create_project_fail_with_date_start_at_after_finished_at()
     {
         $this->expectException(DateMustBeBeforeOtherException::class);
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -123,12 +123,14 @@ class ProjectEntityTest extends TestCase
             startAt: now()->addDays(1),
             finishAt: now()
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
     }
 
     public function test_create_project_fail_with_date_start_at_equal_finished_at()
     {
         $this->expectException(DatesMustBeDifferntsException::class);
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -145,12 +147,14 @@ class ProjectEntityTest extends TestCase
             startAt: now(),
             finishAt: now()
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
     }
 
     public function test_create_project_fail_with_date_start_at_before_now()
     {
         $this->expectException(DateMustBeInCurrentDayException::class);
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -167,11 +171,13 @@ class ProjectEntityTest extends TestCase
             startAt: now()->subDay(),
             finishAt: now()
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
     }
 
     public function test_create_project_success_with_status_pending()
     {
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -186,13 +192,15 @@ class ProjectEntityTest extends TestCase
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::PENDING,
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
 
         $this->expectNotToPerformAssertions();
     }
 
     public function test_create_project_success_with_status_in_progress()
     {
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -207,6 +215,8 @@ class ProjectEntityTest extends TestCase
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::IN_PROGRESS,
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
 
         $this->expectNotToPerformAssertions();
     }
@@ -217,7 +227,7 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_invalid_status(StatusProjectEnum $status)
     {
         $this->expectException(ProjectStatusUnableException::class);
-        ProjectEntity::forCreate(
+        $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
@@ -232,5 +242,7 @@ class ProjectEntityTest extends TestCase
             uuid: Uuid::uuid7(),
             status: $status,
         );
+        $projectEntity->canChangeProject();
+        $projectEntity->datesValidation();
     }
 }

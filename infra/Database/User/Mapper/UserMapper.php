@@ -25,6 +25,7 @@ class UserMapper implements UserMapperInterface
     {
         $userModel = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->toBase()
             ->find($id);
         if (!$userModel) {
             return null;
@@ -50,6 +51,7 @@ class UserMapper implements UserMapperInterface
         $userModel = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('uuid', '=', $uuid)
+            ->toBase()
             ->first();
         if (!$userModel) {
             return null;
@@ -75,6 +77,7 @@ class UserMapper implements UserMapperInterface
         $userModel = User::query()
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('email', '=', $email)
+            ->toBase()
             ->first();
         if (!$userModel) {
             return null;
@@ -101,6 +104,7 @@ class UserMapper implements UserMapperInterface
             ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
             ->where('email', '=', $email)
             ->where('uuid', '=', $uuid->toString())
+            ->toBase()
             ->first();
         if (!$userModel) {
             return null;

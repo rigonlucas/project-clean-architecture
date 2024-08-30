@@ -30,7 +30,17 @@ class ProjectCommand implements ProjectCommandInterface
 
     public function update(ProjectEntity $projectEntity): ProjectEntity
     {
-        throw new Exception('Not implemented yet');
+        Project::query()
+            ->where('id', '=', $projectEntity->getId())
+            ->update([
+                'name' => $projectEntity->getName(),
+                'description' => $projectEntity->getDescription(),
+                'status' => $projectEntity->getStatus()->value,
+                'start_at' => $projectEntity->getStartAt()?->startOfDay(),
+                'finish_at' => $projectEntity->getFinishAt()?->startOfDay()
+            ]);
+
+        return $projectEntity;
     }
 
     public function changeStatus(ProjectEntity $projectEntity): ProjectEntity

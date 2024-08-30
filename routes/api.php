@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\Project\CreateProjectController;
+use App\Http\Controllers\V1\Project\UpdateProjectController;
 use App\Http\Controllers\V1\User\ChangeUserRoleController;
 use App\Http\Controllers\V1\User\CreateUserController;
 use App\Http\Controllers\V1\User\ShowUserController;
@@ -33,6 +34,9 @@ Route::prefix('v1')
         Route::prefix('project')->group(function () {
             Route::post('/create', [CreateProjectController::class, '__invoke'])
                 ->name('api.v1.project.create');
+            Route::put('/update/{uuid}', [UpdateProjectController::class, '__invoke'])
+                ->whereUuid('uuid')
+                ->name('api.v1.project.update');
         });
     });
 
