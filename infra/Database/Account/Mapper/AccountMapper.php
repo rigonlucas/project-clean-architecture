@@ -11,23 +11,6 @@ use Ramsey\Uuid\Uuid;
 
 class AccountMapper implements AccountMapperInterface
 {
-    public function findByid(int $id): ?AccountEntity
-    {
-        $accountModel = Account::query()
-            ->select(['id', 'name', 'uuid'])
-            ->where('id', $id)
-            ->toBase()
-            ->first();
-        if (!$accountModel) {
-            return null;
-        }
-
-        return AccountEntity::forDetail(
-            uuid: Uuid::fromString($accountModel->uuid),
-            name: $accountModel->name
-        );
-    }
-
     public function findByUuid(string $uuid): ?AccountEntity
     {
         $accountModel = Account::query()

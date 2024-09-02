@@ -8,8 +8,6 @@ use Core\Domain\Entities\User\UserEntity;
 
 interface ProjectMapperInterface
 {
-    public function findByid(int $id): ?ProjectEntity;
-
     public function findByUuid(string $uuid, UserEntity $userEntity): ?ProjectEntity;
 
     public function existsByName(string $name, AccountEntity $accountEntity): bool;

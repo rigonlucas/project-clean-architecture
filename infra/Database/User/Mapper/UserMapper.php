@@ -22,30 +22,6 @@ class UserMapper implements UserMapperInterface
      * @throws InvalidEmailException
      * @throws Exception
      */
-    public function findById(int $id): ?UserEntity
-    {
-        $userModel = User::query()
-            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
-            ->toBase()
-            ->find($id);
-        if (!$userModel) {
-            return null;
-        }
-
-        return UserEntity::forDetail(
-            name: $userModel->name,
-            email: $userModel->email,
-            uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
-            account: AccountEntity::forIdentify(Uuid::fromString($userModel->account_uuid)),
-            birthday: new DateTime($userModel->birthday),
-            role: $userModel->role
-        );
-    }
-
-    /**
-     * @throws InvalidEmailException
-     * @throws Exception
-     */
     public function findByUuid(string $uuid): ?UserEntity
     {
         $userModel = User::query()
@@ -127,9 +103,9 @@ class UserMapper implements UserMapperInterface
         return User::query()->where('email', '=', $email)->exists();
     }
 
-    public function existsUuid(int $id): bool
+    public function existsUuid(UuidInterface $uuid): bool
     {
-        return User::query()->where('uuid', '=', $id)->exists();
+        return User::query()->where('uuid', '=', $uuid->toString())->exists();
     }
 
     /**

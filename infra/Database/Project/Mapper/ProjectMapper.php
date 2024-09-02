@@ -9,16 +9,10 @@ use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\Project\ProjectEntity;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
-use Exception;
 use Ramsey\Uuid\Uuid;
 
 class ProjectMapper implements ProjectMapperInterface
 {
-
-    public function findByid(int $id): ?ProjectEntity
-    {
-        throw new Exception('Method not implemented');
-    }
 
     public function findByUuid(string $uuid, UserEntity $userEntity): ?ProjectEntity
     {

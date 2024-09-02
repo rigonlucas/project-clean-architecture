@@ -10,8 +10,6 @@ use Ramsey\Uuid\UuidInterface;
 
 interface UserMapperInterface
 {
-    public function findById(int $id): ?UserEntity;
-
     public function findByUuid(string $uuid): ?UserEntity;
 
     public function findByEmail(string $email): ?UserEntity;
@@ -20,7 +18,7 @@ interface UserMapperInterface
 
     public function existsEmail(string $email): bool;
 
-    public function existsUuid(int $id): bool;
+    public function existsUuid(UuidInterface $uuid): bool;
 
     public function paginatedAccountUserList(
         AccountEntity $account,
