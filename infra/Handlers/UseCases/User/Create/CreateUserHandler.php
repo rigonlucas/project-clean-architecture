@@ -43,7 +43,7 @@ readonly class CreateUserHandler
         );
 
         $accountInput->setUserNane(userNane: $userEntity->getName());
-        $accountInput->setUserId(userId: $userEntity->getId());
+        $accountInput->setUserUuid(userUuid: $userEntity->getUuid());
 
         $accountEntity = $createAccountUseCase->execute(input: $accountInput);
 

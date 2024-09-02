@@ -19,12 +19,12 @@ class AccountCommand implements AccountCommandInterface
         $accountModel->save();
 
         User::query()
-            ->where('id', '=', $accountEntity->getUserEntity()->getId())
+            ->where('uuid', '=', $accountEntity->getUserEntity()->getUuid())
             ->update([
-                'account_id' => $accountModel->id
+                'account_uuid' => $accountModel->uuid
             ]);
 
-        return $accountEntity->setId($accountModel->id);
+        return $accountEntity;
     }
 
     public function useAccountJoinCode(AccountEntity $accountEntity): void
@@ -32,12 +32,12 @@ class AccountCommand implements AccountCommandInterface
         AccountJoinCode::query()
             ->where('code', '=', $accountEntity->getJoinCodeEntity()->getCode())
             ->update([
-                'user_id' => $accountEntity->getUserEntity()->getId()
+                'user_uuid' => $accountEntity->getUserEntity()->getUuid()
             ]);
         User::query()
-            ->where('id', '=', $accountEntity->getUserEntity()->getId())
+            ->where('uuid', '=', $accountEntity->getUserEntity()->getUuid())
             ->update([
-                'account_id' => $accountEntity->getId()
+                'account_uuid' => $accountEntity->getUuid()
             ]);
     }
 }

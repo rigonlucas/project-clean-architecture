@@ -23,6 +23,7 @@ class ProjectMapper implements ProjectMapperInterface
     public function findByUuid(string $uuid, UserEntity $userEntity): ?ProjectEntity
     {
         $projectModel = Project::query()
+            ->select('uuid', 'name', 'description', 'status', 'start_at', 'finish_at')
             ->where('uuid', '=', $uuid)
             ->toBase()
             ->first();
@@ -31,7 +32,6 @@ class ProjectMapper implements ProjectMapperInterface
         }
 
         return ProjectEntity::forUpdate(
-            id: $projectModel->id,
             name: $projectModel->name,
             description: $projectModel->description,
             user: $userEntity,
@@ -52,7 +52,7 @@ class ProjectMapper implements ProjectMapperInterface
     {
         return Project::query()
             ->where('name', 'like', $name)
-            ->where('account_id', '=', $accountEntity->getId())
+            ->where('account_uuid', '=', $accountEntity->getUuid())
             ->exists();
     }
 }

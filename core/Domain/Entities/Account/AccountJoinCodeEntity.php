@@ -8,15 +8,16 @@ use Core\Domain\Entities\Account\Traits\JoinCode\AccountJoinCodeBuilder;
 use Core\Support\Http\ResponseStatus;
 use DateTime;
 use DateTimeInterface;
+use Ramsey\Uuid\UuidInterface;
 
 class AccountJoinCodeEntity
 {
     use AccountJoinCodeAccessors;
     use AccountJoinCodeBuilder;
 
-    private ?int $id = null;
+    private ?UuidInterface $uuid = null;
     private ?string $code = null;
-    private ?int $accountId = null;
+    private ?UuidInterface $accountId = null;
     private ?DateTimeInterface $expiresAt = null;
 
     private function __construct()

@@ -16,7 +16,7 @@ use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 /**
- * @group test_create_project_use_case
+ * @group test_update_project_use_case
  */
 class UpdateProjectUseCaseTest extends TestCase
 {
@@ -28,8 +28,8 @@ class UpdateProjectUseCaseTest extends TestCase
     public function test_create_project_success_without_dates()
     {
         $project = Project::factory()->create([
-            'created_by_user_id' => $this->user->id,
-            'account_id' => $this->user->account_id,
+            'created_by_user_uuid' => $this->user->uuid,
+            'account_uuid' => $this->user->account_uuid,
         ]);
         $input = new UpdateProjectInput(
             uuid: Uuid::fromString($project->uuid),
@@ -42,15 +42,13 @@ class UpdateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
-                accountId: $this->user->account_id
+                accountUuid: Uuid::fromString($this->user->account_uuid)
             )
         );
 
         $this->assertDatabaseHas('projects', [
-            'id' => $projectEntity->getId(),
             'uuid' => $projectEntity->getUuid()->toString(),
             'name' => 'Nome',
             'description' => 'Desc',
@@ -63,8 +61,8 @@ class UpdateProjectUseCaseTest extends TestCase
     public function test_create_project_success_with_dates()
     {
         $project = Project::factory()->create([
-            'created_by_user_id' => $this->user->id,
-            'account_id' => $this->user->account_id,
+            'created_by_user_uuid' => $this->user->uuid,
+            'account_uuid' => $this->user->account_uuid,
         ]);
         $input = new UpdateProjectInput(
             uuid: Uuid::fromString($project->uuid),
@@ -77,15 +75,13 @@ class UpdateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
-                accountId: $this->user->account_id
+                accountUuid: Uuid::fromString($this->user->account_uuid)
             )
         );
 
         $this->assertDatabaseHas('projects', [
-            'id' => $projectEntity->getId(),
             'uuid' => $projectEntity->getUuid()->toString(),
             'name' => 'Nome',
             'description' => 'Desc',

@@ -17,17 +17,15 @@ class UserValidationForSameAccountTest extends TestCase
     {
         $this->expectException(ForbidenException::class);
         $user1 = UserEntity::forIdentify(
-            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN,
-            accountId: 1
+            accountUuid: Uuid::uuid7()
         );
 
         $user2 = UserEntity::forIdentify(
-            id: 2,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN,
-            accountId: 2
+            accountUuid: Uuid::uuid7()
         );
         $user1->checkUsersAreFromSameAccount($user2);
     }
@@ -35,18 +33,18 @@ class UserValidationForSameAccountTest extends TestCase
     public function test_success_for_users_from_same_account()
     {
         $this->expectNotToPerformAssertions();
+        $accountUuid = Uuid::uuid7();
+        $userUuid = Uuid::uuid7();
         $user1 = UserEntity::forIdentify(
-            id: 1,
-            uuid: Uuid::uuid7(),
+            uuid: $userUuid,
             role: UserRoles::ADMIN,
-            accountId: 1
+            accountUuid: $accountUuid
         );
 
         $user2 = UserEntity::forIdentify(
-            id: 2,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN,
-            accountId: 1
+            accountUuid: $accountUuid
         );
         $user1->checkUsersAreFromSameAccount($user2);
     }

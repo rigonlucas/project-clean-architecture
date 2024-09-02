@@ -13,25 +13,23 @@ class ProjectCommand implements ProjectCommandInterface
     public function create(ProjectEntity $projectEntity): ProjectEntity
     {
         $project = new Project();
+        $project->uuid = $projectEntity->getUuid()->toString();
         $project->name = $projectEntity->getName();
         $project->description = $projectEntity->getDescription();
-        $project->account_id = $projectEntity->getAccount()->getId();
-        $project->created_by_user_id = $projectEntity->getUser()->getId();
+        $project->account_uuid = $projectEntity->getAccount()->getUuid();
+        $project->created_by_user_uuid = $projectEntity->getUser()->getUuid();
         $project->status = $projectEntity->getStatus()->value;
         $project->start_at = $projectEntity->getStartAt()?->startOfDay();
         $project->finish_at = $projectEntity->getFinishAt()?->startOfDay();
-        $project->uuid = $projectEntity->getUuid()->toString();
 
         $project->save();
-
-        $projectEntity->setId($project->id);
         return $projectEntity;
     }
 
     public function update(ProjectEntity $projectEntity): ProjectEntity
     {
         Project::query()
-            ->where('id', '=', $projectEntity->getId())
+            ->where('uuid', '=', $projectEntity->getUuid())
             ->update([
                 'name' => $projectEntity->getName(),
                 'description' => $projectEntity->getDescription(),

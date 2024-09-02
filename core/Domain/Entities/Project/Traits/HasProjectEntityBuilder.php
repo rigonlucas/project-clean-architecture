@@ -37,7 +37,6 @@ trait HasProjectEntityBuilder
     }
 
     public static function forUpdate(
-        int $id,
         string $name,
         string $description,
         UserEntity $user,
@@ -48,7 +47,6 @@ trait HasProjectEntityBuilder
         CarbonInterface $finishAt = null
     ): ProjectEntity {
         $project = new ProjectEntity();
-        $project->setId($id);
         $project->setStatus($status);
         $project->setUser($user);
         $project->setAccount($account);

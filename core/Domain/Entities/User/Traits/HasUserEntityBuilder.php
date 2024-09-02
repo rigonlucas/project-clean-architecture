@@ -32,6 +32,7 @@ trait HasUserEntityBuilder
         $userEntity->setPassword($password);
         $userEntity->setUuid($uuid);
         $userEntity->setAccount($account);
+        $userEntity->setPermissions($role);
 
         return $userEntity;
     }
@@ -40,16 +41,14 @@ trait HasUserEntityBuilder
      * @throws InvalidEmailException
      */
     public static function forDetail(
-        int $id,
         string $name,
         string $email,
         UuidInterface $uuid,
-        AccountEntity $account,
+        ?AccountEntity $account,
         ?DateTimeInterface $birthday = null,
         int $role = 0
     ): UserEntity {
         $userEntity = new UserEntity();
-        $userEntity->setId($id);
         $userEntity->setName($name);
         $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setBirthday($birthday);
@@ -64,7 +63,7 @@ trait HasUserEntityBuilder
      * @throws InvalidEmailException
      */
     public static function forUpdate(
-        int $id,
+        UuidInterface $uuid,
         string $name,
         string $email,
         #[SensitiveParameter]
@@ -74,7 +73,7 @@ trait HasUserEntityBuilder
     ): UserEntity {
         $userEntity = new UserEntity();
         $userEntity->setBirthday($birthday);
-        $userEntity->setId($id);
+        $userEntity->setUuid($uuid);
         $userEntity->setName($name);
         $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setPassword($password);
@@ -83,29 +82,25 @@ trait HasUserEntityBuilder
         return $userEntity;
     }
 
-    public static function forDelete(int $id, int $role = 0): UserEntity
+    public static function forDelete(UuidInterface $uuid, int $role = 0): UserEntity
     {
         $userEntity = new UserEntity();
-        $userEntity->setId($id);
+        $userEntity->setUuid($uuid);
         $userEntity->setPermissions($role);
 
         return $userEntity;
     }
 
     public static function forIdentify(
-        int $id,
-        ?UuidInterface $uuid = null,
+        UuidInterface $uuid,
         int $role = 0,
-        ?int $accountId = null
+        ?UuidInterface $accountUuid = null
     ): UserEntity {
         $userEntity = new UserEntity();
-        $userEntity->setId($id);
         $userEntity->setPermissions($role);
-        if ($uuid) {
-            $userEntity->setUuid($uuid);
-        }
-        if ($accountId) {
-            $userEntity->setAccount(AccountEntity::forIdentify($accountId));
+        $userEntity->setUuid($uuid);
+        if ($accountUuid) {
+            $userEntity->setAccount(AccountEntity::forIdentify($accountUuid));
         }
 
         return $userEntity;

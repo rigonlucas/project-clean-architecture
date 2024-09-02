@@ -12,21 +12,21 @@ class UserCommand implements UserCommandInterface
     public function create(UserEntity $userEntity): UserEntity
     {
         $userModel = new User();
+        $userModel->uuid = $userEntity->getUuid()->toString();
         $userModel->name = $userEntity->getName();
+        $userModel->account_uuid = null;
         $userModel->email = $userEntity->getEmail();
         $userModel->password = $userEntity->getPassword();
         $userModel->birthday = $userEntity->getBirthday();
-        $userModel->uuid = $userEntity->getUuid()->toString();
-        $userModel->account_id = null;
         $userModel->save();
 
-        return $userEntity->setId($userModel->id);
+        return $userEntity;
     }
 
     public function changeRole(UserEntity $userEntity): void
     {
         User::query()
-            ->where('id', '=', $userEntity->getId())
+            ->where('uuid', '=', $userEntity->getUuid())
             ->update([
                 'role' => $userEntity->getPermissions()
             ]);
@@ -35,7 +35,7 @@ class UserCommand implements UserCommandInterface
     public function update(UserEntity $userEntity): UserEntity
     {
         User::query()
-            ->where('id', '=', $userEntity->getId())
+            ->where('uuid', '=', $userEntity->getUuid())
             ->update([
                 'name' => $userEntity->getName(),
                 'email' => $userEntity->getEmail(),

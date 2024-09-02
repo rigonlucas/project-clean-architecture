@@ -11,8 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('account_id')->nullable()->default(null);
+            $table->uuid()->primary();
+            $table->foreignUuid('account_uuid')
+                ->nullable()
+                ->default(null)
+                ->constrained('accounts', 'uuid');
             $table->smallInteger('role')->default(0);
             $table->string('name');
             $table->string('email')->unique();
@@ -22,7 +25,6 @@ return new class extends Migration {
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
-            $table->uuid()->unique();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -33,7 +35,7 @@ return new class extends Migration {
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
+            $table->foreignUuid('user_uuid')->constrained('users', 'uuid')->nullable()->index();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->longText('payload');

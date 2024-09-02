@@ -21,8 +21,8 @@ class UpdateProjectE2eTest extends TestCase
     public function test_create_project_success_without_dates()
     {
         $project = Project::factory()->create([
-            'created_by_user_id' => $this->user->id,
-            'account_id' => $this->user->account_id,
+            'created_by_user_uuid' => $this->user->uuid,
+            'account_uuid' => $this->user->account_uuid,
         ]);
         $response = $this->putJson(
             route('api.v1.project.update', $project->uuid),

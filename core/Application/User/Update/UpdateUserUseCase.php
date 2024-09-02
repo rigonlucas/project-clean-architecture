@@ -46,7 +46,7 @@ class UpdateUserUseCase
         }
 
         $userEntity = UserEntity::forUpdate(
-            id: $recordedUser->getId(),
+            uuid: $recordedUser->getUuid(),
             name: $input->name,
             email: $input->email,
             password: $this->framework->passwordHash($input->password),

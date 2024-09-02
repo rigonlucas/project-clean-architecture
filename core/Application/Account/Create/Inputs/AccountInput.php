@@ -2,9 +2,11 @@
 
 namespace Core\Application\Account\Create\Inputs;
 
+use Ramsey\Uuid\UuidInterface;
+
 class AccountInput
 {
-    private ?int $userId;
+    private ?UuidInterface $userUuid = null;
     private ?string $userNane;
 
     public function __construct(
@@ -22,14 +24,14 @@ class AccountInput
         $this->userNane = $userNane;
     }
 
-    public function getUserId(): ?int
+    public function getUserUuid(): UuidInterface
     {
-        return $this->userId;
+        return $this->userUuid;
     }
 
-    public function setUserId(int $userId): void
+    public function setUserUuid(UuidInterface $userUuid): void
     {
-        $this->userId = $userId;
+        $this->userUuid = $userUuid;
     }
 
 }

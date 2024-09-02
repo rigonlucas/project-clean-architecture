@@ -8,6 +8,7 @@ use Core\Support\Permissions\UserRoles;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @extends Factory<User>
@@ -27,13 +28,13 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'account_id' => Account::factory(),
+            'uuid' => Uuid::uuid7()->toString(),
+            'account_uuid' => Account::factory(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'uuid' => fake()->uuid(),
             'role' => UserRoles::VIEWER,
             'birthday' => fake()->date(),
         ];

@@ -20,7 +20,7 @@ interface UserMapperInterface
 
     public function existsEmail(string $email): bool;
 
-    public function existsId(int $id): bool;
+    public function existsUuid(int $id): bool;
 
     public function paginatedAccountUserList(
         AccountEntity $account,

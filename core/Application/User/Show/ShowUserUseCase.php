@@ -32,7 +32,7 @@ class ShowUserUseCase
             );
         }
 
-        $accountEntity = $this->accountMapper->findByid($userEntity->getAccount()->getId());
+        $accountEntity = $this->accountMapper->findByUuid($userEntity->getAccount()->getUuid());
         $userEntity->setAccount($accountEntity);
 
         return $userEntity;

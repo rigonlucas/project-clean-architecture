@@ -21,13 +21,13 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => Uuid::uuid7()->toString(),
             'name' => $this->faker->name,
             'description' => $this->faker->text,
             'start_at' => $this->faker->dateTime,
             'finish_at' => $this->faker->dateTime,
-            'uuid' => Uuid::uuid7()->toString(),
-            'created_by_user_id' => User::factory(),
-            'account_id' => Account::factory(),
+            'created_by_user_uuid' => User::factory(),
+            'account_uuid' => Account::factory(),
         ];
     }
 }

@@ -43,7 +43,7 @@ class CreateUserE2eTest extends TestCase
     {
         $accountCode = AccountJoinCode::factory()->create([
             'code' => '123456',
-            'user_id' => null,
+            'user_uuid' => null,
             'expired_at' => now()->addMinutes(5)
         ]);
 
@@ -93,7 +93,7 @@ class CreateUserE2eTest extends TestCase
     {
         $accountCode = AccountJoinCode::factory()->create([
             'code' => '123456',
-            'user_id' => null,
+            'user_uuid' => null,
             'expired_at' => now()->subDay()
         ]);
 

@@ -21,7 +21,6 @@ class UserEntity
     use UserEntityAcessors;
     use HasUserRoleTrait;
 
-    private ?int $id = null;
     private string $name;
     private ?EmailValueObject $email = null;
     private ?string $password;
@@ -68,13 +67,13 @@ class UserEntity
      */
     public function checkUsersAreFromSameAccount(UserEntity $userToCompare): void
     {
-        if ($this->getAccount()->getId() !== $userToCompare->getAccount()->getId()) {
+        if (!$this->getAccount()->getUuid()->equals($userToCompare->getAccount()->getUuid())) {
             throw new ForbidenException(
                 message: 'You do not have permission to change the role'
             );
         }
 
-        if ($this->getId() === $userToCompare->getId()) {
+        if ($this->getUuid()->equals($userToCompare->getUuid())) {
             throw new InvalidComparationException(
                 message: 'You can not compare the same user',
                 code: ResponseStatus::INTERNAL_SERVER_ERROR->value

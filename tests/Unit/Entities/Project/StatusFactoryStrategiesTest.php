@@ -35,18 +35,16 @@ class StatusFactoryStrategiesTest extends TestCase
         return [
             'Project entity' => [
                 ProjectEntity::forUpdate(
-                    1,
-                    1,
-                    1,
+                    name: 1,
+                    description: 1,
                     user: UserEntity::forDetail(
-                        id: 1,
                         name: 1,
                         email: 1,
                         uuid: Uuid::uuid7(),
-                        account: AccountEntity::forIdentify(1),
+                        account: AccountEntity::forIdentify(Uuid::uuid7()),
                         role: UserRoles::ADMIN
                     ),
-                    account: AccountEntity::forIdentify(1),
+                    account: AccountEntity::forIdentify(Uuid::uuid7()),
                     uuid: Uuid::uuid7(),
                     status: StatusProjectEnum::IN_PROGRESS,
                     startAt: now()->addDay(),

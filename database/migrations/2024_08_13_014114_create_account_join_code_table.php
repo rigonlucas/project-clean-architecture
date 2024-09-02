@@ -11,10 +11,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('account_join_codes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid()->primary();
             $table->string('code', 8);
-            $table->foreignId('account_id')->constrained('accounts');
-            $table->foreignId('user_id')->nullable()->constrained('users');
+            $table->foreignUuid('account_uuid')->constrained('accounts', 'uuid');
+            $table->foreignUuid('user_uuid')->nullable()->constrained('users', 'uuid');
             $table->dateTime('expired_at');
             $table->timestamps();
         });

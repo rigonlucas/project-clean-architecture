@@ -3,17 +3,18 @@
 namespace Core\Domain\Entities\Account\Traits\JoinCode;
 
 use DateTimeInterface;
+use Ramsey\Uuid\UuidInterface;
 
 trait AccountJoinCodeAccessors
 {
-    public function getId(): ?int
+    public function getUuid(): ?UuidInterface
     {
-        return $this->id;
+        return $this->uuid;
     }
 
-    public function setId(?int $id): void
+    public function setUuid(?UuidInterface $uuid): void
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
     }
 
     public function getCode(): ?string
@@ -26,12 +27,12 @@ trait AccountJoinCodeAccessors
         $this->code = $code;
     }
 
-    public function getAccountId(): ?int
+    public function getAccountId(): ?UuidInterface
     {
         return $this->accountId;
     }
 
-    public function setAccountId(?int $accountId): void
+    public function setAccountUuid(?UuidInterface $accountId): void
     {
         $this->accountId = $accountId;
     }

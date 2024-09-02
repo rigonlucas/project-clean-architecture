@@ -18,7 +18,6 @@ class UserEntityRolesTest extends TestCase
     public function test_user_entity_roles_as_admin()
     {
         $user = UserEntity::forIdentify(
-            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN
         );
@@ -39,7 +38,6 @@ class UserEntityRolesTest extends TestCase
     public function test_user_entity_roles_as_editor()
     {
         $user = UserEntity::forIdentify(
-            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::EDITOR
         );
@@ -64,7 +62,6 @@ class UserEntityRolesTest extends TestCase
     public function test_user_entity_roles_as_viewer()
     {
         $user = UserEntity::forIdentify(
-            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::VIEWER
         );
@@ -92,7 +89,6 @@ class UserEntityRolesTest extends TestCase
         $this->expectExceptionMessage('Invalid role');
 
         $userEntity = UserEntity::forIdentify(
-            id: 1,
             uuid: Uuid::uuid7(),
             role: 0
         );

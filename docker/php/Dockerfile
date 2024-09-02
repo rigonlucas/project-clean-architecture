@@ -44,6 +44,7 @@ USER $user
 
 RUN echo "alias pest='./vendor/bin/pest'" >> ~/.bashrc
 RUN echo "alias test='php artisan test'" >> ~/.bashrc
+RUN echo "alias art='php artisan'" >> ~/.bashrc
 
 CMD [ "php-fpm" ]
 # # Set the working directory

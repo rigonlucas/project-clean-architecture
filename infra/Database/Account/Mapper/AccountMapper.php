@@ -23,17 +23,16 @@ class AccountMapper implements AccountMapperInterface
         }
 
         return AccountEntity::forDetail(
-            id: $accountModel->id,
-            name: $accountModel->name,
-            uuid: Uuid::fromString($accountModel->uuid)
+            uuid: Uuid::fromString($accountModel->uuid),
+            name: $accountModel->name
         );
     }
 
     public function findByUuid(string $uuid): ?AccountEntity
     {
         $accountModel = Account::query()
-            ->select(['id', 'name', 'uuid'])
-            ->where('uuid', $uuid)
+            ->select(['name', 'uuid'])
+            ->where('uuid', '=', $uuid)
             ->toBase()
             ->first();
         if (!$accountModel) {
@@ -41,33 +40,31 @@ class AccountMapper implements AccountMapperInterface
         }
 
         return AccountEntity::forDetail(
-            id: $accountModel->id,
-            name: $accountModel->name,
-            uuid: Uuid::fromString($accountModel->uuid)
+            uuid: Uuid::fromString($accountModel->uuid),
+            name: $accountModel->name
         );
     }
 
     public function findByAccessCode(string $code): ?AccountEntity
     {
         $accountJoin = AccountJoinCode::query()
-            ->select(['id', 'code', 'account_id', 'expired_at'])
+            ->select(['uuid', 'code', 'account_uuid', 'expired_at'])
             ->where('code', '=', $code)
-            ->whereNull('user_id')
+            ->whereNull('user_uuid')
             ->with(['account:id,name,uuid'])
             ->first();
         if (!$accountJoin) {
             return null;
         }
         $accountJoinEntity = AccountJoinCodeEntity::forDetail(
-            id: $accountJoin->id,
+            uuid: Uuid::fromString($accountJoin->uuid),
             code: $accountJoin->code,
-            accountid: $accountJoin->account_id,
+            accountUuid: Uuid::fromString($accountJoin->account_uuid),
             expiresAt: $accountJoin->expired_at
         );
         $accountEntity = AccountEntity::forDetail(
-            id: $accountJoin->account->id,
-            name: $accountJoin->account->name,
             uuid: Uuid::fromString($accountJoin->account->uuid),
+            name: $accountJoin->account->name,
         );
 
         return $accountEntity->setJoinCodeEntity($accountJoinEntity);

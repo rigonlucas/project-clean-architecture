@@ -5,6 +5,7 @@ namespace Tests\Unit\Entities\Account;
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
 use Core\Domain\Entities\Account\AccountJoinCodeEntity;
 use Core\Support\Http\ResponseStatus;
+use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class AccountJoinCodeEntityTest extends TestCase
@@ -12,7 +13,8 @@ class AccountJoinCodeEntityTest extends TestCase
     public function test_join_code_is_valid()
     {
         // Arrange
-        $entity = AccountJoinCodeEntity::forDetail(1, '123456', 1, now()->addDay());
+        $accountUuid = Uuid::uuid7();
+        $entity = AccountJoinCodeEntity::forDetail(Uuid::uuid7(), '123456', $accountUuid, now()->addDay());
 
         // Act
         $this->expectNotToPerformAssertions();
@@ -26,9 +28,10 @@ class AccountJoinCodeEntityTest extends TestCase
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
         $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
+        $accountUuid = Uuid::uuid7();
 
         // Arrange
-        $entity = AccountJoinCodeEntity::forDetail(1, '', 1, now()->addDay());
+        $entity = AccountJoinCodeEntity::forDetail(Uuid::uuid7(), '', $accountUuid, now()->addDay());
 
         // Assert
         $entity->validateJoinCode();
@@ -39,9 +42,10 @@ class AccountJoinCodeEntityTest extends TestCase
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
         $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
+        $accountUuid = Uuid::uuid7();
 
         // Arrange
-        $entity = AccountJoinCodeEntity::forDetail(1, '12345', 1, now()->addDay());
+        $entity = AccountJoinCodeEntity::forDetail(Uuid::uuid7(), '12345', $accountUuid, now()->addDay());
 
         // Assert
         $entity->validateJoinCode();
@@ -53,9 +57,10 @@ class AccountJoinCodeEntityTest extends TestCase
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
         $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
+        $accountUuid = Uuid::uuid7();
 
         // Arrange
-        $entity = AccountJoinCodeEntity::forDetail(1, '1234567', 1, now()->addDay());
+        $entity = AccountJoinCodeEntity::forDetail(Uuid::uuid7(), '1234567', $accountUuid, now()->addDay());
 
         // Assert
         $entity->validateJoinCode();
@@ -66,9 +71,10 @@ class AccountJoinCodeEntityTest extends TestCase
         // Assert
         $this->expectException(AccountJoinCodeInvalidException::class);
         $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
-
+        $accountUuid = Uuid::uuid7();
+        
         // Arrange
-        $entity = AccountJoinCodeEntity::forDetail(1, '123456', 1, now()->subDay());
+        $entity = AccountJoinCodeEntity::forDetail(Uuid::uuid7(), '123456', $accountUuid, now()->subDay());
 
         // Assert
         $entity->validateJoinCode();

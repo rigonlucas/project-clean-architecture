@@ -37,7 +37,7 @@ class CreateUserUseCaseTest extends TestCase
 
         // Assert
         $this->assertDatabaseHas('users', [
-            'id' => $UserEntity->getId(),
+            'uuid' => $UserEntity->getUuid()->toString(),
             'name' => $UserEntity->getName(),
             'email' => $UserEntity->getEmail(),
             'password' => $UserEntity->getPassword(),

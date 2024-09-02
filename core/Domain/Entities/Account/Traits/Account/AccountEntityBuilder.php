@@ -24,23 +24,21 @@ trait AccountEntityBuilder
     }
 
     public static function forDetail(
-        int $id,
-        string $name,
-        UuidInterface $uuid
+        UuidInterface $uuid,
+        string $name
     ): AccountEntity {
         $account = new AccountEntity();
-        $account->setId($id);
-        $account->setName($name);
         $account->setUuid($uuid);
+        $account->setName($name);
 
         return $account;
     }
 
     public static function forIdentify(
-        int $id
+        UuidInterface $uuid
     ): AccountEntity {
         $account = new AccountEntity();
-        $account->setId($id);
+        $account->setUuid($uuid);
 
         return $account;
     }

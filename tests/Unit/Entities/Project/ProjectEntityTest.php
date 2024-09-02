@@ -35,18 +35,16 @@ class ProjectEntityTest extends TestCase
 
     public function test_create_project_success_without_dates()
     {
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
         );
@@ -59,18 +57,16 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_success_with_dates()
     {
         $this->expectNotToPerformAssertions();
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
             startAt: now(),
@@ -83,18 +79,16 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_success_with_date_start_at_null_and_finished_at_now()
     {
         $this->expectException(DateRequiredException::class);
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
             finishAt: now()
@@ -106,18 +100,17 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_date_start_at_after_finished_at()
     {
         $this->expectException(DateMustBeBeforeOtherException::class);
+        $accountUuid = Uuid::uuid7();
+
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
             startAt: now()->addDays(1),
@@ -130,18 +123,16 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_date_start_at_equal_finished_at()
     {
         $this->expectException(DatesMustBeDifferntsException::class);
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
             startAt: now(),
@@ -154,18 +145,16 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_date_start_at_before_now()
     {
         $this->expectException(DateMustBeInCurrentDayException::class);
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::BACKLOG,
             startAt: now()->subDay(),
@@ -177,18 +166,16 @@ class ProjectEntityTest extends TestCase
 
     public function test_create_project_success_with_status_pending()
     {
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::PENDING,
         );
@@ -200,18 +187,16 @@ class ProjectEntityTest extends TestCase
 
     public function test_create_project_success_with_status_in_progress()
     {
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: StatusProjectEnum::IN_PROGRESS,
         );
@@ -227,18 +212,16 @@ class ProjectEntityTest extends TestCase
     public function test_create_project_fail_with_invalid_status(StatusProjectEnum $status)
     {
         $this->expectException(ProjectStatusUnableException::class);
+        $accountUuid = Uuid::uuid7();
         $projectEntity = ProjectEntity::forCreate(
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
-                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
-                accountId: 1
+                accountUuid: $accountUuid
             ),
-            account: AccountEntity::forIdentify(
-                id: 1
-            ),
+            account: AccountEntity::forIdentify($accountUuid),
             uuid: Uuid::uuid7(),
             status: $status,
         );

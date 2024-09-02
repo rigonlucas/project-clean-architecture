@@ -32,7 +32,7 @@ class ChangeUserRoleE2eTest extends TestCase
         $userToChange = User::factory()->create(
             [
                 'role' => UserRoles::VIEWER,
-                'account_id' => $userAuth->account_id
+                'account_uuid' => $userAuth->account_uuid
             ]
         );
         $response = $this->patchJson(
@@ -58,7 +58,7 @@ class ChangeUserRoleE2eTest extends TestCase
         $userToChange = User::factory()->create(
             [
                 'role' => UserRoles::ADMIN,
-                'account_id' => $userAuth->account_id
+                'account_uuid' => $userAuth->account_uuid
             ]
         );
         $response = $this->patchJson(

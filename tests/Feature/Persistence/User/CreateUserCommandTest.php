@@ -26,9 +26,8 @@ class CreateUserCommandTest extends TestCase
             email: new EmailValueObject('email3@email.com', false),
             password: 'password',
             account: AccountEntity::forDetail(
-                id: $accountModel->id,
-                name: $accountModel->name,
-                uuid: Uuid::fromString($accountModel->uuid)
+                uuid: Uuid::fromString($accountModel->uuid),
+                name: $accountModel->name
             ),
             uuid: $this->app->make(FrameworkContract::class)::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)

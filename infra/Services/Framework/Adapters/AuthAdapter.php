@@ -30,10 +30,9 @@ class AuthAdapter implements AuthContract
     public function user(): UserEntity
     {
         return UserEntity::forIdentify(
-            id: auth()->id(),
             uuid: Uuid::fromString(auth()->user()->uuid),
             role: auth()->user()->role,
-            accountId: auth()->user()->account_id,
+            accountUuid: Uuid::fromString(auth()->user()->account_uuid),
         );
     }
 }

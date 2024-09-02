@@ -14,7 +14,6 @@ class AccountEntity
     use AccountEntityAcessors;
     use AccountEntityBuilder;
 
-    private ?int $id = null;
     private ?string $name = null;
     private ?UuidInterface $uuid = null;
     private ?AccountJoinCodeEntity $joinCodeEntity = null;

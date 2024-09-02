@@ -37,15 +37,13 @@ class CreateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
-                accountId: $this->user->account_id
+                accountUuid: Uuid::fromString($this->user->account_uuid)
             )
         );
 
         $this->assertDatabaseHas('projects', [
-            'id' => $projectEntity->getId(),
             'uuid' => $projectEntity->getUuid()->toString(),
             'name' => 'Nome',
             'description' => 'Desc',
@@ -67,15 +65,13 @@ class CreateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
-                accountId: $this->user->account_id
+                accountUuid: Uuid::fromString($this->user->account_uuid)
             )
         );
 
         $this->assertDatabaseHas('projects', [
-            'id' => $projectEntity->getId(),
             'uuid' => $projectEntity->getUuid()->toString(),
             'name' => 'Nome',
             'description' => 'Desc',

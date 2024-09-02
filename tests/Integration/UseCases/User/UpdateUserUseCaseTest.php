@@ -19,7 +19,7 @@ use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 /**
- * @group UseCaseUpdateUser
+ * @group use_case_update_user
  */
 class UpdateUserUseCaseTest extends TestCase
 {
@@ -43,7 +43,6 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(18),
             authenticableUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );
@@ -53,7 +52,7 @@ class UpdateUserUseCaseTest extends TestCase
 
         // Assert
         $this->assertDatabaseHas('users', [
-            'id' => $userEntity->getId(),
+            'uuid' => $userEntity->getUuid()->toString(),
             'name' => $userEntity->getName(),
             'email' => $userEntity->getEmail(),
             'password' => $userEntity->getPassword(),
@@ -79,7 +78,6 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(17),
             authenticableUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );
@@ -100,7 +98,6 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(18),
             authenticableUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );
@@ -125,7 +122,6 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(17),
             authenticableUser: UserEntity::forIdentify(
-                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );

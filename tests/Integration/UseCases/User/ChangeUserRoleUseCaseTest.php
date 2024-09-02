@@ -40,17 +40,16 @@ class ChangeUserRoleUseCaseTest extends TestCase
         $userToChange = User::factory()->create(
             [
                 'role' => UserRoles::VIEWER,
-                'account_id' => $userAuth->account_id
+                'account_uuid' => $userAuth->account_uuid
             ]
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
-                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
-                accountId: $userAuth->account_id
+                accountUuid: Uuid::fromString($userAuth->account_uuid)
             ),
-            userUuid: $userToChange->uuid,
+            userUuid: Uuid::fromString($userToChange->uuid),
             role: UserRoles::ADMIN
         );
         $this->useCase->execute($input);
@@ -74,17 +73,16 @@ class ChangeUserRoleUseCaseTest extends TestCase
         $userToChange = User::factory()->create(
             [
                 'role' => UserRoles::ADMIN,
-                'account_id' => $userAuth->account_id
+                'account_uuid' => $userAuth->account_uuid
             ]
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
-                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
-                accountId: $userAuth->account_id
+                accountUuid: Uuid::fromString($userAuth->account_uuid)
             ),
-            userUuid: $userToChange->uuid,
+            userUuid: Uuid::fromString($userToChange->uuid),
             role: UserRoles::ADMIN
         );
         $this->useCase->execute($input);
@@ -110,17 +108,16 @@ class ChangeUserRoleUseCaseTest extends TestCase
         $userToChange = User::factory()->create(
             [
                 'role' => UserRoles::VIEWER,
-                'account_id' => $userAuth->account_id
+                'account_uuid' => $userAuth->account_uuid
             ]
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
-                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
-                accountId: $userAuth->account_id
+                accountUuid: Uuid::fromString($userAuth->account_uuid)
             ),
-            userUuid: $userToChange->uuid,
+            userUuid: Uuid::fromString($userToChange->uuid),
             role: UserRoles::ADMIN
         );
         $this->useCase->execute($input);
@@ -141,17 +138,16 @@ class ChangeUserRoleUseCaseTest extends TestCase
         $userToChange = User::factory()->create(
             [
                 'role' => UserRoles::EDITOR,
-                'account_id' => $userAuth->account_id
+                'account_uuid' => $userAuth->account_uuid
             ]
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
-                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
-                accountId: $userAuth->account_id
+                accountUuid: Uuid::fromString($userAuth->account_uuid)
             ),
-            userUuid: $userToChange->uuid,
+            userUuid: Uuid::fromString($userToChange->uuid),
             role: UserRoles::ADMIN
         );
         $this->useCase->execute($input);
@@ -171,10 +167,9 @@ class ChangeUserRoleUseCaseTest extends TestCase
 
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
-                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
-                accountId: $userAuth->account_id
+                accountUuid: Uuid::fromString($userAuth->account_uuid)
             ),
             userUuid: $this->faker->uuid,
             role: UserRoles::ADMIN
@@ -201,12 +196,11 @@ class ChangeUserRoleUseCaseTest extends TestCase
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
-                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
-                accountId: $userAuth->account_id
+                accountUuid: Uuid::fromString($userAuth->account_uuid)
             ),
-            userUuid: $userToChange->uuid,
+            userUuid: Uuid::fromString($userToChange->uuid),
             role: UserRoles::ADMIN
         );
         $this->useCase->execute($input);

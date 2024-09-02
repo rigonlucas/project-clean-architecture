@@ -7,6 +7,7 @@ use Core\Domain\Entities\User\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Permissions\UserRoles;
 use Infra\Services\Framework\FrameworkService;
+use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 /**
@@ -22,9 +23,8 @@ class UserEntityTest extends TestCase
             email: new EmailValueObject('email@email.com', false),
             password: 'password',
             account: AccountEntity::forDetail(
-                id: 1,
-                name: 'Account',
-                uuid: FrameworkService::getInstance()->uuid()->uuid7Generate()
+                uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
+                name: 'Account'
             ),
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(17)
@@ -40,9 +40,8 @@ class UserEntityTest extends TestCase
             email: new EmailValueObject('john@email.com', false),
             password: 'password',
             account: AccountEntity::forDetail(
-                id: 1,
-                name: 'Account',
-                uuid: FrameworkService::getInstance()->uuid()->uuid7Generate()
+                uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
+                name: 'Account'
             ),
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             birthday: now()->subYears(18)
@@ -58,17 +57,15 @@ class UserEntityTest extends TestCase
     public function test_user_admin_can_access_email_not_suppresed()
     {
         $userEntity = UserEntity::forDetail(
-            id: 1,
             name: 'Aaaa',
             email: 'email@email.com',
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
-            account: AccountEntity::forIdentify(1),
+            account: AccountEntity::forIdentify(Uuid::uuid7()),
             birthday: now(),
             role: UserRoles::ADMIN
         );
 
         $requireUserEntity = UserEntity::forIdentify(
-            id: 1,
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             role: UserRoles::ADMIN
         );
@@ -80,11 +77,10 @@ class UserEntityTest extends TestCase
     public function test_user_editor_can_access_email_suppresed()
     {
         $userEntity = UserEntity::forDetail(
-            id: 1,
             name: 'Aaaa',
             email: 'email@email.com',
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
-            account: AccountEntity::forIdentify(1),
+            account: AccountEntity::forIdentify(Uuid::uuid7()),
             birthday: now(),
             role: UserRoles::EDITOR
         );
@@ -94,17 +90,15 @@ class UserEntityTest extends TestCase
     public function test_userviewer_can_access_email_suppresed()
     {
         $userEntity = UserEntity::forDetail(
-            id: 1,
             name: 'Aaaa',
             email: 'email@email.com',
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
-            account: AccountEntity::forIdentify(1),
+            account: AccountEntity::forIdentify(Uuid::uuid7()),
             birthday: now(),
             role: UserRoles::VIEWER
         );
 
         $requireUserEntity = UserEntity::forIdentify(
-            id: 1,
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             role: UserRoles::VIEWER
         );
@@ -115,7 +109,6 @@ class UserEntityTest extends TestCase
     public function test_must_throw_exception_forbiden_when_no_email_defined()
     {
         $userEntity = UserEntity::forIdentify(
-            id: 1,
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             role: UserRoles::VIEWER
         );

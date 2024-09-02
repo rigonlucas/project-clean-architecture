@@ -13,6 +13,7 @@ use DateTime;
 use Exception;
 use Infra\Services\Framework\DefaultPaginationConverter;
 use Infra\Services\Framework\FrameworkService;
+use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
 class UserMapper implements UserMapperInterface
@@ -24,7 +25,7 @@ class UserMapper implements UserMapperInterface
     public function findById(int $id): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->toBase()
             ->find($id);
         if (!$userModel) {
@@ -32,11 +33,10 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
-            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
-            account: AccountEntity::forIdentify($userModel->account_id),
+            account: AccountEntity::forIdentify(Uuid::fromString($userModel->account_uuid)),
             birthday: new DateTime($userModel->birthday),
             role: $userModel->role
         );
@@ -49,7 +49,7 @@ class UserMapper implements UserMapperInterface
     public function findByUuid(string $uuid): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('uuid', '=', $uuid)
             ->toBase()
             ->first();
@@ -58,11 +58,12 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
-            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
-            account: AccountEntity::forIdentify($userModel->account_id),
+            account: AccountEntity::forIdentify(
+                FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account_uuid)
+            ),
             birthday: new DateTime($userModel->birthday),
             role: $userModel->role
         );
@@ -75,7 +76,7 @@ class UserMapper implements UserMapperInterface
     public function findByEmail(string $email): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('email', '=', $email)
             ->toBase()
             ->first();
@@ -84,11 +85,10 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
-            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
-            account: AccountEntity::forIdentify($userModel->account_id),
+            account: AccountEntity::forIdentify(Uuid::fromString($userModel->account_uuid)),
             birthday: new DateTime($userModel->birthday),
             role: $userModel->role
         );
@@ -101,7 +101,7 @@ class UserMapper implements UserMapperInterface
     public function findByEmailAndUuid(string $email, UuidInterface $uuid): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
+            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('email', '=', $email)
             ->where('uuid', '=', $uuid->toString())
             ->toBase()
@@ -111,11 +111,12 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
-            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
-            account: AccountEntity::forIdentify($userModel->account_id),
+            account: AccountEntity::forIdentify(
+                FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid)
+            ),
             birthday: new DateTime($userModel->birthday),
             role: $userModel->role
         );
@@ -126,9 +127,9 @@ class UserMapper implements UserMapperInterface
         return User::query()->where('email', '=', $email)->exists();
     }
 
-    public function existsId(int $id): bool
+    public function existsUuid(int $id): bool
     {
-        return User::query()->where('id', '=', $id)->exists();
+        return User::query()->where('uuid', '=', $id)->exists();
     }
 
     /**
@@ -140,8 +141,8 @@ class UserMapper implements UserMapperInterface
         UserEntity $authUser
     ): UserCollection {
         $userModels = User::query()
-            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_id', 'role'])
-            ->where('account_id', '=', $account->getId())
+            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
+            ->where('account_uuid', '=', $account->getUuid())
             ->with('account:id,name,uuid')
             ->paginate(perPage: $paginationData->perPage, page: $paginationData->page);
 
@@ -149,14 +150,12 @@ class UserMapper implements UserMapperInterface
         foreach ($userModels->items() as $userModel) {
             $userCollection->add(
                 UserEntity::forDetail(
-                    id: $userModel->id,
                     name: $userModel->name,
                     email: $userModel->email,
                     uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
                     account: AccountEntity::forDetail(
-                        $userModel->account->id,
+                        FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account->uuid),
                         $userModel->account->name,
-                        FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account->uuid)
                     ),
                     birthday: new DateTime($userModel->birthday),
                     role: $userModel->role

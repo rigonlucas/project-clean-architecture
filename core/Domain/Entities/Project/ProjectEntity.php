@@ -31,7 +31,6 @@ class ProjectEntity
         StatusProjectEnum::PENDING->value,
         StatusProjectEnum::IN_PROGRESS->value
     ];
-    private int $id;
     private UuidInterface $uuid;
     private string $name;
     private string $description;
@@ -62,7 +61,7 @@ class ProjectEntity
             throw new ForbidenException('An account is required to create a project');
         }
 
-        if ($this->account->getId() !== $this->user->getAccount()->getId()) {
+        if (!$this->account->getUuid()->equals($this->user->getAccount()->getUuid())) {
             throw new ForbidenException('Your account is not allowed to create a project in this account');
         }
     }

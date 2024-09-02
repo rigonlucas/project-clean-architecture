@@ -93,7 +93,7 @@ class AccountUserListE2eTest extends TestCase
     public function test_success_case_for_paginated_user_list_with_authenticated_admin()
     {
         User::factory()->count(15)->create([
-            'account_id' => $this->user->account_id,
+            'account_uuid' => $this->user->account_uuid,
         ]);
         $response = $this->getJson(route('api.v1.user.list', ['page' => 2, 'per_page' => 5]));
 
