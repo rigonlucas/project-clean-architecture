@@ -42,7 +42,8 @@ class AccountUserListE2eTest extends TestCase
             1 => 'READ',
             2 => 'WRITE',
             4 => 'DELETE',
-            8 => 'EXECUTE'
+            8 => 'EXECUTE',
+            16 => 'UPLOAD_FILES',
         ], (array)$firstRow->role->permissions);
 
         $response->assertJsonStructure([

@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Domain\Entities\Project\StatusValidation;
+namespace Core\Domain\Validations\Project\StatusValidation;
 
 use Core\Domain\Entities\Project\ProjectEntity;
 

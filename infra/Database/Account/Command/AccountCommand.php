@@ -16,6 +16,7 @@ class AccountCommand implements AccountCommandInterface
         $accountModel = new Account();
         $accountModel->name = $accountEntity->getName();
         $accountModel->uuid = $accountEntity->getUuid();
+        $accountModel->owner_user_uuid = $accountEntity->getUserEntity()->getUuid()->toString();
         $accountModel->save();
 
         User::query()

@@ -38,7 +38,7 @@ class UserMapper implements UserMapperInterface
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             account: AccountEntity::forIdentify(
-                FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account_uuid)
+                uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account_uuid)
             ),
             birthday: new DateTime($userModel->birthday),
             role: $userModel->role
@@ -91,7 +91,7 @@ class UserMapper implements UserMapperInterface
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
             account: AccountEntity::forIdentify(
-                FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid)
+                uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid)
             ),
             birthday: new DateTime($userModel->birthday),
             role: $userModel->role
@@ -125,13 +125,13 @@ class UserMapper implements UserMapperInterface
         $userCollection = new UserCollection($authUser);
         foreach ($userModels->items() as $userModel) {
             $userCollection->add(
-                UserEntity::forDetail(
+                user: UserEntity::forDetail(
                     name: $userModel->name,
                     email: $userModel->email,
                     uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
                     account: AccountEntity::forDetail(
-                        FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account->uuid),
-                        $userModel->account->name,
+                        uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->account->uuid),
+                        name: $userModel->account->name,
                     ),
                     birthday: new DateTime($userModel->birthday),
                     role: $userModel->role

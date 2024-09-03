@@ -5,6 +5,8 @@ namespace App\Providers;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Commons\Gateways\ProjectFileCommandInterface;
+use Core\Application\Project\Commons\Gateways\ProjectFileMapperInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserMapperInterface;
@@ -20,6 +22,8 @@ use Illuminate\Support\ServiceProvider;
 use Infra\Database\Account\Command\AccountCommand;
 use Infra\Database\Account\Mapper\AccountMapper;
 use Infra\Database\Project\Command\ProjectCommand;
+use Infra\Database\Project\Command\ProjectFileCommand;
+use Infra\Database\Project\Mapper\ProjectFileMapper;
 use Infra\Database\Project\Mapper\ProjectMapper;
 use Infra\Database\User\Command\UserCommand;
 use Infra\Database\User\Mapper\UserMapper;
@@ -65,6 +69,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ProjectCommandInterface::class, ProjectCommand::class);
         $this->app->bind(ProjectMapperInterface::class, ProjectMapper::class);
+
+        $this->app->bind(ProjectFileMapperInterface::class, ProjectFileMapper::class);
+        $this->app->bind(ProjectFileCommandInterface::class, ProjectFileCommand::class);
     }
 
     /**

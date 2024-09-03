@@ -1,12 +1,12 @@
 <?php
 
-namespace Core\Domain\Entities\Project\StatusValidation;
+namespace Core\Domain\Validations\Project\StatusValidation;
 
 use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\Project\StatusValidation\Strategies\DefaultValidation;
-use Core\Domain\Entities\Project\StatusValidation\Strategies\InProgressValidation;
-use Core\Domain\Entities\Project\StatusValidation\Strategies\PendingValidation;
 use Core\Domain\Enum\Project\StatusProjectEnum;
+use Core\Domain\Validations\Project\StatusValidation\Strategies\DefaultValidation;
+use Core\Domain\Validations\Project\StatusValidation\Strategies\InProgressValidation;
+use Core\Domain\Validations\Project\StatusValidation\Strategies\PendingValidation;
 
 class StatusValidationFactory
 {

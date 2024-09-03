@@ -12,6 +12,9 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
+/**
+ * @group test_create_user_command
+ */
 class CreateUserCommandTest extends TestCase
 {
     use DatabaseMigrations;

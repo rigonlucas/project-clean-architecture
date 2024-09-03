@@ -18,7 +18,8 @@ class UserRoleTest extends TestCase
                 1 => 'READ',
                 2 => 'WRITE',
                 4 => 'DELETE',
-                8 => 'EXECUTE'
+                8 => 'EXECUTE',
+                16 => 'UPLOAD_FILES',
             ],
             $roles
         );
@@ -31,6 +32,7 @@ class UserRoleTest extends TestCase
             [
                 1 => 'READ',
                 2 => 'WRITE',
+                16 => 'UPLOAD_FILES'
             ],
             $roles
         );

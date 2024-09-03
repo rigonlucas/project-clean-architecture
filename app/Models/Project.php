@@ -46,13 +46,11 @@ class Project extends Model
         'uuid',
     ];
 
-    //make relation for created_by_user_uuid
     public function createdByUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by_user_uuid');
     }
 
-    //account_id
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class, 'account_uuid');

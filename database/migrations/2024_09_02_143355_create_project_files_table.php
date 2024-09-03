@@ -15,13 +15,13 @@ return new class extends Migration {
     {
         Schema::create('project_files', function (Blueprint $table) {
             $table->uuid()->primary();
-            $table->foreignUuid('project_id')->constrained('projects');
+            $table->foreignUuid('project_uuid')->constrained('projects', 'uuid');
+            $table->foreignUuid('created_by_user_uuid')->constrained('users', 'uuid');
+            $table->foreignUuid('account_uuid')->constrained('accounts', 'uuid');
             $table->string('file_name', 255);
-            $table->string('file_hash', 255);
-            $table->string('file_path', 255);
+            $table->string('file_path_mask', 255);
             $table->string('file_extension', 10);
-            $table->string('file_mime_type', 255);
-            $table->string('file_size', 255);
+            $table->unsignedBigInteger('file_size');
 
             $types = array_map(
                 fn(TypeFileEnum $enum) => $enum->value,
@@ -49,8 +49,6 @@ return new class extends Migration {
                 ->comment(implode(' | ', $contexts))
                 ->default(null);
 
-            $table->foreignUuid('created_by_user_uuid')->constrained('users', 'uuid');
-            $table->foreignUuid('account_uuid')->constrained('accounts', 'uuid');
 
             $table->timestamp('deletion_date')->nullable()->default(null);
             $table->softDeletes();

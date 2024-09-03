@@ -1,9 +1,9 @@
 <?php
 
-namespace Core\Domain\Entities\Project\StatusValidation\Strategies;
+namespace Core\Domain\Validations\Project\StatusValidation\Strategies;
 
 use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\Project\StatusValidation\StatusValidationInterface;
+use Core\Domain\Validations\Project\StatusValidation\StatusValidationInterface;
 
 readonly class DefaultValidation implements StatusValidationInterface
 {

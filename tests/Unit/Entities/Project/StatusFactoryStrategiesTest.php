@@ -4,9 +4,9 @@ namespace Tests\Unit\Entities\Project;
 
 use Core\Domain\Entities\Account\AccountEntity;
 use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\Project\StatusValidation\StatusValidationFactory;
 use Core\Domain\Entities\User\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
+use Core\Domain\Validations\Project\StatusValidation\StatusValidationFactory;
 use Core\Support\Exceptions\Dates\DateNotAllowedException;
 use Core\Support\Exceptions\Dates\DateRequiredException;
 use Core\Support\Permissions\UserRoles;
