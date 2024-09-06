@@ -15,7 +15,9 @@ RUN apt-get update && apt-get install -y \
     unzip \
     redis  \
     && pecl install redis \
-    && docker-php-ext-enable redis
+      xdebug \
+      pcov \
+    && docker-php-ext-enable redis xdebug pcov
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -39,7 +41,6 @@ RUN useradd -G www-data,root -u $uid -d /home/$user $user
 RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /home/$user && \
     chown -R $user:$user /var/www/html
-    
 USER $user
 # make an if for bash for APP_ENV is diferent from production
 
