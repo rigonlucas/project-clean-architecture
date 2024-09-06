@@ -71,7 +71,7 @@ class FileProjectUseCaseTest extends TestCase
             $fileEntity->getEntityUuid(),
             $fileEntity->getUlidFileName() . '.' . $fileEntity->getExtension()->value
         );
-        dd($expectedPath);
+        
         $this->assertEquals($expectedPath, $fileEntity->getPath());
     }
 
