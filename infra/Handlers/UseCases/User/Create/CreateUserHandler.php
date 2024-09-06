@@ -42,7 +42,7 @@ readonly class CreateUserHandler
             accountMapper: $this->accountMapper
         );
 
-        $accountInput->setUserNane(userNane: $userEntity->getName());
+        $accountInput->setUserName(userNane: $userEntity->getName());
         $accountInput->setUserUuid(userUuid: $userEntity->getUuid());
 
         $accountEntity = $createAccountUseCase->execute(input: $accountInput);

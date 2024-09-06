@@ -1,9 +1,9 @@
 <?php
 
-namespace Core\Application\Project\Upload\inputs;
+namespace Core\Application\Common\Inputs;
 
-use Core\Domain\Enum\File\AllowedExtensionsEnum;
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
+use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Ramsey\Uuid\UuidInterface;
@@ -15,10 +15,9 @@ readonly class ProjecFiletInput
         public string $name,
         public TypeFileEnum $type,
         public BytesValueObject $size,
-        public AllowedExtensionsEnum $extension,
-        public FileContextEnum $context,
-        public UuidInterface $projectUuid
+        public ExtensionsEnum $extension,
+        public ContextFileEnum $contextFile,
+        public UuidInterface $uuid
     ) {
     }
-
 }

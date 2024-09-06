@@ -39,7 +39,7 @@ class UpdateUserCommandTest extends TestCase
         ]);
 
         $this->assertEquals($userModel->uuid, $userEntity->getUuid()->toString());
-        $this->assertNotEquals($userModel->name, $userEntity->getName());
+        $this->assertNotEquals($userModel->file_name, $userEntity->getName());
         $this->assertNotEquals($userModel->email, $userEntity->getEmail());
         $this->assertNotEquals($userModel->birthday, $userEntity->getBirthday());
     }

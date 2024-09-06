@@ -35,7 +35,7 @@ trait HasProjectEntityBuilder
         return $project;
     }
 
-    public static function forUpdate(
+    public static function forGet(
         string $name,
         string $description,
         UserEntity $user,

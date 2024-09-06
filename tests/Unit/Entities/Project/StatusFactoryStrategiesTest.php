@@ -33,7 +33,7 @@ class StatusFactoryStrategiesTest extends TestCase
     {
         return [
             'Project entity' => [
-                ProjectEntity::forUpdate(
+                ProjectEntity::forGet(
                     name: 1,
                     description: 1,
                     user: UserEntity::forDetail(

@@ -7,21 +7,21 @@ use Ramsey\Uuid\UuidInterface;
 class AccountInput
 {
     private ?UuidInterface $userUuid = null;
-    private ?string $userNane;
+    private ?string $userName;
 
     public function __construct(
         public readonly ?string $accessCode
     ) {
     }
 
-    public function getUserNane(): ?string
+    public function getUserName(): ?string
     {
-        return $this->userNane;
+        return $this->userName;
     }
 
-    public function setUserNane(string $userNane): void
+    public function setUserName(string $userNane): void
     {
-        $this->userNane = $userNane;
+        $this->userName = $userNane;
     }
 
     public function getUserUuid(): UuidInterface

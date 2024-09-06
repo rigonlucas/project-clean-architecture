@@ -33,7 +33,7 @@ class CreateAccountUseCaseTest extends TestCase
             accessCode: null
         );
         $input->setUserUuid(Uuid::fromString($userFactory->uuid));
-        $input->setUserNane($userFactory->name);
+        $input->setUserName($userFactory->name);
 
         // Act
         $accountEntity = $this->useCase->execute(input: $input);
@@ -61,7 +61,7 @@ class CreateAccountUseCaseTest extends TestCase
             accessCode: $accountJoinCode->code
         );
         $input->setUserUuid(Uuid::fromString($userFactory->uuid));
-        $input->setUserNane($userFactory->name);
+        $input->setUserName($userFactory->name);
 
         // Act
         $accountEntity = $this->useCase->execute(input: $input);

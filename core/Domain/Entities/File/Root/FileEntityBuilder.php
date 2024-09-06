@@ -3,8 +3,8 @@
 namespace Core\Domain\Entities\File\Root;
 
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Enum\File\AllowedExtensionsEnum;
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
+use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\StatusFileEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
@@ -18,9 +18,9 @@ trait FileEntityBuilder
         string $name,
         TypeFileEnum $type,
         BytesValueObject $size,
-        AllowedExtensionsEnum $extension,
+        ExtensionsEnum $extension,
         UserEntity $userEntity,
-        FileContextEnum $context
+        ContextFileEnum $context
     ): FileEntity {
         $projectFileEntity = new FileEntity();
         $projectFileEntity->setUuid($uuid);

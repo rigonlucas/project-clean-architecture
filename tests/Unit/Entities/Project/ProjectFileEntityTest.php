@@ -4,8 +4,8 @@ namespace Tests\Unit\Entities\Project;
 
 use Core\Domain\Entities\File\Root\FileEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Enum\File\AllowedExtensionsEnum;
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
+use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Support\Permissions\UserRoles;
@@ -18,7 +18,7 @@ class ProjectFileEntityTest extends TestCase
 {
     public static function projectFileContextProvider(): array
     {
-        foreach (FileContextEnum::cases() as $context) {
+        foreach (ContextFileEnum::cases() as $context) {
             $data[strtolower($context->value)] = [
                 $context
             ];
@@ -29,7 +29,7 @@ class ProjectFileEntityTest extends TestCase
     /**
      * @dataProvider projectFileContextProvider
      */
-    public function test_entity_must_generate_path_storage_for_file_context(FileContextEnum $context): void
+    public function test_entity_must_generate_path_storage_for_file_context(ContextFileEnum $context): void
     {
         $userUuid = Uuid::uuid7();
         $accountUuid = Uuid::uuid7();
@@ -44,18 +44,18 @@ class ProjectFileEntityTest extends TestCase
             name: 'Name',
             type: TypeFileEnum::AUDIO,
             size: new BytesValueObject(2),
-            extension: AllowedExtensionsEnum::CSV,
+            extension: ExtensionsEnum::CSV,
             userEntity: $userEntity,
             context: $context
         );
-        $projectFileEntity->applyPathMask();
+
         $this->assertEquals(
             sprintf(
                 '%s/%s/%s.%s',
                 $accountUuid,
-                strtolower($context->value),
-                $projectFileEntity->getUuid()->toString(),
-                AllowedExtensionsEnum::CSV->value
+                $context->value,
+                $projectFileEntity->getUlidFileName(),
+                ExtensionsEnum::CSV->value
             ),
             $projectFileEntity->getPath()
         );

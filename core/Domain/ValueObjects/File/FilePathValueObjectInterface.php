@@ -2,7 +2,7 @@
 
 namespace Core\Domain\ValueObjects\File;
 
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
 use Ramsey\Uuid\UuidInterface;
 
 interface FilePathValueObjectInterface
@@ -11,7 +11,7 @@ interface FilePathValueObjectInterface
 
     public function apply(
         UuidInterface $accountUuid,
-        FileContextEnum $contextEnum,
+        ContextFileEnum $contextEnum,
         string $fileName,
         string $fileExtension
     ): self;

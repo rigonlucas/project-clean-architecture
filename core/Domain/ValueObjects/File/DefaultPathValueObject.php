@@ -2,7 +2,7 @@
 
 namespace Core\Domain\ValueObjects\File;
 
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
 use Ramsey\Uuid\UuidInterface;
 
 class DefaultPathValueObject implements FilePathValueObjectInterface
@@ -21,14 +21,14 @@ class DefaultPathValueObject implements FilePathValueObjectInterface
 
     public function apply(
         UuidInterface $accountUuid,
-        FileContextEnum $contextEnum,
+        ContextFileEnum $contextEnum,
         string $fileName,
         string $fileExtension
     ): self {
         $this->path = sprintf(
             self::FILE_PATH_MASK,
             $accountUuid->toString(),
-            strtolower($contextEnum->value),
+            $contextEnum->value,
             $fileName,
             $fileExtension
         );

@@ -4,7 +4,7 @@ namespace Core\Domain\Enum\File;
 
 use ReflectionClass;
 
-enum AllowedExtensionsEnum: string
+enum ExtensionsEnum: string
 {
     // Documentos
     case CSV = 'csv'; // Comma-separated values

@@ -3,8 +3,8 @@
 namespace Core\Domain\Entities\File\Root;
 
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Enum\File\AllowedExtensionsEnum;
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
+use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\StatusFileEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
@@ -12,6 +12,7 @@ use Core\Domain\ValueObjects\File\DefaultPathValueObject;
 use Core\Domain\ValueObjects\File\FilePathValueObjectInterface;
 use InvalidArgumentException;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Ulid;
 
 class FileEntity
 {
@@ -19,13 +20,14 @@ class FileEntity
 
 
     private UuidInterface $uuid;
+    private string $ulidFileName;
     private string $name;
     private FilePathValueObjectInterface $path;
     private TypeFileEnum $type;
     private BytesValueObject $size;
-    private AllowedExtensionsEnum $extension;
+    private ExtensionsEnum $extension;
     private UserEntity $userEntity;
-    private FileContextEnum $context;
+    private ContextFileEnum $context;
     private StatusFileEnum $status;
 
     private function __construct()
@@ -37,36 +39,6 @@ class FileEntity
         if ($this->size->getBytes() < 1) {
             throw new InvalidArgumentException('File size must be greater than 0 bytes');
         }
-    }
-
-    public function applyPathMask(): void
-    {
-        $this->path->apply(
-            $this->getUserEntity()->getAccount()->getUuid(),
-            $this->context,
-            $this->uuid,
-            $this->extension->value
-        );
-    }
-
-    public function getUuid(): UuidInterface
-    {
-        return $this->uuid;
-    }
-
-    public function setUuid(UuidInterface $uuid): void
-    {
-        $this->uuid = $uuid;
-    }
-
-    public function getUserEntity(): UserEntity
-    {
-        return $this->userEntity;
-    }
-
-    public function setUserEntity(UserEntity $userEntity): void
-    {
-        $this->userEntity = $userEntity;
     }
 
     public function getName(): string
@@ -109,12 +81,12 @@ class FileEntity
         $this->size = $size;
     }
 
-    public function getContext(): FileContextEnum
+    public function getContext(): ContextFileEnum
     {
         return $this->context;
     }
 
-    public function setContext(FileContextEnum $context): void
+    public function setContext(ContextFileEnum $context): void
     {
         $this->context = $context;
     }
@@ -129,13 +101,48 @@ class FileEntity
         $this->status = $status;
     }
 
-    public function getExtension(): AllowedExtensionsEnum
+    public function getExtension(): ExtensionsEnum
     {
         return $this->extension;
     }
 
-    public function setExtension(AllowedExtensionsEnum $extension): void
+    public function setExtension(ExtensionsEnum $extension): void
     {
         $this->extension = $extension;
+    }
+
+    public function getUlidFileName(): string
+    {
+        return $this->ulidFileName;
+    }
+
+    private function applyPathMask(): void
+    {
+        $this->path->apply(
+            $this->getUserEntity()->getAccount()->getUuid(),
+            $this->context,
+            $this->ulidFileName = Ulid::generate(),
+            $this->extension->value
+        );
+    }
+
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(UuidInterface $uuid): void
+    {
+        $this->uuid = $uuid;
+    }
+
+    public function getUserEntity(): UserEntity
+    {
+        return $this->userEntity;
+    }
+
+    public function setUserEntity(UserEntity $userEntity): void
+    {
+        $this->userEntity = $userEntity;
     }
 }

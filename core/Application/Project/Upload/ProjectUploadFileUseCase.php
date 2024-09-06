@@ -2,10 +2,10 @@
 
 namespace Core\Application\Project\Upload;
 
+use Core\Application\Common\Inputs\ProjecFiletInput;
+use Core\Application\File\Gateways\FileCommandInterface;
 use Core\Application\Project\Commons\Exceptions\ProjectNotFoundException;
-use Core\Application\Project\Commons\Gateways\ProjectFileCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
-use Core\Application\Project\Upload\inputs\ProjecFiletInput;
 use Core\Domain\Entities\File\Root\FileEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;
@@ -15,9 +15,9 @@ use Core\Support\Http\ResponseStatus;
 class ProjectUploadFileUseCase
 {
     public function __construct(
-        private FrameworkContract $framework,
-        private ProjectFileCommandInterface $fileCommand,
-        private ProjectMapperInterface $projectMapper
+        private readonly FrameworkContract $framework,
+        private readonly FileCommandInterface $fileCommand,
+        private readonly ProjectMapperInterface $projectMapper
     ) {
     }
 
@@ -27,8 +27,8 @@ class ProjectUploadFileUseCase
      */
     public function execute(ProjecFiletInput $projecFiletInput, UserEntity $authUserEntity): FileEntity
     {
-        $projectEntity = $this->projectMapper->findByUuid($projecFiletInput->projectUuid, $authUserEntity);
-        if ($projectEntity) {
+        $projectEntity = $this->projectMapper->findByUuid($projecFiletInput->uuid, $authUserEntity);
+        if (!$projectEntity) {
             throw new ProjectNotFoundException(
                 'Project not found',
                 ResponseStatus::NOT_FOUND->value
@@ -43,9 +43,9 @@ class ProjectUploadFileUseCase
             size: $projecFiletInput->size,
             extension: $projecFiletInput->extension,
             userEntity: $authUserEntity,
-            context: $projecFiletInput->context
+            context: $projecFiletInput->contextFile
         );
 
-        return $this->fileCommand->create($projectFileEntity, $projectEntity);
+        return $this->fileCommand->create($projectFileEntity, $projectEntity->getUuid());
     }
 }

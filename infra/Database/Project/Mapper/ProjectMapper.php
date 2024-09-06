@@ -25,7 +25,7 @@ class ProjectMapper implements ProjectMapperInterface
             return null;
         }
 
-        return ProjectEntity::forUpdate(
+        return ProjectEntity::forGet(
             name: $projectModel->name,
             description: $projectModel->description,
             user: $userEntity,

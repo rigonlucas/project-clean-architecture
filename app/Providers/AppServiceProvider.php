@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\V1\Project\UploadFileController;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
+use Core\Application\File\Gateways\FileCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectFileCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectFileMapperInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
@@ -21,8 +22,8 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Infra\Database\Account\Command\AccountCommand;
 use Infra\Database\Account\Mapper\AccountMapper;
+use Infra\Database\File\Command\FileProjectCommand;
 use Infra\Database\Project\Command\ProjectCommand;
-use Infra\Database\Project\Command\ProjectFileCommand;
 use Infra\Database\Project\Mapper\ProjectFileMapper;
 use Infra\Database\Project\Mapper\ProjectMapper;
 use Infra\Database\User\Command\UserCommand;
@@ -71,7 +72,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ProjectMapperInterface::class, ProjectMapper::class);
 
         $this->app->bind(ProjectFileMapperInterface::class, ProjectFileMapper::class);
-        $this->app->bind(ProjectFileCommandInterface::class, ProjectFileCommand::class);
+
+        $this->app->when([UploadFileController::class])
+            ->needs(FileCommandInterface::class)
+            ->give(FileProjectCommand::class);
     }
 
     /**

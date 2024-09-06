@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Core\Domain\Enum\File\AllowedExtensionsEnum;
-use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\ContextFileEnum;
+use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\StatusFileEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
@@ -17,14 +17,14 @@ use Ramsey\Uuid\UuidInterface;
 /**
  * @property mixed|UuidInterface $uuid
  * @property mixed|UuidInterface $account_uuid
- * @property mixed|string $name
- * @property mixed|string $path
- * @property TypeFileEnum|mixed $type
- * @property BytesValueObject|mixed $size
- * @property AllowedExtensionsEnum|mixed $extension
- * @property mixed $project_id
- * @property mixed $user_id
- * @property FileContextEnum|mixed $context
+ * @property mixed|string $file_name
+ * @property mixed|string $file_path
+ * @property TypeFileEnum|mixed $file_type
+ * @property BytesValueObject|mixed $file_size
+ * @property ExtensionsEnum|mixed $file_extension
+ * @property mixed $project_uuid
+ * @property mixed $created_by_user_uuid
+ * @property ContextFileEnum|mixed $context
  * @property StatusFileEnum|mixed $status
  */
 class ProjectFile extends Model
