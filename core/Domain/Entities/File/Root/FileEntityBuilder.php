@@ -15,6 +15,7 @@ trait FileEntityBuilder
 {
     public static function forCreate(
         UuidInterface $uuid,
+        UuidInterface $entityUuid,
         string $name,
         TypeFileEnum $type,
         BytesValueObject $size,
@@ -30,6 +31,7 @@ trait FileEntityBuilder
         $projectFileEntity->setExtension($extension);
         $projectFileEntity->setUserEntity($userEntity);
         $projectFileEntity->setContext($context);
+        $projectFileEntity->setEntityUuid($entityUuid);
         $projectFileEntity->setStatus(StatusFileEnum::PENDING);
         $projectFileEntity->setPath(new DefaultPathValueObject());
 

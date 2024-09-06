@@ -27,4 +27,11 @@ class FileProjectCommand implements FileCommandInterface
 
         return $projectFileEntity;
     }
+
+    public function confirmUploadFile(FileEntity $fileEntity): void
+    {
+        $projectFile = ProjectFile::query()->where('uuid', $fileEntity->getUuid())->first();
+        $projectFile->status = $fileEntity->getStatus()->value;
+        $projectFile->save();
+    }
 }

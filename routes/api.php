@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\V1\Project\CreateProjectController;
 use App\Http\Controllers\V1\Project\UpdateProjectController;
+use App\Http\Controllers\V1\Project\UploadProjectFileController;
 use App\Http\Controllers\V1\User\ChangeUserRoleController;
 use App\Http\Controllers\V1\User\CreateUserController;
 use App\Http\Controllers\V1\User\ShowUserController;
@@ -37,6 +38,10 @@ Route::prefix('v1')
             Route::put('/update/{uuid}', [UpdateProjectController::class, '__invoke'])
                 ->whereUuid('uuid')
                 ->name('api.v1.project.update');
+            //create a route for upload file
+            Route::post('/{uuid}/upload-file', [UploadProjectFileController::class, '__invoke'])
+                ->whereUuid('uuid')
+                ->name('api.v1.project.upload-file');
         });
     });
 

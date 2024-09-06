@@ -8,7 +8,7 @@ use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Ramsey\Uuid\UuidInterface;
 
-readonly class ProjecFiletInput
+readonly class FiletInput
 {
 
     public function __construct(

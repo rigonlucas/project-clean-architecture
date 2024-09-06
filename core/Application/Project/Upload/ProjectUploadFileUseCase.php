@@ -2,7 +2,7 @@
 
 namespace Core\Application\Project\Upload;
 
-use Core\Application\Common\Inputs\ProjecFiletInput;
+use Core\Application\Common\Inputs\FiletInput;
 use Core\Application\File\Gateways\FileCommandInterface;
 use Core\Application\Project\Commons\Exceptions\ProjectNotFoundException;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
@@ -25,7 +25,7 @@ class ProjectUploadFileUseCase
      * @throws ForbidenException
      * @throws ProjectNotFoundException
      */
-    public function execute(ProjecFiletInput $projecFiletInput, UserEntity $authUserEntity): FileEntity
+    public function execute(FiletInput $projecFiletInput, UserEntity $authUserEntity): FileEntity
     {
         $projectEntity = $this->projectMapper->findByUuid($projecFiletInput->uuid, $authUserEntity);
         if (!$projectEntity) {
@@ -38,6 +38,7 @@ class ProjectUploadFileUseCase
 
         $projectFileEntity = FileEntity::forCreate(
             uuid: $this->framework->uuid()->uuid7Generate(),
+            entityUuid: $projectEntity->getUuid(),
             name: $projecFiletInput->name,
             type: $projecFiletInput->type,
             size: $projecFiletInput->size,

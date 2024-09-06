@@ -12,6 +12,7 @@ interface FilePathValueObjectInterface
     public function apply(
         UuidInterface $accountUuid,
         ContextFileEnum $contextEnum,
+        UuidInterface $entityUuid,
         string $fileName,
         string $fileExtension
     ): self;

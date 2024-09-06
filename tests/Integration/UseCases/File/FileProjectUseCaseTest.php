@@ -3,7 +3,7 @@
 namespace Tests\Integration\UseCases\File;
 
 use App\Models\Project;
-use Core\Application\Common\Inputs\ProjecFiletInput;
+use Core\Application\Common\Inputs\FiletInput;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Upload\ProjectUploadFileUseCase;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
@@ -30,7 +30,7 @@ class FileProjectUseCaseTest extends TestCase
     {
         // arrange
         $projectModel = Project::factory()->create();
-        $input = new ProjecFiletInput(
+        $input = new FiletInput(
             name: 'name',
             type: TypeFileEnum::DOCUMENT,
             size: new BytesValueObject(1000),
@@ -65,11 +65,13 @@ class FileProjectUseCaseTest extends TestCase
         ]);
 
         $expectedPath = sprintf(
-            '%s/%s/%s',
+            '%s/%s/%s/%s',
             $projectModel->account_uuid,
             $fileEntity->getContext()->value,
+            $fileEntity->getEntityUuid(),
             $fileEntity->getUlidFileName() . '.' . $fileEntity->getExtension()->value
         );
+        dd($expectedPath);
         $this->assertEquals($expectedPath, $fileEntity->getPath());
     }
 
@@ -78,7 +80,7 @@ class FileProjectUseCaseTest extends TestCase
         // arrange
         $this->expectExceptionMessage('Project not found');
         $this->expectExceptionCode(404);
-        $input = new ProjecFiletInput(
+        $input = new FiletInput(
             name: 'name',
             type: TypeFileEnum::DOCUMENT,
             size: new BytesValueObject(1000),

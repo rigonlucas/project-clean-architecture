@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\V1\Project\UploadFileController;
+use App\Http\Controllers\V1\Project\UploadProjectFileController;
 use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
 use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\File\Gateways\FileCommandInterface;
@@ -73,7 +73,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ProjectFileMapperInterface::class, ProjectFileMapper::class);
 
-        $this->app->when([UploadFileController::class])
+        $this->app->when([UploadProjectFileController::class])
             ->needs(FileCommandInterface::class)
             ->give(FileProjectCommand::class);
     }

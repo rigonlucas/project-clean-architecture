@@ -20,6 +20,7 @@ class FileEntity
 
 
     private UuidInterface $uuid;
+    private UuidInterface $entityUuid;
     private string $ulidFileName;
     private string $name;
     private FilePathValueObjectInterface $path;
@@ -116,11 +117,28 @@ class FileEntity
         return $this->ulidFileName;
     }
 
+    public function getEntityUuid(): UuidInterface
+    {
+        return $this->entityUuid;
+    }
+
+    public function setEntityUuid(UuidInterface $entityUuid): FileEntity
+    {
+        $this->entityUuid = $entityUuid;
+        return $this;
+    }
+
+    public function confirmUpload(): void
+    {
+        $this->status = StatusFileEnum::FINISHED;
+    }
+
     private function applyPathMask(): void
     {
         $this->path->apply(
             $this->getUserEntity()->getAccount()->getUuid(),
             $this->context,
+            $this->entityUuid,
             $this->ulidFileName = Ulid::generate(),
             $this->extension->value
         );

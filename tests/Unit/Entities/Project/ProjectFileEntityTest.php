@@ -41,8 +41,9 @@ class ProjectFileEntityTest extends TestCase
 
         $projectFileEntity = FileEntity::forCreate(
             uuid: Uuid::uuid7(),
+            entityUuid: Uuid::uuid7(),
             name: 'Name',
-            type: TypeFileEnum::AUDIO,
+            type: TypeFileEnum::DOCUMENT,
             size: new BytesValueObject(2),
             extension: ExtensionsEnum::CSV,
             userEntity: $userEntity,
@@ -51,11 +52,12 @@ class ProjectFileEntityTest extends TestCase
 
         $this->assertEquals(
             sprintf(
-                '%s/%s/%s.%s',
+                '%s/%s/%s/%s.%s',
                 $accountUuid,
                 $context->value,
+                $projectFileEntity->getEntityUuid(),
                 $projectFileEntity->getUlidFileName(),
-                ExtensionsEnum::CSV->value
+                $projectFileEntity->getExtension()->value
             ),
             $projectFileEntity->getPath()
         );
