@@ -2,14 +2,14 @@
 
 namespace Infra\Handlers\UseCases\Project\Upload;
 
-use Core\Application\Common\Inputs\FiletInput;
-use Core\Application\File\Gateways\FileCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
+use Core\Application\File\Shared\Gateways\FileCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Upload\ProjectUploadFileUseCase;
+use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Entities\File\Root\FileEntity;
 use Core\Services\Framework\FrameworkContract;
+use Core\Support\Exceptions\ErrorOnUploadToStorageException;
 use Core\Support\Http\ResponseStatus;
-use Exception;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,20 +46,26 @@ class UploadProjectFileHandler
         $directory = dirname($fileEntity->getPath());
         $baseName = basename($fileEntity->getPath());
 
-        Storage::disk(config('filesystems.default'))
+        $returnFromStorage = Storage::disk(config('filesystems.default'))
             ->putFileAs(
                 $directory,
                 $file,
                 $baseName
             );
+        if (!$returnFromStorage) {
+            throw new ErrorOnUploadToStorageException(
+                message: 'Error to save file in the storage, we are working to solve this problem',
+                code: ResponseStatus::INTERNAL_SERVER_ERROR->value
+            );
+        }
     }
 
     private function checkIfFileWasSaved(FileEntity $fileEntity): void
     {
         $fileExists = Storage::disk(config('filesystems.default'))->exists($fileEntity->getPath());
         if (!$fileExists) {
-            throw new Exception(
-                message: 'File not found in storage',
+            throw new ErrorOnUploadToStorageException(
+                message: 'File was not saved in the storage, we are working to solve this problem',
                 code: ResponseStatus::INTERNAL_SERVER_ERROR->value
             );
         }

@@ -3,9 +3,9 @@
 namespace Tests\Integration\UseCases\File;
 
 use App\Models\Project;
-use Core\Application\Common\Inputs\FiletInput;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Upload\ProjectUploadFileUseCase;
+use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\File\ContextFileEnum;
 use Core\Domain\Enum\File\ExtensionsEnum;
@@ -71,7 +71,7 @@ class FileProjectUseCaseTest extends TestCase
             $fileEntity->getEntityUuid(),
             $fileEntity->getUlidFileName() . '.' . $fileEntity->getExtension()->value
         );
-        
+
         $this->assertEquals($expectedPath, $fileEntity->getPath());
     }
 

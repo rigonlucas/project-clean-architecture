@@ -3,7 +3,7 @@
 namespace Infra\Database\Project\Command;
 
 use App\Models\Project;
-use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Exception;
 

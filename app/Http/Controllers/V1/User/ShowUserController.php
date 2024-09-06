@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
-use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
+use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
 use Core\Application\User\Show\ShowUserUseCase;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Presentation\Http\User\UserDetaisPresenter;

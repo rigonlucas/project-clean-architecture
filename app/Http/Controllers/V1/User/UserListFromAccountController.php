@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1\User;
 
 use App\Http\Controllers\Controller;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;

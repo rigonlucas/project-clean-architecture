@@ -3,7 +3,7 @@
 namespace Core\Domain\Entities\Project\Root;
 
 use Carbon\CarbonInterface;
-use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
+use Core\Application\Project\Shared\Exceptions\ProjectStatusUnableException;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;

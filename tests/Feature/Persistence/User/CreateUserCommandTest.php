@@ -3,7 +3,7 @@
 namespace Tests\Feature\Persistence\User;
 
 use App\Models\Account;
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;

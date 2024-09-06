@@ -3,7 +3,7 @@
 namespace Infra\Database\File\Command;
 
 use App\Models\ProjectFile;
-use Core\Application\File\Gateways\FileCommandInterface;
+use Core\Application\File\Shared\Gateways\FileCommandInterface;
 use Core\Domain\Entities\File\Root\FileEntity;
 use Ramsey\Uuid\UuidInterface;
 
@@ -30,8 +30,10 @@ class FileProjectCommand implements FileCommandInterface
 
     public function confirmUploadFile(FileEntity $fileEntity): void
     {
-        $projectFile = ProjectFile::query()->where('uuid', $fileEntity->getUuid())->first();
-        $projectFile->status = $fileEntity->getStatus()->value;
-        $projectFile->save();
+        ProjectFile::query()
+            ->where('uuid', '=', $fileEntity->getUuid())
+            ->update([
+                'status' => $fileEntity->getStatus()->value
+            ]);
     }
 }

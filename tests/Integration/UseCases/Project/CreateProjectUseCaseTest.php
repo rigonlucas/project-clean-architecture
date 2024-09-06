@@ -3,10 +3,10 @@
 namespace Tests\Integration\UseCases\Project;
 
 use App\Models\User;
-use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Create\CreateProjectUseCase;
 use Core\Application\Project\Create\inputs\CreateProjectInput;
+use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Services\Framework\FrameworkContract;

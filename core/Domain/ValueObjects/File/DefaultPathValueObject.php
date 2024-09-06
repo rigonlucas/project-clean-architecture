@@ -2,8 +2,7 @@
 
 namespace Core\Domain\ValueObjects\File;
 
-use Core\Domain\Enum\File\ContextFileEnum;
-use Ramsey\Uuid\UuidInterface;
+use InvalidArgumentException;
 
 class DefaultPathValueObject implements FilePathValueObjectInterface
 {
@@ -12,27 +11,18 @@ class DefaultPathValueObject implements FilePathValueObjectInterface
      * @example {ACCOUNT_UUID}/{CONTEXT}/{PROJECT_UUID}/{FILE_UUID}.{EXTENSION}
      */
     private const string FILE_PATH_MASK = '%s/%s/%s/%s.%s';
+    private array $partOfPath = [];
     private ?string $path = null;
 
-    public function getPath(): string
+    public function apply(): self
     {
-        return $this->path;
-    }
+        if (count($this->partOfPath) !== substr_count(self::FILE_PATH_MASK, '%s')) {
+            throw new InvalidArgumentException('Path is already full');
+        }
 
-    public function apply(
-        UuidInterface $accountUuid,
-        ContextFileEnum $contextEnum,
-        UuidInterface $entityUuid,
-        string $fileName,
-        string $fileExtension
-    ): self {
         $this->path = sprintf(
             self::FILE_PATH_MASK,
-            $accountUuid->toString(),
-            $contextEnum->value,
-            $entityUuid->toString(),
-            $fileName,
-            $fileExtension
+            ...$this->partOfPath,
         );
 
         return $this;
@@ -40,11 +30,17 @@ class DefaultPathValueObject implements FilePathValueObjectInterface
 
     public function __toString(): string
     {
+        return $this->getPath();
+    }
+
+    public function getPath(): string
+    {
         return $this->path;
     }
 
-    public function getBasePath(): string
+    public function addPathSegment(string $segiment): DefaultPathValueObject
     {
-        // TODO: Implement getBasePath() method.
+        $this->partOfPath[] = $segiment;
+        return $this;
     }
 }

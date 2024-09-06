@@ -3,7 +3,7 @@
 namespace Infra\Database\User\Mapper;
 
 use App\Models\User;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Domain\Collections\User\UserCollection;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;

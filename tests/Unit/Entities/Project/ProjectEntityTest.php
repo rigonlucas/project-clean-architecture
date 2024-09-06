@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Entities\Project;
 
-use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
+use Core\Application\Project\Shared\Exceptions\ProjectStatusUnableException;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;

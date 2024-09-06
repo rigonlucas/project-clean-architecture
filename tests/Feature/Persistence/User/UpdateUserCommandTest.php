@@ -3,7 +3,7 @@
 namespace Tests\Feature\Persistence\User;
 
 use App\Models\User;
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Ramsey\Uuid\Uuid;

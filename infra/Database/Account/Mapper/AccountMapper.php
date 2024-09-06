@@ -4,7 +4,7 @@ namespace Infra\Database\Account\Mapper;
 
 use App\Models\Account;
 use App\Models\AccountJoinCode;
-use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
+use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
 use Core\Domain\Entities\Shared\Account\JoinCode\AccountJoinCodeEntity;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Ramsey\Uuid\Uuid;

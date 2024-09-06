@@ -3,7 +3,7 @@
 namespace Infra\Database\User\Command;
 
 use App\Models\User;
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 class UserCommand implements UserCommandInterface

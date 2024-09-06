@@ -8,11 +8,9 @@ use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\StatusFileEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
-use Core\Domain\ValueObjects\File\DefaultPathValueObject;
 use Core\Domain\ValueObjects\File\FilePathValueObjectInterface;
 use InvalidArgumentException;
 use Ramsey\Uuid\UuidInterface;
-use Symfony\Component\Uid\Ulid;
 
 class FileEntity
 {
@@ -23,7 +21,7 @@ class FileEntity
     private UuidInterface $entityUuid;
     private string $ulidFileName;
     private string $name;
-    private FilePathValueObjectInterface $path;
+    private FilePathValueObjectInterface $filePathValueObject;
     private TypeFileEnum $type;
     private BytesValueObject $size;
     private ExtensionsEnum $extension;
@@ -54,12 +52,17 @@ class FileEntity
 
     public function getPath(): string
     {
-        return $this->path->getPath();
+        return $this->filePathValueObject->getPath();
     }
 
-    public function setPath(DefaultPathValueObject $path): void
+    public function getFilePathValueObject(): FilePathValueObjectInterface
     {
-        $this->path = $path;
+        return $this->filePathValueObject;
+    }
+
+    public function setFilePathValueObject(FilePathValueObjectInterface $filePathValueObject): void
+    {
+        $this->filePathValueObject = $filePathValueObject;
     }
 
     public function getType(): TypeFileEnum
@@ -117,6 +120,12 @@ class FileEntity
         return $this->ulidFileName;
     }
 
+    public function setUlidFileName(string $ulidFileName): FileEntity
+    {
+        $this->ulidFileName = $ulidFileName;
+        return $this;
+    }
+
     public function getEntityUuid(): UuidInterface
     {
         return $this->entityUuid;
@@ -131,17 +140,6 @@ class FileEntity
     public function confirmUpload(): void
     {
         $this->status = StatusFileEnum::FINISHED;
-    }
-
-    private function applyPathMask(): void
-    {
-        $this->path->apply(
-            $this->getUserEntity()->getAccount()->getUuid(),
-            $this->context,
-            $this->entityUuid,
-            $this->ulidFileName = Ulid::generate(),
-            $this->extension->value
-        );
     }
 
     public function getUuid(): UuidInterface
@@ -162,5 +160,10 @@ class FileEntity
     public function setUserEntity(UserEntity $userEntity): void
     {
         $this->userEntity = $userEntity;
+    }
+
+    private function getFilePatValueObject(): FilePathValueObjectInterface
+    {
+        return $this->filePathValueObject;
     }
 }

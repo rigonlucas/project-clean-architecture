@@ -2,11 +2,11 @@
 
 namespace Core\Application\Account\Create;
 
-use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
-use Core\Application\Account\Commons\Exceptions\AccountNotFoundException;
-use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Account\Create\Inputs\AccountInput;
+use Core\Application\Account\Shared\Exceptions\AccountNameInvalidException;
+use Core\Application\Account\Shared\Exceptions\AccountNotFoundException;
+use Core\Application\Account\Shared\Gateways\AccountCommandInterface;
+use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;

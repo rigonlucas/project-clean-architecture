@@ -3,9 +3,9 @@
 namespace Core\Application\User\ChangeRole;
 
 use Core\Application\User\ChangeRole\Inputs\ChangeUserRoleInput;
-use Core\Application\User\Commons\Exceptions\UserNotFountException;
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
+use Core\Application\User\Shared\Exceptions\UserNotFountException;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\InvalideRules\InvalidComparationException;
 use Core\Support\Exceptions\InvalideRules\InvalidRoleException;

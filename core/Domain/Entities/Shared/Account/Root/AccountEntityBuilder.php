@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Entities\Shared\Account\Root;
 
-use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
+use Core\Application\Account\Shared\Exceptions\AccountNameInvalidException;
 use Ramsey\Uuid\UuidInterface;
 
 trait AccountEntityBuilder

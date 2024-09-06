@@ -4,7 +4,7 @@ namespace Infra\Database\Project\Mapper;
 
 use App\Models\Project;
 use Carbon\Carbon;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;

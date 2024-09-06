@@ -2,12 +2,12 @@
 
 namespace Core\Application\Project\Create;
 
-use Core\Application\Project\Commons\Exceptions\ProjectAlreadyExistsException;
-use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
-use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
-use Core\Application\Project\Commons\Validations\HasProjectWithSameNameValidation;
 use Core\Application\Project\Create\inputs\CreateProjectInput;
+use Core\Application\Project\Shared\Exceptions\ProjectAlreadyExistsException;
+use Core\Application\Project\Shared\Exceptions\ProjectStatusUnableException;
+use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
+use Core\Application\Project\Shared\Validations\HasProjectWithSameNameValidation;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;

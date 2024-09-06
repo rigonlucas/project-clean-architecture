@@ -5,7 +5,7 @@ namespace Infra\Database\Account\Command;
 use App\Models\Account;
 use App\Models\AccountJoinCode;
 use App\Models\User;
-use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
+use Core\Application\Account\Shared\Gateways\AccountCommandInterface;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 
 class AccountCommand implements AccountCommandInterface

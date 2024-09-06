@@ -2,9 +2,9 @@
 
 namespace Core\Application\User\Show;
 
-use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
-use Core\Application\User\Commons\Exceptions\UserNotFountException;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
+use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
+use Core\Application\User\Shared\Exceptions\UserNotFountException;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;

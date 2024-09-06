@@ -6,7 +6,7 @@ use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
-use Core\Domain\Validations\Project\StatusValidation\StatusValidationFactory;
+use Core\Domain\Validations\Project\Status\StatusValidationFactory;
 use Core\Support\Exceptions\Dates\DateNotAllowedException;
 use Core\Support\Exceptions\Dates\DateRequiredException;
 use Core\Support\Permissions\UserRoles;

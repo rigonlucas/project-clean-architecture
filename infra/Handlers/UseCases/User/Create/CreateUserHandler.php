@@ -2,14 +2,14 @@
 
 namespace Infra\Handlers\UseCases\User\Create;
 
-use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
 use Core\Application\Account\Create\CreateAccountUseCase;
 use Core\Application\Account\Create\Inputs\AccountInput;
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
+use Core\Application\Account\Shared\Gateways\AccountCommandInterface;
+use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 

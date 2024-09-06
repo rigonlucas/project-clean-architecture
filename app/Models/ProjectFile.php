@@ -38,6 +38,19 @@ class ProjectFile extends Model
     protected $primaryKey = 'uuid';
     protected $keyType = 'string';
 
+    protected $fillable = [
+        'file_name',
+        'file_path',
+        'file_type',
+        'file_size',
+        'file_extension',
+        'project_uuid',
+        'created_by_user_uuid',
+        'account_uuid',
+        'context',
+        'status',
+    ];
+
     public function createdByUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by_user_uuid');

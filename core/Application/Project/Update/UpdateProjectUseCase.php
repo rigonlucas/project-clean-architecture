@@ -2,15 +2,15 @@
 
 namespace Core\Application\Project\Update;
 
-use Core\Application\Project\Commons\Exceptions\ProjectAlreadyExistsException;
-use Core\Application\Project\Commons\Exceptions\ProjectNotFoundException;
-use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
-use Core\Application\Project\Commons\Validations\HasProjectWithSameNameValidation;
+use Core\Application\Project\Shared\Exceptions\ProjectAlreadyExistsException;
+use Core\Application\Project\Shared\Exceptions\ProjectNotFoundException;
+use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
+use Core\Application\Project\Shared\Validations\HasProjectWithSameNameValidation;
 use Core\Application\Project\Update\inputs\UpdateProjectInput;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Validations\Project\StatusValidation\StatusValidationFactory;
+use Core\Domain\Validations\Project\Status\StatusValidationFactory;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\Dates\DateMustBeBeforeOtherException;
 use Core\Support\Exceptions\Dates\DateMustBeInCurrentDayException;

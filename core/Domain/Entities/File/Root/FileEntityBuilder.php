@@ -10,6 +10,7 @@ use Core\Domain\Enum\File\TypeFileEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Domain\ValueObjects\File\DefaultPathValueObject;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Ulid;
 
 trait FileEntityBuilder
 {
@@ -33,10 +34,17 @@ trait FileEntityBuilder
         $projectFileEntity->setContext($context);
         $projectFileEntity->setEntityUuid($entityUuid);
         $projectFileEntity->setStatus(StatusFileEnum::PENDING);
-        $projectFileEntity->setPath(new DefaultPathValueObject());
+        $projectFileEntity->setFilePathValueObject(new DefaultPathValueObject());
+        $projectFileEntity->setUlidFileName(Ulid::generate());
 
         $projectFileEntity->checkProjectFile();
-        $projectFileEntity->applyPathMask();
+        $projectFileEntity->getFilePathValueObject()
+            ->addPathSegment($userEntity->getAccount()->getUuid())
+            ->addPathSegment($context->value)
+            ->addPathSegment($entityUuid)
+            ->addPathSegment($projectFileEntity->getUlidFileName())
+            ->addPathSegment($projectFileEntity->getExtension()->value)
+            ->apply();
 
         return $projectFileEntity;
     }

@@ -2,8 +2,8 @@
 
 namespace Infra\Handlers\UseCases\Project\Update;
 
-use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
+use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Update\inputs\UpdateProjectInput;
 use Core\Application\Project\Update\UpdateProjectUseCase;
 use Core\Domain\Entities\Project\Root\ProjectEntity;

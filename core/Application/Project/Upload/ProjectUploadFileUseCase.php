@@ -2,10 +2,10 @@
 
 namespace Core\Application\Project\Upload;
 
-use Core\Application\Common\Inputs\FiletInput;
-use Core\Application\File\Gateways\FileCommandInterface;
-use Core\Application\Project\Commons\Exceptions\ProjectNotFoundException;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
+use Core\Application\File\Shared\Gateways\FileCommandInterface;
+use Core\Application\Project\Shared\Exceptions\ProjectNotFoundException;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
+use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Entities\File\Root\FileEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;

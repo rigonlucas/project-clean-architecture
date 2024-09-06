@@ -2,9 +2,9 @@
 
 namespace Core\Application\User\Create;
 
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;

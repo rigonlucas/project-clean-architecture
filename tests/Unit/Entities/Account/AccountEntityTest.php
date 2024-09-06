@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Entities\Account;
 
-use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
+use Core\Application\Account\Shared\Exceptions\AccountNameInvalidException;
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Support\Http\ResponseStatus;
 use Ramsey\Uuid\Uuid;

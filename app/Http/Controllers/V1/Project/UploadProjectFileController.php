@@ -4,9 +4,9 @@ namespace App\Http\Controllers\V1\Project;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Project\UploadProjectFileRequest;
-use Core\Application\Common\Inputs\FiletInput;
-use Core\Application\File\Gateways\FileCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
+use Core\Application\File\Shared\Gateways\FileCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
+use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Enum\File\ContextFileEnum;
 use Core\Domain\Enum\File\ExtensionsEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
@@ -62,9 +62,11 @@ class UploadProjectFileController extends Controller
 
         return response()->json(
             data: [
-                'uuid' => $fileEntity->getUuid()->toString(),
-                'project_uuid' => $uuid,
-                'file_name' => $fileEntity->getUlidFileName() . '.' . $fileEntity->getExtension()->value,
+                'data' => [
+                    'uuid' => $fileEntity->getUuid()->toString(),
+                    'project_uuid' => $uuid,
+                    'file_name' => $fileEntity->getUlidFileName() . '.' . $fileEntity->getExtension()->value,
+                ]
             ],
             status: ResponseStatus::OK->value
         );

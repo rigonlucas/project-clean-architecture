@@ -3,14 +3,14 @@
 namespace App\Providers;
 
 use App\Http\Controllers\V1\Project\UploadProjectFileController;
-use Core\Application\Account\Commons\Gateways\AccountCommandInterface;
-use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
-use Core\Application\File\Gateways\FileCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectFileMapperInterface;
-use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
+use Core\Application\Account\Shared\Gateways\AccountCommandInterface;
+use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
+use Core\Application\File\Shared\Gateways\FileCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
+use Core\Application\Project\Shared\Gateways\ProjectFileMapperInterface;
+use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Services\Framework\Contracts\AuthContract;
 use Core\Services\Framework\Contracts\StrContract;
 use Core\Services\Framework\Contracts\TransactionManagerContract;

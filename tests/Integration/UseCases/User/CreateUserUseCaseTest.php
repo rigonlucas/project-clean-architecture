@@ -2,10 +2,10 @@
 
 namespace Tests\Integration\UseCases\User;
 
-use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\CreateUserUseCase;
 use Core\Application\User\Create\Inputs\CreateUserInput;
+use Core\Application\User\Shared\Gateways\UserCommandInterface;
+use Core\Application\User\Shared\Gateways\UserMapperInterface;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\InvalideRules\HasErrorsInBagException;

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Entities\Account;
 
-use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
+use Core\Application\Account\Shared\Exceptions\AccountJoinCodeInvalidException;
 use Core\Domain\Entities\Shared\Account\JoinCode\AccountJoinCodeEntity;
 use Core\Support\Http\ResponseStatus;
 use Ramsey\Uuid\Uuid;
