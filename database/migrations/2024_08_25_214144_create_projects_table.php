@@ -15,8 +15,11 @@ return new class extends Migration {
             $table->uuid()->primary();
             $table->string('name', 255);
             $table->string('description', 500);
-            $table->foreignUuid('created_by_user_uuid')->constrained('users', 'uuid');
-            $table->foreignUuid('account_uuid')->constrained('accounts', 'uuid');
+            $table->foreignUuid('created_by_user_uuid')
+                ->constrained('users', 'uuid')
+                ->onDelete('cascade');
+            $table->foreignUuid('account_uuid')
+                ->constrained('accounts', 'uuid');
             $table->dateTime('start_at')->default(null)->nullable();
             $table->dateTime('finish_at')->default(null)->nullable();
 

@@ -4,20 +4,12 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./app/Http/Controllers</directory>
-            <directory suffix=".php">./core/Domain</directory>
-        </include>
+    <coverage>
         <report>
             <html outputDirectory="storage/app/public/coverage/coverage-html"/>
             <clover outputFile="storage/app/public/coverage/logs/clover.xml"/>
         </report>
     </coverage>
-
-    <logging>
-        <log type="coverage-clover" target="storage/app/public/coverage/clover.xml"/>
-    </logging>
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>

@@ -11,18 +11,18 @@ class DefaultPathValueObject implements FilePathValueObjectInterface
      * @example {ACCOUNT_UUID}/{CONTEXT}/{PROJECT_UUID}/{FILE_UUID}.{EXTENSION}
      */
     private const string FILE_PATH_MASK = '%s/%s/%s/%s.%s';
-    private array $partOfPath = [];
+    private array $segiments = [];
     private ?string $path = null;
 
     public function apply(): self
     {
-        if (count($this->partOfPath) !== substr_count(self::FILE_PATH_MASK, '%s')) {
+        if (count($this->segiments) !== substr_count(self::FILE_PATH_MASK, '%s')) {
             throw new InvalidArgumentException('Path is already full');
         }
 
         $this->path = sprintf(
             self::FILE_PATH_MASK,
-            ...$this->partOfPath,
+            ...$this->segiments,
         );
 
         return $this;
@@ -40,7 +40,7 @@ class DefaultPathValueObject implements FilePathValueObjectInterface
 
     public function addPathSegment(string $segiment): DefaultPathValueObject
     {
-        $this->partOfPath[] = $segiment;
+        $this->segiments[] = $segiment;
         return $this;
     }
 }

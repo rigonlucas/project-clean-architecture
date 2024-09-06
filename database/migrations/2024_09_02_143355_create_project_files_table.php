@@ -14,9 +14,15 @@ return new class extends Migration {
     {
         Schema::create('project_files', function (Blueprint $table) {
             $table->uuid()->primary();
-            $table->foreignUuid('project_uuid')->constrained('projects', 'uuid');
-            $table->foreignUuid('created_by_user_uuid')->constrained('users', 'uuid');
-            $table->foreignUuid('account_uuid')->constrained('accounts', 'uuid');
+            $table->foreignUuid('project_uuid')
+                ->constrained('projects', 'uuid')
+                ->onDelete('cascade');
+            $table->foreignUuid('created_by_user_uuid')
+                ->constrained('users', 'uuid')
+                ->onDelete('cascade');
+            $table->foreignUuid('account_uuid')
+                ->constrained('accounts', 'uuid')
+                ->onDelete('cascade');
             $table->string('file_name', 255);
             $table->string('file_path', 255);
             $table->string('file_extension', 10);

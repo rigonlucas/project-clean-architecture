@@ -10,16 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('account_join_codes', function (Blueprint $table) {
+        Schema::create('project_cards', function (Blueprint $table) {
             $table->uuid()->primary();
-            $table->string('code', 8);
-            $table->foreignUuid('account_uuid')
-                ->constrained('accounts', 'uuid');
-            $table->foreignUuid('user_uuid')
-                ->nullable()
-                ->constrained('users', 'uuid');
-            $table->dateTime('expired_at');
+            $table->foreignUuid('created_by_user_uuid')
+                ->constrained('users', 'uuid')
+                ->onDelete('cascade');
+            $table->string('name');
+            $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('account_join_codes');
+        Schema::dropIfExists('project_cards');
     }
 };
