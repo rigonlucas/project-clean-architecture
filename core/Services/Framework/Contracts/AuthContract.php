@@ -2,7 +2,7 @@
 
 namespace Core\Services\Framework\Contracts;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 interface AuthContract
 {

@@ -7,17 +7,16 @@ use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Create\CreateProjectUseCase;
 use Core\Application\Project\Create\inputs\CreateProjectInput;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group test_create_project_use_case
- */
+#[Group("test_create_project_use_case")]
 class CreateProjectUseCaseTest extends TestCase
 {
     use DatabaseMigrations;

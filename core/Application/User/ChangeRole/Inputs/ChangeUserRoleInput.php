@@ -2,7 +2,7 @@
 
 namespace Core\Application\User\ChangeRole\Inputs;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 readonly class ChangeUserRoleInput
 {

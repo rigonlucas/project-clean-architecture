@@ -4,11 +4,10 @@ namespace Core\Application\Project\Upload;
 
 use Core\Application\Project\Commons\Exceptions\ProjectNotFoundException;
 use Core\Application\Project\Commons\Gateways\ProjectFileCommandInterface;
-use Core\Application\Project\Commons\Gateways\ProjectFileMapperInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Upload\inputs\ProjecFiletInput;
-use Core\Domain\Entities\Project\ProjectFile\ProjectFileEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\File\Root\FileEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Http\ResponseStatus;
@@ -18,8 +17,7 @@ class ProjectUploadFileUseCase
     public function __construct(
         private FrameworkContract $framework,
         private ProjectFileCommandInterface $fileCommand,
-        private ProjectFileMapperInterface $fileMapper,
-        private ProjectMapperInterface $projectMapper,
+        private ProjectMapperInterface $projectMapper
     ) {
     }
 
@@ -27,7 +25,7 @@ class ProjectUploadFileUseCase
      * @throws ForbidenException
      * @throws ProjectNotFoundException
      */
-    public function execute(ProjecFiletInput $projecFiletInput, UserEntity $authUserEntity): ProjectFileEntity
+    public function execute(ProjecFiletInput $projecFiletInput, UserEntity $authUserEntity): FileEntity
     {
         $projectEntity = $this->projectMapper->findByUuid($projecFiletInput->projectUuid, $authUserEntity);
         if ($projectEntity) {
@@ -38,17 +36,16 @@ class ProjectUploadFileUseCase
         }
         $projectEntity->canChangeProject();
 
-        $projectFileEntity = ProjectFileEntity::forCreate(
+        $projectFileEntity = FileEntity::forCreate(
             uuid: $this->framework->uuid()->uuid7Generate(),
             name: $projecFiletInput->name,
             type: $projecFiletInput->type,
             size: $projecFiletInput->size,
             extension: $projecFiletInput->extension,
-            projectEntity: $projectEntity,
             userEntity: $authUserEntity,
             context: $projecFiletInput->context
         );
 
-        return $this->fileCommand->create($projectFileEntity);
+        return $this->fileCommand->create($projectFileEntity, $projectEntity);
     }
 }

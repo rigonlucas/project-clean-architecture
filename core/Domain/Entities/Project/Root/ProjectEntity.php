@@ -1,13 +1,11 @@
 <?php
 
-namespace Core\Domain\Entities\Project;
+namespace Core\Domain\Entities\Project\Root;
 
 use Carbon\CarbonInterface;
 use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\Project\Traits\HasProjectEntityBuilder;
-use Core\Domain\Entities\Project\Traits\ProjectEntityAcessors;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\Dates\DateMustBeBeforeOtherException;
@@ -19,7 +17,6 @@ use Ramsey\Uuid\UuidInterface;
 
 class ProjectEntity
 {
-    use ProjectEntityAcessors;
     use HasProjectEntityBuilder;
 
     public const array PERMISSIONS_TO_MANAGEMEMT = [
@@ -66,6 +63,26 @@ class ProjectEntity
         }
     }
 
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(UuidInterface $uuid): void
+    {
+        $this->uuid = $uuid;
+    }
+
+    public function getAccount(): AccountEntity
+    {
+        return $this->account;
+    }
+
+    public function setAccount(AccountEntity $account): void
+    {
+        $this->account = $account;
+    }
+
     /**
      * @throws DateMustBeBeforeOtherException
      * @throws DateMustBeInCurrentDayException
@@ -107,5 +124,65 @@ class ProjectEntity
                 "Only BACKLOG, IN PROGRESS and PENDING status are allowed to create a project, " . $this->status->value . " given"
             );
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function getUser(): UserEntity
+    {
+        return $this->user;
+    }
+
+    public function setUser(UserEntity $user): void
+    {
+        $this->user = $user;
+    }
+
+    public function getStartAt(): ?CarbonInterface
+    {
+        return $this->startAt;
+    }
+
+    public function setStartAt(?CarbonInterface $startAt): void
+    {
+        $this->startAt = $startAt;
+    }
+
+    public function getFinishAt(): ?CarbonInterface
+    {
+        return $this->finishAt;
+    }
+
+    public function setFinishAt(?CarbonInterface $finishAt): void
+    {
+        $this->finishAt = $finishAt;
+    }
+
+    public function getStatus(): StatusProjectEnum
+    {
+        return $this->status;
+    }
+
+    public function setStatus(StatusProjectEnum $status): void
+    {
+        $this->status = $status;
     }
 }

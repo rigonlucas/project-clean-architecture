@@ -4,17 +4,16 @@ namespace Tests\Feature\Persistence\User;
 
 use App\Models\Account;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Services\Framework\FrameworkContract;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group test_create_user_command
- */
+#[Group("test_create_user_command")]
 class CreateUserCommandTest extends TestCase
 {
     use DatabaseMigrations;

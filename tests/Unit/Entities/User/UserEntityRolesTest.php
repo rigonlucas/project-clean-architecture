@@ -2,17 +2,16 @@
 
 namespace Tests\Unit\Entities\User;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\Access\GeneralPermissions;
 use Core\Support\Permissions\UserRoles;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group UserEntityRolesTest
- */
+#[Group('UserEntityRolesTest')]
 class UserEntityRolesTest extends TestCase
 {
     public function test_user_entity_roles_as_admin()

@@ -9,11 +9,10 @@ use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Sanctum\Sanctum;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group e2e_account_user_list
- */
+#[Group('e2e_account_user_list')]
 class AccountUserListE2eTest extends TestCase
 {
     use DatabaseMigrations;

@@ -2,7 +2,7 @@
 
 namespace Infra\Services\Framework\Adapters;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\Contracts\AuthContract;
 use Core\Support\HasSingletonTrait;
 use Exception;

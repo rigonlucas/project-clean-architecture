@@ -1,8 +1,7 @@
 <?php
 
-namespace Core\Domain\Entities\Account\Traits\JoinCode;
+namespace Core\Domain\Entities\Shared\Account\JoinCode;
 
-use Core\Domain\Entities\Account\AccountJoinCodeEntity;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
 

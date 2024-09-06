@@ -2,7 +2,7 @@
 
 namespace Core\Application\Project\Commons\Gateways;
 
-use Core\Domain\Entities\Project\ProjectEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
 
 interface ProjectCommandInterface
 {

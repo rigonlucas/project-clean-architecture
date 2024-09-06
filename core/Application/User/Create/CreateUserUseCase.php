@@ -5,7 +5,7 @@ namespace Core\Application\User\Create;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
 use Core\Application\User\Commons\Gateways\UserMapperInterface;
 use Core\Application\User\Create\Inputs\CreateUserInput;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Validations\HasErrorBagTrait;

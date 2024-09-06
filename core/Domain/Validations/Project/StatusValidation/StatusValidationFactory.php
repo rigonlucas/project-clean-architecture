@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Validations\Project\StatusValidation;
 
-use Core\Domain\Entities\Project\ProjectEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Domain\Validations\Project\StatusValidation\Strategies\DefaultValidation;
 use Core\Domain\Validations\Project\StatusValidation\Strategies\InProgressValidation;

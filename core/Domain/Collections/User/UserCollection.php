@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Collections\User;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Support\Collections\CollectionBase;
 use Core\Support\Collections\Paginations\Simple\HasDefaultPagination;
 use Core\Support\Exceptions\InvalideRules\InvalidRoleException;

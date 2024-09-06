@@ -4,7 +4,7 @@ namespace Infra\Database\Project\Command;
 
 use App\Models\Project;
 use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
-use Core\Domain\Entities\Project\ProjectEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Exception;
 
 class ProjectCommand implements ProjectCommandInterface

@@ -1,11 +1,10 @@
 <?php
 
-namespace Core\Domain\Entities\Project\Traits;
+namespace Core\Domain\Entities\Project\Root;
 
 use Carbon\CarbonInterface;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Ramsey\Uuid\UuidInterface;
 

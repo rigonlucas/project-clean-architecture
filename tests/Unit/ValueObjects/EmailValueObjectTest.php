@@ -5,11 +5,10 @@ namespace Tests\Unit\ValueObjects;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use Core\Support\Http\ResponseStatus;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group email_value_objects
- */
+#[Group('email_value_objects')]
 class EmailValueObjectTest extends TestCase
 {
     public function test_valid_email()

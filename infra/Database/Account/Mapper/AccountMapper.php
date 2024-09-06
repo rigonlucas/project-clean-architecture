@@ -5,8 +5,8 @@ namespace Infra\Database\Account\Mapper;
 use App\Models\Account;
 use App\Models\AccountJoinCode;
 use Core\Application\Account\Commons\Gateways\AccountMapperInterface;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\Account\AccountJoinCodeEntity;
+use Core\Domain\Entities\Shared\Account\JoinCode\AccountJoinCodeEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Ramsey\Uuid\Uuid;
 
 class AccountMapper implements AccountMapperInterface

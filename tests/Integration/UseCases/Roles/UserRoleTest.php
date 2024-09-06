@@ -3,11 +3,10 @@
 namespace Tests\Integration\UseCases\Roles;
 
 use Core\Support\Permissions\UserRoles;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group test_user_role
- */
+#[Group('test_user_role')]
 class UserRoleTest extends TestCase
 {
     public function test_general_for_admin()

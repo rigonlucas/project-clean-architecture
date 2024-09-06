@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Domain\Entities\User\Traits;
+namespace Core\Domain\Entities\Shared\User\Root;
 
 use Core\Support\Exceptions\InvalideRules\InvalidRoleException;
 use Core\Support\Http\ResponseStatus;

@@ -1,14 +1,13 @@
 <?php
 
-namespace Core\Domain\Entities\User;
+namespace Core\Domain\Entities\Shared\User\Root;
 
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\User\Traits\HasUserEntityBuilder;
-use Core\Domain\Entities\User\Traits\HasUserRoleTrait;
-use Core\Domain\Entities\User\Traits\UserEntityAcessors;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\SensitiveParameter;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\InvalideRules\InvalidComparationException;
+use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use Core\Support\Http\ResponseStatus;
 use Core\Support\Permissions\UserRoles;
 use DateTime;
@@ -18,7 +17,6 @@ use Ramsey\Uuid\UuidInterface;
 class UserEntity
 {
     use HasUserEntityBuilder;
-    use UserEntityAcessors;
     use HasUserRoleTrait;
 
     private string $name;
@@ -48,6 +46,15 @@ class UserEntity
         return $this->email;
     }
 
+    /**
+     * @throws InvalidEmailException
+     */
+    public function setEmail(EmailValueObject $email): self
+    {
+        $this->email = new EmailValueObject($email, false);
+        return $this;
+    }
+
     public function getEmailWithAccessControl(UserEntity $requireUserEntity): EmailValueObject
     {
         $permissions = [
@@ -59,6 +66,17 @@ class UserEntity
         }
 
         return $this->email;
+    }
+
+    public function isUserOwner(): bool
+    {
+        return $this->userOwner;
+    }
+
+    public function setUserOwner(bool $userOwner): self
+    {
+        $this->userOwner = $userOwner;
+        return $this;
     }
 
     /**
@@ -81,6 +99,27 @@ class UserEntity
         }
     }
 
+    public function getUuid(): UuidInterface
+    {
+        return $this->uuid;
+    }
+
+    public function setUuid(?UuidInterface $uuid): void
+    {
+        $this->uuid = $uuid;
+    }
+
+    public function getAccount(): ?AccountEntity
+    {
+        return $this->account;
+    }
+
+    public function setAccount(?AccountEntity $account): self
+    {
+        $this->account = $account;
+        return $this;
+    }
+
     /**
      * @throws ForbidenException
      */
@@ -91,5 +130,40 @@ class UserEntity
                 message: 'You do not have permission to update this user',
             );
         }
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(
+        #[SensitiveParameter]
+        string $password
+    ): self {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function getBirthday(): ?DateTimeInterface
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?DateTimeInterface $birthday): self
+    {
+        $this->birthday = $birthday;
+        return $this;
     }
 }

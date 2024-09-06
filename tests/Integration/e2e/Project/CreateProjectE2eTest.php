@@ -6,11 +6,10 @@ use App\Models\User;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group test_create_project_e2e
- */
+#[Group('test_create_project_e2e')]
 class CreateProjectE2eTest extends TestCase
 {
     use DatabaseMigrations;

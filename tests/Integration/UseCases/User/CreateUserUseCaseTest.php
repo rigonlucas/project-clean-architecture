@@ -11,11 +11,10 @@ use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\InvalideRules\HasErrorsInBagException;
 use Core\Support\Http\ResponseStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group UseCaseCreateUser
- */
+#[Group('UseCaseCreateUser')]
 class CreateUserUseCaseTest extends TestCase
 {
     use DatabaseMigrations;

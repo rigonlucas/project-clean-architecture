@@ -2,20 +2,19 @@
 
 namespace Tests\Unit\Entities\Project;
 
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Domain\Validations\Project\StatusValidation\StatusValidationFactory;
 use Core\Support\Exceptions\Dates\DateNotAllowedException;
 use Core\Support\Exceptions\Dates\DateRequiredException;
 use Core\Support\Permissions\UserRoles;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group project_entity_factory_strategies
- */
+#[Group('project_entity_factory_strategies')]
 class StatusFactoryStrategiesTest extends TestCase
 {
     /**

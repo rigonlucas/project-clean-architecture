@@ -1,9 +1,8 @@
 <?php
 
-namespace Core\Domain\Entities\User\Traits;
+namespace Core\Domain\Entities\Shared\User\Root;
 
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Exceptions\InvalideRules\InvalidEmailException;
 use DateTimeInterface;

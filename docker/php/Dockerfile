@@ -41,10 +41,14 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:$user /var/www/html
     
 USER $user
+# make an if for bash for APP_ENV is diferent from production
 
-RUN echo "alias pest='./vendor/bin/pest'" >> ~/.bashrc
 RUN echo "alias test='php artisan test'" >> ~/.bashrc
 RUN echo "alias art='php artisan'" >> ~/.bashrc
+RUN echo "alias model='php artisan make:model'" >> ~/.bashrc
+RUN echo "alias migrate='php artisan migrate'" >> ~/.bashrc
+RUN echo "alias rollback='php artisan migrate:rollback'" >> ~/.bashrc
+RUN echo "alias rollback='php artisan migrate:rollback'" >> ~/.bashrc
 
 CMD [ "php-fpm" ]
 # # Set the working directory

@@ -2,8 +2,8 @@
 
 namespace Infra\Handlers\UseCases\User\Create;
 
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 readonly class CreateUserOutput
 {

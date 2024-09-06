@@ -3,7 +3,7 @@
 namespace Tests\Unit\Entities\Account;
 
 use Core\Application\Account\Commons\Exceptions\AccountJoinCodeInvalidException;
-use Core\Domain\Entities\Account\AccountJoinCodeEntity;
+use Core\Domain\Entities\Shared\Account\JoinCode\AccountJoinCodeEntity;
 use Core\Support\Http\ResponseStatus;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
@@ -72,7 +72,7 @@ class AccountJoinCodeEntityTest extends TestCase
         $this->expectException(AccountJoinCodeInvalidException::class);
         $this->expectExceptionCode(ResponseStatus::BAD_REQUEST->value);
         $accountUuid = Uuid::uuid7();
-        
+
         // Arrange
         $entity = AccountJoinCodeEntity::forDetail(Uuid::uuid7(), '123456', $accountUuid, now()->subDay());
 

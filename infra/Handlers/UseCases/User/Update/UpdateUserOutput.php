@@ -2,7 +2,7 @@
 
 namespace Infra\Handlers\UseCases\User\Update;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 readonly class UpdateUserOutput
 {

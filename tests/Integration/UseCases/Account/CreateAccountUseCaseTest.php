@@ -14,12 +14,11 @@ use Core\Application\Account\Create\Inputs\AccountInput;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Http\ResponseStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group use_case_create_account
- */
+#[Group('use_case_create_account')]
 class CreateAccountUseCaseTest extends TestCase
 {
     use DatabaseMigrations;

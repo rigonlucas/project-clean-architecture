@@ -2,26 +2,23 @@
 
 namespace Tests\Unit\Entities\Project;
 
-use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\Project\ProjectFile\ProjectFileEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\File\Root\FileEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\File\AllowedExtensionsEnum;
+use Core\Domain\Enum\File\FileContextEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
-use Core\Domain\Enum\Project\ProjectFileContextEnum;
-use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Support\Permissions\UserRoles;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group project_file_test
- */
+#[Group('project_file_test')]
 class ProjectFileEntityTest extends TestCase
 {
     public static function projectFileContextProvider(): array
     {
-        foreach (ProjectFileContextEnum::cases() as $context) {
+        foreach (FileContextEnum::cases() as $context) {
             $data[strtolower($context->value)] = [
                 $context
             ];
@@ -32,31 +29,22 @@ class ProjectFileEntityTest extends TestCase
     /**
      * @dataProvider projectFileContextProvider
      */
-    public function test_entity_must_generate_path_storage_for_file_context(ProjectFileContextEnum $context): void
+    public function test_entity_must_generate_path_storage_for_file_context(FileContextEnum $context): void
     {
         $userUuid = Uuid::uuid7();
         $accountUuid = Uuid::uuid7();
-        $projectUuid = Uuid::uuid7();
         $userEntity = UserEntity::forIdentify(
             uuid: $userUuid,
             role: UserRoles::ADMIN,
             accountUuid: $accountUuid
         );
 
-        $projectFileEntity = ProjectFileEntity::forCreate(
-            Uuid::uuid7(),
-            'Name',
-            TypeFileEnum::AUDIO,
-            new BytesValueObject(2),
-            AllowedExtensionsEnum::CSV,
-            projectEntity: ProjectEntity::forCreate(
-                name: 'Nome',
-                description: 'Desc',
-                user: $userEntity,
-                account: $userEntity->getAccount(),
-                uuid: $projectUuid,
-                status: StatusProjectEnum::IN_PROGRESS
-            ),
+        $projectFileEntity = FileEntity::forCreate(
+            uuid: Uuid::uuid7(),
+            name: 'Name',
+            type: TypeFileEnum::AUDIO,
+            size: new BytesValueObject(2),
+            extension: AllowedExtensionsEnum::CSV,
             userEntity: $userEntity,
             context: $context
         );

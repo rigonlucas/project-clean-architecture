@@ -6,8 +6,8 @@ use Core\Application\Project\Commons\Gateways\ProjectCommandInterface;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Update\inputs\UpdateProjectInput;
 use Core\Application\Project\Update\UpdateProjectUseCase;
-use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 class UpdateProjectHandler
 {

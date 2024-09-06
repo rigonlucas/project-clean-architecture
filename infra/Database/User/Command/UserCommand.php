@@ -4,7 +4,7 @@ namespace Infra\Database\User\Command;
 
 use App\Models\User;
 use Core\Application\User\Commons\Gateways\UserCommandInterface;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 
 class UserCommand implements UserCommandInterface
 {

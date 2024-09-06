@@ -2,7 +2,7 @@
 
 namespace Core\Application\User\Update\Inputs;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;

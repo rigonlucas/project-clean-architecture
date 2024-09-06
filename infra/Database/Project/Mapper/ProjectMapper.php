@@ -5,9 +5,9 @@ namespace Infra\Database\Project\Mapper;
 use App\Models\Project;
 use Carbon\Carbon;
 use Core\Application\Project\Commons\Gateways\ProjectMapperInterface;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Ramsey\Uuid\Uuid;
 

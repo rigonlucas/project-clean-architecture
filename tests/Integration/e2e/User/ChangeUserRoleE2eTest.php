@@ -9,11 +9,10 @@ use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group e2e_change_user_role
- */
+#[Group('e2e_change_user_role')]
 class ChangeUserRoleE2eTest extends TestCase
 {
     use DatabaseMigrations;

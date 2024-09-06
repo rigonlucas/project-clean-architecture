@@ -3,21 +3,20 @@
 namespace Tests\Unit\Entities\Project;
 
 use Core\Application\Project\Commons\Exceptions\ProjectStatusUnableException;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\Project\ProjectEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\Project\StatusProjectEnum;
 use Core\Support\Exceptions\Dates\DateMustBeBeforeOtherException;
 use Core\Support\Exceptions\Dates\DateMustBeInCurrentDayException;
 use Core\Support\Exceptions\Dates\DateRequiredException;
 use Core\Support\Exceptions\Dates\DatesMustBeDifferntsException;
 use Core\Support\Permissions\UserRoles;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group project_entity
- */
+#[Group('project_entity')]
 class ProjectEntityTest extends TestCase
 {
     public static function statusInvalidForCreationProvider(): array

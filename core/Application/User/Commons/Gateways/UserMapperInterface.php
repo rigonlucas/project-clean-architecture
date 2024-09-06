@@ -3,8 +3,8 @@
 namespace Core\Application\User\Commons\Gateways;
 
 use Core\Domain\Collections\User\UserCollection;
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Support\Collections\Paginations\Inputs\DefaultPaginationData;
 use Ramsey\Uuid\UuidInterface;
 

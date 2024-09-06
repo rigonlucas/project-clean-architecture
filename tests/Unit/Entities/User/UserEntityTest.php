@@ -2,17 +2,16 @@
 
 namespace Tests\Unit\Entities\User;
 
-use Core\Domain\Entities\Account\AccountEntity;
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Permissions\UserRoles;
 use Infra\Services\Framework\FrameworkService;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group user_entity
- */
+#[Group('user_entity')]
 class UserEntityTest extends TestCase
 {
     public function test_should_return_that_the_user_is_not_of_legal_age(): void

@@ -2,15 +2,14 @@
 
 namespace Tests\Unit\Entities\User;
 
-use Core\Domain\Entities\User\UserEntity;
+use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Permissions\UserRoles;
+use PHPUnit\Framework\Attributes\Group;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-/**
- * @group user_entity_validation_for_same_account
- */
+#[Group('user_entity_validation_for_same_account')]
 class UserValidationForSameAccountTest extends TestCase
 {
     public function test_success_for_users_from_different_accounts()

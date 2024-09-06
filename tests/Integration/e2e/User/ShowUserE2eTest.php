@@ -9,11 +9,10 @@ use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Laravel\Sanctum\Sanctum;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group e2e_show_user
- */
+#[Group('e2e_show_user')]
 class ShowUserE2eTest extends TestCase
 {
     use DatabaseMigrations;

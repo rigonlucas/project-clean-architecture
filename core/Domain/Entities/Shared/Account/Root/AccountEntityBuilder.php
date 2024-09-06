@@ -1,9 +1,8 @@
 <?php
 
-namespace Core\Domain\Entities\Account\Traits\Account;
+namespace Core\Domain\Entities\Shared\Account\Root;
 
 use Core\Application\Account\Commons\Exceptions\AccountNameInvalidException;
-use Core\Domain\Entities\Account\AccountEntity;
 use Ramsey\Uuid\UuidInterface;
 
 trait AccountEntityBuilder

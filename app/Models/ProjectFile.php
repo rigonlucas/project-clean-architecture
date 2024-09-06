@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Core\Domain\Enum\File\AllowedExtensionsEnum;
+use Core\Domain\Enum\File\FileContextEnum;
 use Core\Domain\Enum\File\StatusFileEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
-use Core\Domain\Enum\Project\ProjectFileContextEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,7 +24,7 @@ use Ramsey\Uuid\UuidInterface;
  * @property AllowedExtensionsEnum|mixed $extension
  * @property mixed $project_id
  * @property mixed $user_id
- * @property ProjectFileContextEnum|mixed $context
+ * @property FileContextEnum|mixed $context
  * @property StatusFileEnum|mixed $status
  */
 class ProjectFile extends Model

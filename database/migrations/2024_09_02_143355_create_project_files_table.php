@@ -2,7 +2,6 @@
 
 use Core\Domain\Enum\File\StatusFileEnum;
 use Core\Domain\Enum\File\TypeFileEnum;
-use Core\Domain\Enum\Project\ProjectFileContextEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -40,13 +39,8 @@ return new class extends Migration {
                 ->comment(implode(' | ', $status))
                 ->default(StatusFileEnum::PENDING->value);
 
-            $contexts = array_map(
-                fn(ProjectFileContextEnum $enum) => $enum->value,
-                ProjectFileContextEnum::cases()
-            );
-            $table->enum(column: 'context', allowed: $contexts)
+            $table->unsignedBigInteger(column: 'context')
                 ->index()
-                ->comment(implode(' | ', $contexts))
                 ->default(null);
 
 

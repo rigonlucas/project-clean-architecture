@@ -8,11 +8,10 @@ use Core\Support\Http\HttpApiHeaders;
 use Core\Support\Http\ResponseStatus;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-/**
- * @group e2e_create_user
- */
+#[Group('e2e_create_user')]
 class CreateUserE2eTest extends TestCase
 {
     use DatabaseMigrations;

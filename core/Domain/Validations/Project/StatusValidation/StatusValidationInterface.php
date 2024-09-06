@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Validations\Project\StatusValidation;
 
-use Core\Domain\Entities\Project\ProjectEntity;
+use Core\Domain\Entities\Project\Root\ProjectEntity;
 
 interface StatusValidationInterface
 {
