@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\ProjectCard;
+use App\Models\Project;
 use App\Models\ProjectTask;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,9 @@ class ProjectTaskFactory extends Factory
     public function definition()
     {
         return [
-            'project_id' => ProjectCard::factory(),
-            'task_id' => Task::factory(),
+            'project_uuid' => Project::factory(),
+            'task_uuid' => Task::factory(),
+            'created_by_user_uuid' => User::factory(),
         ];
     }
 }

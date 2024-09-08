@@ -12,6 +12,9 @@ return new class extends Migration {
     {
         Schema::create('flows', function (Blueprint $table) {
             $table->uuid()->primary();
+            $table->foreignUuid('account_uuid')
+                ->constrained('accounts', 'uuid')
+                ->onDelete('cascade');
             $table->foreignUuid('created_by_user_uuid')
                 ->constrained('users', 'uuid')
                 ->onDelete('cascade');

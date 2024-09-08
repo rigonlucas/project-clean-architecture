@@ -3,10 +3,10 @@
 namespace Core\Domain\Entities\File\Root;
 
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Enum\File\ContextFileEnum;
-use Core\Domain\Enum\File\ExtensionsEnum;
-use Core\Domain\Enum\File\StatusFileEnum;
-use Core\Domain\Enum\File\TypeFileEnum;
+use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\FileExtensionsEnum;
+use Core\Domain\Enum\File\FileStatusEnum;
+use Core\Domain\Enum\File\FileTypeEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Domain\ValueObjects\File\FilePathValueObjectInterface;
 use InvalidArgumentException;
@@ -22,12 +22,12 @@ class FileEntity
     private string $ulidFileName;
     private string $name;
     private FilePathValueObjectInterface $filePathValueObject;
-    private TypeFileEnum $type;
+    private FileTypeEnum $type;
     private BytesValueObject $size;
-    private ExtensionsEnum $extension;
+    private FileExtensionsEnum $extension;
     private UserEntity $userEntity;
-    private ContextFileEnum $context;
-    private StatusFileEnum $status;
+    private FileContextEnum $context;
+    private FileStatusEnum $status;
 
     private function __construct()
     {
@@ -65,12 +65,12 @@ class FileEntity
         $this->filePathValueObject = $filePathValueObject;
     }
 
-    public function getType(): TypeFileEnum
+    public function getType(): FileTypeEnum
     {
         return $this->type;
     }
 
-    public function setType(TypeFileEnum $type): void
+    public function setType(FileTypeEnum $type): void
     {
         $this->type = $type;
     }
@@ -85,32 +85,32 @@ class FileEntity
         $this->size = $size;
     }
 
-    public function getContext(): ContextFileEnum
+    public function getContext(): FileContextEnum
     {
         return $this->context;
     }
 
-    public function setContext(ContextFileEnum $context): void
+    public function setContext(FileContextEnum $context): void
     {
         $this->context = $context;
     }
 
-    public function getStatus(): StatusFileEnum
+    public function getStatus(): FileStatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(StatusFileEnum $status): void
+    public function setStatus(FileStatusEnum $status): void
     {
         $this->status = $status;
     }
 
-    public function getExtension(): ExtensionsEnum
+    public function getExtension(): FileExtensionsEnum
     {
         return $this->extension;
     }
 
-    public function setExtension(ExtensionsEnum $extension): void
+    public function setExtension(FileExtensionsEnum $extension): void
     {
         $this->extension = $extension;
     }
@@ -139,7 +139,7 @@ class FileEntity
 
     public function confirmUpload(): void
     {
-        $this->status = StatusFileEnum::FINISHED;
+        $this->status = FileStatusEnum::FINISHED;
     }
 
     public function getUuid(): UuidInterface

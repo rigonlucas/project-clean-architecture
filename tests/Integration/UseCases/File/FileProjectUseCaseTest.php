@@ -7,9 +7,9 @@ use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Application\Project\Upload\ProjectUploadFileUseCase;
 use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Enum\File\ContextFileEnum;
-use Core\Domain\Enum\File\ExtensionsEnum;
-use Core\Domain\Enum\File\TypeFileEnum;
+use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\FileExtensionsEnum;
+use Core\Domain\Enum\File\FileTypeEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Permissions\UserRoles;
@@ -32,10 +32,10 @@ class FileProjectUseCaseTest extends TestCase
         $projectModel = Project::factory()->create();
         $input = new FiletInput(
             name: 'name',
-            type: TypeFileEnum::DOCUMENT,
+            type: FileTypeEnum::DOCUMENT,
             size: new BytesValueObject(1000),
-            extension: ExtensionsEnum::DOCX,
-            contextFile: ContextFileEnum::PROJECT,
+            extension: FileExtensionsEnum::DOCX,
+            contextFile: FileContextEnum::PROJECT,
             uuid: Uuid::fromString($projectModel->uuid)
         );
 
@@ -82,10 +82,10 @@ class FileProjectUseCaseTest extends TestCase
         $this->expectExceptionCode(404);
         $input = new FiletInput(
             name: 'name',
-            type: TypeFileEnum::DOCUMENT,
+            type: FileTypeEnum::DOCUMENT,
             size: new BytesValueObject(1000),
-            extension: ExtensionsEnum::DOCX,
-            contextFile: ContextFileEnum::PROJECT,
+            extension: FileExtensionsEnum::DOCX,
+            contextFile: FileContextEnum::PROJECT,
             uuid: Uuid::uuid4()
         );
 

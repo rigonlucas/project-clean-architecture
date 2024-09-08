@@ -4,9 +4,9 @@ namespace Tests\Unit\Entities\Project;
 
 use Core\Domain\Entities\File\Root\FileEntity;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
-use Core\Domain\Enum\File\ContextFileEnum;
-use Core\Domain\Enum\File\ExtensionsEnum;
-use Core\Domain\Enum\File\TypeFileEnum;
+use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\FileExtensionsEnum;
+use Core\Domain\Enum\File\FileTypeEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Support\Permissions\UserRoles;
 use PHPUnit\Framework\Attributes\Group;
@@ -18,7 +18,7 @@ class ProjectFileEntityTest extends TestCase
 {
     public static function projectFileContextProvider(): array
     {
-        foreach (ContextFileEnum::cases() as $context) {
+        foreach (FileContextEnum::cases() as $context) {
             $data[strtolower($context->value)] = [
                 $context
             ];
@@ -29,7 +29,7 @@ class ProjectFileEntityTest extends TestCase
     /**
      * @dataProvider projectFileContextProvider
      */
-    public function test_entity_must_generate_path_storage_for_file_context(ContextFileEnum $context): void
+    public function test_entity_must_generate_path_storage_for_file_context(FileContextEnum $context): void
     {
         $userUuid = Uuid::uuid7();
         $accountUuid = Uuid::uuid7();
@@ -43,9 +43,9 @@ class ProjectFileEntityTest extends TestCase
             uuid: Uuid::uuid7(),
             entityUuid: Uuid::uuid7(),
             name: 'Name',
-            type: TypeFileEnum::DOCUMENT,
+            type: FileTypeEnum::DOCUMENT,
             size: new BytesValueObject(2),
-            extension: ExtensionsEnum::CSV,
+            extension: FileExtensionsEnum::CSV,
             userEntity: $userEntity,
             context: $context
         );

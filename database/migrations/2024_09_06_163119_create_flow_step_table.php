@@ -10,14 +10,20 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('flow_step', function (Blueprint $table) {
+        Schema::create('flow_steps', function (Blueprint $table) {
             $table->uuid()->primary();
             $table->foreignUuid('flow_uuid')
                 ->constrained('flows', 'uuid')
                 ->onDelete('cascade');
+            $table->foreignUuid('next_step_uuid')
+                ->nullable()
+                ->constrained('flow_steps', 'uuid')
+                ->onDelete('cascade');
+            $table->foreignUuid('created_by_user_uuid')
+                ->constrained('users', 'uuid')
+                ->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('integration')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +34,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('flow_step');
+        Schema::dropIfExists('flow_steps');
     }
 };

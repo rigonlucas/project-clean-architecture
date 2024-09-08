@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Models\HasCreatedByUser;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +14,7 @@ class ProjectCard extends Model
     use HasFactory;
     use SoftDeletes;
     use HasUuids;
+    use HasCreatedByUser;
 
     public $incrementing = false;
     protected $primaryKey = 'uuid';

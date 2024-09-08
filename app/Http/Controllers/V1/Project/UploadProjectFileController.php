@@ -7,9 +7,9 @@ use App\Http\Requests\V1\Project\UploadProjectFileRequest;
 use Core\Application\File\Shared\Gateways\FileCommandInterface;
 use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
 use Core\Application\Shared\Inputs\FiletInput;
-use Core\Domain\Enum\File\ContextFileEnum;
-use Core\Domain\Enum\File\ExtensionsEnum;
-use Core\Domain\Enum\File\TypeFileEnum;
+use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\FileExtensionsEnum;
+use Core\Domain\Enum\File\FileTypeEnum;
 use Core\Domain\ValueObjects\BytesValueObject;
 use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Services\Framework\FrameworkContract;
@@ -32,10 +32,10 @@ class UploadProjectFileController extends Controller
         $uploadedFile = $request->file('file');
         $input = new FiletInput(
             name: $uploadedFile->name,
-            type: TypeFileEnum::DOCUMENT,
+            type: FileTypeEnum::DOCUMENT,
             size: new BytesValueObject($uploadedFile->getSize()),
-            extension: ExtensionsEnum::from($uploadedFile->getClientOriginalExtension()),
-            contextFile: ContextFileEnum::PROJECT,
+            extension: FileExtensionsEnum::from($uploadedFile->getClientOriginalExtension()),
+            contextFile: FileContextEnum::PROJECT,
             uuid: Uuid::fromString($uuid)
         );
         try {

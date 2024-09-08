@@ -13,10 +13,13 @@ return new class extends Migration {
         Schema::create('project_tasks', function (Blueprint $table) {
             $table->id();
             $table->foreignUuid('project_uuid')
-                ->constrained('project_cards', 'uuid')
+                ->constrained('projects', 'uuid')
                 ->onDelete('cascade');
             $table->foreignUuid('task_uuid')
                 ->constrained('tasks', 'uuid')
+                ->onDelete('cascade');
+            $table->foreignUuid('created_by_user_uuid')
+                ->constrained('users', 'uuid')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

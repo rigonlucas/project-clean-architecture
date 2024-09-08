@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Enum\File;
 
-enum ContextFileEnum: string
+enum FileContextEnum: string
 {
     case PROJECT = 'project';
     case PROJECT_TASK = 'project_task';

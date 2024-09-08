@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Project;
 use App\Models\ProjectCard;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,6 +18,8 @@ class ProjectCardFactory extends Factory
     {
         return [
             'uuid' => $this->faker->uuid,
+            'created_by_user_uuid' => User::factory(),
+            'project_uuid' => Project::factory(),
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,
         ];

@@ -15,6 +15,9 @@ return new class extends Migration {
             $table->foreignUuid('created_by_user_uuid')
                 ->constrained('users', 'uuid')
                 ->onDelete('cascade');
+            $table->foreignUuid('project_uuid')
+                ->constrained('projects', 'uuid')
+                ->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();

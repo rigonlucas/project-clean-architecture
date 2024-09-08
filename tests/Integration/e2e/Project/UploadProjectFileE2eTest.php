@@ -4,8 +4,8 @@ namespace Tests\Integration\e2e\Project;
 
 use App\Models\Project;
 use App\Models\User;
-use Core\Domain\Enum\File\ContextFileEnum;
-use Core\Domain\Enum\File\StatusFileEnum;
+use Core\Domain\Enum\File\FileContextEnum;
+use Core\Domain\Enum\File\FileStatusEnum;
 use Core\Support\Permissions\UserRoles;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Http\UploadedFile;
@@ -44,7 +44,7 @@ class UploadProjectFileE2eTest extends TestCase
         $filePath = sprintf(
             '%s/%s/%s/%s',
             $project->account_uuid,
-            ContextFileEnum::PROJECT->value,
+            FileContextEnum::PROJECT->value,
             $project->uuid,
             $content->data->file_name
         );
@@ -73,8 +73,8 @@ class UploadProjectFileE2eTest extends TestCase
             'file_extension' => $file->extension(),
             'file_size' => $file->getSize(),
             //'file_type' => $content->data->file_type, do the validation into controller
-            'status' => StatusFileEnum::FINISHED->value,
-            'context' => ContextFileEnum::PROJECT->value,
+            'status' => FileStatusEnum::FINISHED->value,
+            'context' => FileContextEnum::PROJECT->value,
         ]);
     }
 

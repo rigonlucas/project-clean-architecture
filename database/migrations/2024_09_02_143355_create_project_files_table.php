@@ -1,7 +1,7 @@
 <?php
 
-use Core\Domain\Enum\File\StatusFileEnum;
-use Core\Domain\Enum\File\TypeFileEnum;
+use Core\Domain\Enum\File\FileStatusEnum;
+use Core\Domain\Enum\File\FileTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -29,8 +29,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('file_size');
 
             $types = array_map(
-                fn(TypeFileEnum $enum) => $enum->value,
-                TypeFileEnum::cases()
+                fn(FileTypeEnum $enum) => $enum->value,
+                FileTypeEnum::cases()
             );
             $table->enum(column: 'file_type', allowed: $types)
                 ->comment(implode(' | ', $types))
@@ -38,12 +38,12 @@ return new class extends Migration {
                 ->nullable();
 
             $status = array_map(
-                fn(StatusFileEnum $enum) => $enum->value,
-                StatusFileEnum::cases()
+                fn(FileStatusEnum $enum) => $enum->value,
+                FileStatusEnum::cases()
             );
             $table->enum(column: 'status', allowed: $status)
                 ->comment(implode(' | ', $status))
-                ->default(StatusFileEnum::PENDING->value);
+                ->default(FileStatusEnum::PENDING->value);
 
             $table->unsignedBigInteger(column: 'context')
                 ->index()

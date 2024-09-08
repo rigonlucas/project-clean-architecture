@@ -21,7 +21,10 @@ return new class extends Migration {
             $table->foreignUuid('created_by_user_uuid')
                 ->constrained('users', 'uuid')
                 ->onDelete('cascade');
-            $table->string('name');
+            $table->foreignUuid('account_uuid')
+                ->constrained('accounts', 'uuid')
+                ->onDelete('cascade');
+            $table->string('title');
             $table->text('description')->nullable();
             $table->enum(column: 'status', allowed: $status)
                 ->comment(implode(' | ', $status))

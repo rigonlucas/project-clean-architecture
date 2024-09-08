@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,6 +19,8 @@ class TaskFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
+            'created_by_user_uuid' => User::factory(),
+            'account_uuid' => Account::factory(),
         ];
     }
 }

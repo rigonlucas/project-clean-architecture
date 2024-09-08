@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Enum\File;
 
-enum TypeFileEnum: string
+enum FileTypeEnum: string
 {
     case IMAGE = 'IMAGE';
     case VIDEO = 'VIDEO';

@@ -2,7 +2,7 @@
 
 namespace Core\Domain\Enum\File;
 
-enum StatusFileEnum: string
+enum FileStatusEnum: string
 {
     case PENDING = 'PENDING';
     case IN_PROGRESS = 'IN_PROGRESS';
