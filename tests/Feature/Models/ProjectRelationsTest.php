@@ -14,6 +14,7 @@ use Tests\TestCase;
 
 #[Group('test_project_relations')]
 #[Group('test_models')]
+#[Group('test_project')]
 class ProjectRelationsTest extends TestCase
 {
     use DatabaseMigrations;

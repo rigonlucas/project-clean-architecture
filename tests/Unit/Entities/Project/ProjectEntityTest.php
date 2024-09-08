@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 #[Group('project_entity')]
+#[Group('test_project')]
 class ProjectEntityTest extends TestCase
 {
     public static function statusInvalidForCreationProvider(): array

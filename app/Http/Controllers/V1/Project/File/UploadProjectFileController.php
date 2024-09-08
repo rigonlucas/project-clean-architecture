@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1\Project;
+namespace App\Http\Controllers\V1\Project\File;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Project\UploadProjectFileRequest;

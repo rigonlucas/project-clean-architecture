@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 #[Group("test_update_project_use_case")]
+#[Group('test_project')]
 class UpdateProjectUseCaseTest extends TestCase
 {
     use DatabaseMigrations;

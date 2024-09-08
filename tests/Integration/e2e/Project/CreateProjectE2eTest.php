@@ -1,6 +1,6 @@
 <?php
 
-namespace Integration\e2e\Project;
+namespace Tests\Integration\e2e\Project;
 
 use App\Models\User;
 use Core\Domain\Enum\Project\StatusProjectEnum;
@@ -10,6 +10,8 @@ use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
 #[Group('test_create_project_e2e')]
+#[Group('test_e2e_project')]
+#[Group('test_project')]
 class CreateProjectE2eTest extends TestCase
 {
     use DatabaseMigrations;

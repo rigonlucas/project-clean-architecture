@@ -14,6 +14,7 @@ use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 #[Group('project_file_test')]
+#[Group('test_project')]
 class ProjectFileEntityTest extends TestCase
 {
     public static function projectFileContextProvider(): array

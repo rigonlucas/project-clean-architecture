@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Http\Controllers\V1\Project\UploadProjectFileController;
+use App\Http\Controllers\V1\Project\File\UploadProjectFileController;
 use Core\Application\Account\Shared\Gateways\AccountCommandInterface;
 use Core\Application\Account\Shared\Gateways\AccountMapperInterface;
 use Core\Application\File\Shared\Gateways\FileCommandInterface;

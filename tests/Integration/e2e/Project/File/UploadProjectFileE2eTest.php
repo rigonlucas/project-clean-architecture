@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Integration\e2e\Project;
+namespace Tests\Integration\e2e\Project\File;
 
 use App\Models\Project;
 use App\Models\User;
@@ -14,6 +14,8 @@ use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
 #[Group('test_e2e_upload_project_file')]
+#[Group('test_e2e_project')]
+#[Group('test_project')]
 class UploadProjectFileE2eTest extends TestCase
 {
     use DatabaseMigrations;
@@ -34,7 +36,7 @@ class UploadProjectFileE2eTest extends TestCase
 
         // Act
         $response = $this->postJson(
-            route('api.v1.project.upload-file', ['uuid' => $project->uuid]),
+            route('api.v1.project.file.upload', ['uuid' => $project->uuid]),
             [
                 'project_uuid' => $project->uuid,
                 'file' => $file
@@ -102,7 +104,7 @@ class UploadProjectFileE2eTest extends TestCase
 
         // Act
         $response = $this->postJson(
-            route('api.v1.project.upload-file', ['uuid' => $project->uuid]),
+            route('api.v1.project.file.upload', ['uuid' => $project->uuid]),
             [
                 'project_uuid' => $project->uuid,
                 'file' => $file
@@ -136,7 +138,7 @@ class UploadProjectFileE2eTest extends TestCase
 
         // Act
         $response = $this->postJson(
-            route('api.v1.project.upload-file', ['uuid' => $project->uuid]),
+            route('api.v1.project.file.upload', ['uuid' => $project->uuid]),
             [
                 'project_uuid' => $project->uuid,
                 'file' => $file

@@ -11,6 +11,8 @@ use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
 #[Group('test_update_project_e2e')]
+#[Group('test_e2e_project')]
+#[Group('test_project')]
 class UpdateProjectE2eTest extends TestCase
 {
     use DatabaseMigrations;

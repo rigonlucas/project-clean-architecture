@@ -15,6 +15,7 @@ use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 #[Group('project_entity_factory_strategies')]
+#[Group('test_project')]
 class StatusFactoryStrategiesTest extends TestCase
 {
     /**
