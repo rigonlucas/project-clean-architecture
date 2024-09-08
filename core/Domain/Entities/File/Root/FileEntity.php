@@ -139,7 +139,7 @@ class FileEntity
 
     public function confirmUpload(): void
     {
-        $this->status = FileStatusEnum::FINISHED;
+        $this->status = FileStatusEnum::SOFT_DELETED;
     }
 
     public function getUuid(): UuidInterface

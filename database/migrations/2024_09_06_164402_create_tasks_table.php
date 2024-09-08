@@ -33,6 +33,10 @@ return new class extends Migration {
             $table->dateTime('finish_at')->default(null)->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->string('ulid_deletion', 26)
+                ->nullable()
+                ->default(null)
+                ->comment('Unique local identifier for deletion');
         });
     }
 

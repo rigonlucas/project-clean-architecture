@@ -23,6 +23,9 @@ class ProjectEntity
         UserRoles::ADMIN,
         UserRoles::EDITOR
     ];
+    public const array PERMISSIONS_TO_DELETE = [
+        UserRoles::ADMIN
+    ];
     public const array STATUS_TO_CREATE = [
         StatusProjectEnum::BACKLOG->value,
         StatusProjectEnum::PENDING->value,
@@ -36,6 +39,7 @@ class ProjectEntity
     private ?CarbonInterface $startAt = null;
     private ?CarbonInterface $finishAt = null;
     private StatusProjectEnum $status;
+    private ?string $ulidDeletion = null;
 
     private function __construct()
     {
@@ -78,9 +82,31 @@ class ProjectEntity
         return $this->account;
     }
 
-    public function setAccount(AccountEntity $account): void
+    public function setAccount(?AccountEntity $account): void
     {
         $this->account = $account;
+    }
+
+    /**
+     * @throws ForbidenException
+     */
+    public function canDeleteProject(): void
+    {
+        if (is_null($this->user)) {
+            throw new ForbidenException('An user is required to delete a project');
+        }
+
+        if ($this->user->hasNotAnyPermissionFromArray(self::PERMISSIONS_TO_DELETE)) {
+            throw new ForbidenException('You do not have permission to delete a project');
+        }
+
+        if (is_null($this->account)) {
+            throw new ForbidenException('An account is required to delete a project');
+        }
+
+        if (!$this->account->getUuid()->equals($this->user->getAccount()->getUuid())) {
+            throw new ForbidenException('Your account is not allowed to delete a project in this account');
+        }
     }
 
     /**
@@ -151,7 +177,7 @@ class ProjectEntity
         return $this->user;
     }
 
-    public function setUser(UserEntity $user): void
+    public function setUser(?UserEntity $user): void
     {
         $this->user = $user;
     }
@@ -184,5 +210,15 @@ class ProjectEntity
     public function setStatus(StatusProjectEnum $status): void
     {
         $this->status = $status;
+    }
+
+    public function getUlidDeletion(): ?string
+    {
+        return $this->ulidDeletion;
+    }
+
+    public function setUlidDeletion(?string $ulidDeletion): void
+    {
+        $this->ulidDeletion = $ulidDeletion;
     }
 }

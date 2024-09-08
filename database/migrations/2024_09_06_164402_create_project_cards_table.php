@@ -22,6 +22,10 @@ return new class extends Migration {
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->string('ulid_deletion', 26)
+                ->nullable()
+                ->default(null)
+                ->comment('Unique local identifier for deletion');
         });
     }
 

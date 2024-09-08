@@ -43,7 +43,7 @@ return new class extends Migration {
             );
             $table->enum(column: 'status', allowed: $status)
                 ->comment(implode(' | ', $status))
-                ->default(FileStatusEnum::PENDING->value);
+                ->default(FileStatusEnum::AVAILABLE->value);
 
             $table->unsignedBigInteger(column: 'context')
                 ->index()
@@ -51,8 +51,12 @@ return new class extends Migration {
 
 
             $table->timestamp('deletion_date')->nullable()->default(null);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
+            $table->string('ulid_deletion', 26)
+                ->nullable()
+                ->default(null)
+                ->comment('Unique local identifier for deletion');
         });
     }
 

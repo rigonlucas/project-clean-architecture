@@ -3,7 +3,6 @@
 namespace Core\Domain\Entities\Shared\User\Root;
 
 use Core\Domain\Entities\Shared\Account\Root\AccountEntity;
-use Core\Domain\Entities\Shared\User\SensitiveParameter;
 use Core\Domain\ValueObjects\EmailValueObject;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Exceptions\InvalideRules\InvalidComparationException;

@@ -10,4 +10,6 @@ interface UuidContract
     public function uuid7Generate(?DateTimeInterface $dateTime = null): UuidInterface;
 
     public function uuidFromString(string $uuid): UuidInterface;
+
+    public function ulidGenerate(): string;
 }

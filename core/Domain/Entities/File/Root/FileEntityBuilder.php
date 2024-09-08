@@ -33,7 +33,7 @@ trait FileEntityBuilder
         $projectFileEntity->setUserEntity($userEntity);
         $projectFileEntity->setContext($context);
         $projectFileEntity->setEntityUuid($entityUuid);
-        $projectFileEntity->setStatus(FileStatusEnum::PENDING);
+        $projectFileEntity->setStatus(FileStatusEnum::AVAILABLE);
         $projectFileEntity->setFilePathValueObject(new DefaultPathValueObject());
         $projectFileEntity->setUlidFileName(Ulid::generate());
 

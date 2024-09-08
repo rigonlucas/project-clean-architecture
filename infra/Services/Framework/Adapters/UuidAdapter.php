@@ -7,6 +7,7 @@ use Core\Support\HasSingletonTrait;
 use DateTimeInterface;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use Symfony\Component\Uid\Ulid;
 
 class UuidAdapter implements UuidContract
 {
@@ -20,5 +21,10 @@ class UuidAdapter implements UuidContract
     public function uuidFromString(string $uuid): UuidInterface
     {
         return Uuid::fromString($uuid);
+    }
+
+    public function ulidGenerate(): string
+    {
+        return Ulid::generate();
     }
 }

@@ -51,6 +51,8 @@ class ProjectFile extends Model
         'account_uuid',
         'context',
         'status',
+        'deleted_at',
+        'ulid_deletion',
     ];
 
     public function account(): BelongsTo

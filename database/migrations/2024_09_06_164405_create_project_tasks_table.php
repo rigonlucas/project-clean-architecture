@@ -23,6 +23,10 @@ return new class extends Migration {
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
+            $table->string('ulid_deletion', 26)
+                ->nullable()
+                ->default(null)
+                ->comment('Unique local identifier for deletion');
         });
     }
 

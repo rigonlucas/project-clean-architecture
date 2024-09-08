@@ -33,7 +33,7 @@ class ProjectFileFactory extends Factory
             'file_extension' => FileExtensionsEnum::DOCX->value,
             'file_size' => $this->faker->randomNumber(),
             'file_type' => FileTypeEnum::IMAGE->value,
-            'status' => FileStatusEnum::PENDING->value,
+            'status' => FileStatusEnum::AVAILABLE->value,
             'context' => FileContextEnum::PROJECT->value,
         ];
     }

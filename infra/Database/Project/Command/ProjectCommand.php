@@ -3,8 +3,12 @@
 namespace Infra\Database\Project\Command;
 
 use App\Models\Project;
+use App\Models\ProjectCard;
+use App\Models\ProjectFile;
+use App\Models\ProjectTask;
 use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Enum\File\FileStatusEnum;
 use Exception;
 
 class ProjectCommand implements ProjectCommandInterface
@@ -26,6 +30,21 @@ class ProjectCommand implements ProjectCommandInterface
         return $projectEntity;
     }
 
+    public function changeStatus(ProjectEntity $projectEntity): ProjectEntity
+    {
+        throw new Exception('Not implemented yet');
+    }
+
+    public function deleteProjectTaskSoftly(ProjectEntity $projectEntity): void
+    {
+        ProjectTask::query()
+            ->where('project_uuid', '=', $projectEntity->getUuid())
+            ->update([
+                'deleted_at' => now(),
+                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            ]);
+    }
+
     public function update(ProjectEntity $projectEntity): ProjectEntity
     {
         Project::query()
@@ -41,13 +60,34 @@ class ProjectCommand implements ProjectCommandInterface
         return $projectEntity;
     }
 
-    public function changeStatus(ProjectEntity $projectEntity): ProjectEntity
+    public function deleteProjectSoftly(ProjectEntity $projectEntity): void
     {
-        throw new Exception('Not implemented yet');
+        Project::query()
+            ->where('uuid', '=', $projectEntity->getUuid())
+            ->update([
+                'deleted_at' => now(),
+                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            ]);
     }
 
-    public function delete(ProjectEntity $projectEntity): void
+    public function deleteProjectCardSoftly(ProjectEntity $projectEntity): void
     {
-        throw new Exception('Not implemented yet');
+        ProjectCard::query()
+            ->where('project_uuid', '=', $projectEntity->getUuid())
+            ->update([
+                'deleted_at' => now(),
+                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            ]);
+    }
+
+    public function deleteProjectFileSoftly(ProjectEntity $projectEntity, FileStatusEnum $fileStatusEnum): void
+    {
+        ProjectFile::query()
+            ->where('project_uuid', '=', $projectEntity->getUuid())
+            ->update([
+                'status' => $fileStatusEnum->value,
+                'deleted_at' => now(),
+                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            ]);
     }
 }

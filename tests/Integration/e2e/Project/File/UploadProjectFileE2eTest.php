@@ -75,7 +75,7 @@ class UploadProjectFileE2eTest extends TestCase
             'file_extension' => $file->extension(),
             'file_size' => $file->getSize(),
             //'file_type' => $content->data->file_type, do the validation into controller
-            'status' => FileStatusEnum::FINISHED->value,
+            'status' => FileStatusEnum::SOFT_DELETED->value,
             'context' => FileContextEnum::PROJECT->value,
         ]);
     }

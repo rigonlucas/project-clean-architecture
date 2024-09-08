@@ -23,6 +23,8 @@ class ProjectCard extends Model
     protected $fillable = [
         'name',
         'description',
+        'deleted_at',
+        'ulid_deletion',
     ];
 
     public function tasks(): BelongsToMany

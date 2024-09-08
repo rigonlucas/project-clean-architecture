@@ -3,6 +3,7 @@
 namespace Core\Application\Project\Shared\Gateways;
 
 use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Enum\File\FileStatusEnum;
 
 interface ProjectCommandInterface
 {
@@ -12,5 +13,11 @@ interface ProjectCommandInterface
 
     public function changeStatus(ProjectEntity $projectEntity): ProjectEntity;
 
-    public function delete(ProjectEntity $projectEntity): void;
+    public function deleteProjectSoftly(ProjectEntity $projectEntity): void;
+
+    public function deleteProjectTaskSoftly(ProjectEntity $projectEntity): void;
+
+    public function deleteProjectCardSoftly(ProjectEntity $projectEntity): void;
+
+    public function deleteProjectFileSoftly(ProjectEntity $projectEntity, FileStatusEnum $fileStatusEnum): void;
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\Models\HasCreatedByUser;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\UuidInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @property int $status
@@ -32,9 +33,6 @@ class Project extends Model
     use HasCreatedByUser;
 
     public $incrementing = false;
-    /**
-     * @var mixed|UuidInterface
-     */
     protected $table = 'projects';
     protected $primaryKey = 'uuid';
     protected $keyType = 'string';
@@ -48,7 +46,16 @@ class Project extends Model
         'start_at',
         'finish_at',
         'uuid',
+        'deleted_at',
+        'ulid_deletion',
     ];
+
+    public function uuid(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => Uuid::fromString($value),
+        );
+    }
 
     public function account(): BelongsTo
     {

@@ -42,8 +42,8 @@ trait HasProjectEntityBuilder
         AccountEntity $account,
         UuidInterface $uuid,
         StatusProjectEnum $status,
-        CarbonInterface $startAt = null,
-        CarbonInterface $finishAt = null
+        ?CarbonInterface $startAt = null,
+        ?CarbonInterface $finishAt = null
     ): ProjectEntity {
         $project = new ProjectEntity();
         $project->setStatus($status);
@@ -55,6 +55,19 @@ trait HasProjectEntityBuilder
 
         $project->setName($name);
         $project->setDescription($description);
+        $project->setUuid($uuid);
+
+        return $project;
+    }
+
+    public static function forIdentify(
+        UuidInterface $uuid,
+        ?UserEntity $user,
+        ?AccountEntity $account
+    ): ProjectEntity {
+        $project = new ProjectEntity();
+        $project->setUser($user);
+        $project->setAccount($account);
         $project->setUuid($uuid);
 
         return $project;
