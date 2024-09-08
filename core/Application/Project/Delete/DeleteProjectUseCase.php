@@ -5,7 +5,7 @@ namespace Core\Application\Project\Delete;
 use Core\Application\Project\Shared\Exceptions\ProjectNotFoundException;
 use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
 use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
-use Core\Domain\Entities\Project\Root\ProjectEntity;
+use Core\Domain\Aggregates\Project\ProjectDeletionAggregate;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\File\FileStatusEnum;
 use Core\Services\Framework\FrameworkContract;
@@ -29,7 +29,7 @@ class DeleteProjectUseCase
      * @throws ForbidenException
      * @throws ProjectNotFoundException
      */
-    public function execute(UuidInterface $uuid, UserEntity $userAuth): ProjectEntity
+    public function execute(UuidInterface $uuid, UserEntity $userAuth): ProjectDeletionAggregate
     {
         $project = $this->projectMapper->findByUuid($uuid, $userAuth);
         if (!$project) {
@@ -44,6 +44,16 @@ class DeleteProjectUseCase
         $this->projectCommand->deleteProjectTaskSoftly($project);
         $this->projectCommand->deleteProjectSoftly($project);
 
-        return $project;
+        return new ProjectDeletionAggregate(
+            $project,
+            $project->getUuid(),
+            $project->getUlidDeletion(),
+            [
+                'project_cards',
+                'project_files',
+                'project_tasks',
+                'projects'
+            ]
+        );
     }
 }

@@ -45,13 +45,13 @@ class DeleteProjectUseCaseTest extends TestCase
             'created_by_user_uuid' => $this->user->uuid,
         ]);
         // Act
-        $projectEntity = $this->useCase->execute($project->uuid, $this->userEntity);
+        $projectAggregate = $this->useCase->execute($project->uuid, $this->userEntity);
 
         // Assert
         $this->assertSoftDeleted($project);
         $this->assertDatabaseHas('projects', [
             'uuid' => $project->uuid->toString(),
-            'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            'ulid_deletion' => $projectAggregate->projectEntity->getUlidDeletion(),
         ]);
         foreach ($projectTasks as $projectTask) {
             $projectTask->refresh();
@@ -59,7 +59,7 @@ class DeleteProjectUseCaseTest extends TestCase
             $this->assertDatabaseHas('project_tasks', [
                 'task_uuid' => $projectTask->task_uuid,
                 'project_uuid' => $project->uuid->toString(),
-                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+                'ulid_deletion' => $projectAggregate->projectEntity->getUlidDeletion(),
             ]);
         }
     }
@@ -77,13 +77,13 @@ class DeleteProjectUseCaseTest extends TestCase
         ]);
 
         // Act
-        $projectEntity = $this->useCase->execute($project->uuid, $this->userEntity);
+        $projectAggregate = $this->useCase->execute($project->uuid, $this->userEntity);
 
         // Assert
         $this->assertSoftDeleted($project);
         $this->assertDatabaseHas('projects', [
             'uuid' => $project->uuid->toString(),
-            'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            'ulid_deletion' => $projectAggregate->projectEntity->getUlidDeletion(),
         ]);
         foreach ($projectFile as $file) {
             $file->refresh();
@@ -91,7 +91,7 @@ class DeleteProjectUseCaseTest extends TestCase
             $this->assertEquals(FileStatusEnum::SOFT_DELETED, FileStatusEnum::from($file->status));
             $this->assertDatabaseHas('project_files', [
                 'project_uuid' => $project->uuid->toString(),
-                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+                'ulid_deletion' => $projectAggregate->projectEntity->getUlidDeletion(),
             ]);
         }
     }
@@ -108,20 +108,20 @@ class DeleteProjectUseCaseTest extends TestCase
         ]);
 
         // Act
-        $projectEntity = $this->useCase->execute($project->uuid, $this->userEntity);
+        $projectAggregate = $this->useCase->execute($project->uuid, $this->userEntity);
 
         // Assert
         $this->assertSoftDeleted($project);
         $this->assertDatabaseHas('projects', [
             'uuid' => $project->uuid->toString(),
-            'ulid_deletion' => $projectEntity->getUlidDeletion(),
+            'ulid_deletion' => $projectAggregate->projectEntity->getUlidDeletion(),
         ]);
         foreach ($projectCard as $card) {
             $card->refresh();
             $this->assertSoftDeleted($card);
             $this->assertDatabaseHas('project_cards', [
                 'project_uuid' => $project->uuid->toString(),
-                'ulid_deletion' => $projectEntity->getUlidDeletion(),
+                'ulid_deletion' => $projectAggregate->projectEntity->getUlidDeletion(),
             ]);
         }
     }
