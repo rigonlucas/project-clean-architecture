@@ -16,6 +16,11 @@ class ProjectDeleteFileE2eTest extends TestCase
 
     private User $user;
 
+    public function test_e()
+    {
+        $this->markTestSkipped();
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
