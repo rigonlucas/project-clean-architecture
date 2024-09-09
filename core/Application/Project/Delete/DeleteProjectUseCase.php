@@ -35,7 +35,7 @@ class DeleteProjectUseCase
         if (!$project) {
             throw new ProjectNotFoundException('Project not found', ResponseStatus::NOT_FOUND->value);
         }
-        $project->canChangeProject();
+        $project->canDeleteProject());
 
         $project->setUlidDeletion($this->ulidDeletion);
 
