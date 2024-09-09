@@ -3,6 +3,7 @@
 use App\Http\Controllers\V1\Project\CreateProjectController;
 use App\Http\Controllers\V1\Project\File\DeleteProjectFileController;
 use App\Http\Controllers\V1\Project\File\UploadProjectFileController;
+use App\Http\Controllers\V1\Project\SoftDeleteProjectController;
 use App\Http\Controllers\V1\Project\UpdateProjectController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,9 @@ Route::prefix('project')->group(function () {
     Route::put('/update/{uuid}', [UpdateProjectController::class, '__invoke'])
         ->whereUuid('uuid')
         ->name('api.v1.project.update');
+    Route::delete('/{uuid}/', [SoftDeleteProjectController::class, '__invoke'])
+        ->whereUuid('uuid')
+        ->name('api.v1.project.soft-delete');
 
     Route::group(['prefix' => 'file'], function () {
         Route::post('/{uuid}/upload', [UploadProjectFileController::class, '__invoke'])
