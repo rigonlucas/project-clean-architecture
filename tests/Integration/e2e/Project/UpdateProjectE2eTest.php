@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-#[Group('test_update_project_e2e')]
+#[Group('test_api_update_project_e2e')]
 #[Group('test_e2e_project')]
 #[Group('test_project')]
 class UpdateProjectE2eTest extends TestCase
@@ -19,7 +19,7 @@ class UpdateProjectE2eTest extends TestCase
 
     private User $user;
 
-    public function test_create_project_success_without_dates()
+    public function test_api_create_project_success_without_dates()
     {
         $project = Project::factory()->create([
             'created_by_user_uuid' => $this->user->uuid,

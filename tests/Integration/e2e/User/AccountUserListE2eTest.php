@@ -19,7 +19,7 @@ class AccountUserListE2eTest extends TestCase
 
     private User $user;
 
-    public function test_success_case_user_list_with_authenticated_admin()
+    public function test_api_success_case_user_list_with_authenticated_admin()
     {
         $response = $this->getJson(route('api.v1.user.list'));
 
@@ -73,7 +73,7 @@ class AccountUserListE2eTest extends TestCase
         ]);
     }
 
-    public function test_success_case_user_list_with_authenticated_user_as_editor()
+    public function test_api_success_case_user_list_with_authenticated_user_as_editor()
     {
         Sanctum::actingAs(
             User::factory()->create([
@@ -90,7 +90,7 @@ class AccountUserListE2eTest extends TestCase
         $response->assertStatus(ResponseStatus::OK->value);
     }
 
-    public function test_success_case_for_paginated_user_list_with_authenticated_admin()
+    public function test_api_success_case_for_paginated_user_list_with_authenticated_admin()
     {
         User::factory()->count(15)->create([
             'account_uuid' => $this->user->account_uuid,
@@ -126,7 +126,7 @@ class AccountUserListE2eTest extends TestCase
         ]);
     }
 
-    public function test_fail_case_user_list_with_authenticated_user_as_viewer()
+    public function test_api_fail_case_user_list_with_authenticated_user_as_viewer()
     {
         Sanctum::actingAs(
             User::factory()->create([

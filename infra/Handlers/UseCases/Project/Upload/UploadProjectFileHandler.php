@@ -22,6 +22,9 @@ class UploadProjectFileHandler
     ) {
     }
 
+    /**
+     * @throws ErrorOnUploadToStorageException
+     */
     public function handle(FiletInput $projecFiletInput, UploadedFile $file): FileEntity
     {
         $fileEntity = $this->applyRegisterFile($projecFiletInput);
@@ -41,16 +44,18 @@ class UploadProjectFileHandler
         return $projectUploadFileUseCase->execute($projecFiletInput, $this->framework->auth()->user());
     }
 
+    /**
+     * @throws ErrorOnUploadToStorageException
+     */
     private function pushFile(FileEntity $fileEntity, UploadedFile $file): void
     {
         $directory = dirname($fileEntity->getPath());
         $baseName = basename($fileEntity->getPath());
-
         $returnFromStorage = Storage::disk(config('filesystems.default'))
             ->putFileAs(
-                $directory,
-                $file,
-                $baseName
+                path: $directory,
+                file: $file,
+                name: $baseName
             );
         if (!$returnFromStorage) {
             throw new ErrorOnUploadToStorageException(
@@ -60,15 +65,25 @@ class UploadProjectFileHandler
         }
     }
 
+    /**
+     * @throws ErrorOnUploadToStorageException
+     */
     private function checkIfFileWasSaved(FileEntity $fileEntity): void
     {
-        $fileExists = Storage::disk(config('filesystems.default'))->exists($fileEntity->getPath());
-        if (!$fileExists) {
+        $fileSizeFromStorage = Storage::disk(config('filesystems.default'))->size($fileEntity->getPath());
+        if (!$fileSizeFromStorage || $fileSizeFromStorage == 0) {
             throw new ErrorOnUploadToStorageException(
-                message: 'File was not saved in the storage, we are working to solve this problem',
+                message: 'Error to get file size from storage, we are working to solve this problem',
                 code: ResponseStatus::INTERNAL_SERVER_ERROR->value
             );
         }
+        if ($fileEntity->getSize()->getBytes() !== $fileSizeFromStorage) {
+            throw new ErrorOnUploadToStorageException(
+                message: 'File was saved in the storage, but it is corrupted, we are working to solve this problem',
+                code: ResponseStatus::INTERNAL_SERVER_ERROR->value
+            );
+        }
+
         $fileEntity->confirmUpload();
         $this->fileProjectCommand->confirmUploadFile($fileEntity);
     }

@@ -13,14 +13,14 @@ use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-#[Group('test_e2e_upload_project_file')]
+#[Group('test_api_e2e_upload_project_file')]
 #[Group('test_e2e_project')]
 #[Group('test_project')]
 class UploadProjectFileE2eTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function test_must_upload_file_to_project_and_check_if_was_uploaded(): void
+    public function test_api_must_upload_file_to_project_and_check_if_was_uploaded(): void
     {
         // Arrange
         Storage::fake(config('filesystems.default'));
@@ -28,10 +28,9 @@ class UploadProjectFileE2eTest extends TestCase
             'created_by_user_uuid' => $this->user->uuid,
             'account_uuid' => $this->user->account_uuid
         ]);
-        $file = UploadedFile::fake()->create(
-            'document.pdf',
-            100,
-            'application/pdf'
+        $file = UploadedFile::fake()->createWithContent(
+            name: 'document.txt',
+            content: 'content'
         );
 
         // Act
@@ -75,22 +74,19 @@ class UploadProjectFileE2eTest extends TestCase
             'file_extension' => $file->extension(),
             'file_size' => $file->getSize(),
             //'file_type' => $content->data->file_type, do the validation into controller
-            'status' => FileStatusEnum::SOFT_DELETED->value,
+            'status' => FileStatusEnum::AVAILABLE->value,
             'context' => FileContextEnum::PROJECT->value,
         ]);
     }
 
-    public function test_must_return_error_when_upload_file_failed_after_upload_success(): void
+    public function test_api_must_return_error_when_upload_file_failed_after_upload_success(): void
     {
         // Arrange
         Storage::shouldReceive('disk')
             ->andReturnSelf();
 
         Storage::shouldReceive('putFileAs')
-            ->andReturn('');
-
-        Storage::shouldReceive('exists')
-            ->andReturn(false);
+            ->andReturn(null);
 
         $project = Project::factory()->create([
             'created_by_user_uuid' => $this->user->uuid,
@@ -117,7 +113,7 @@ class UploadProjectFileE2eTest extends TestCase
         ]);
     }
 
-    public function test_must_return_error_when_upload_file_failed_on_save(): void
+    public function test_api_must_return_error_when_upload_file_failed_on_save(): void
     {
         // Arrange
         Storage::shouldReceive('disk')

@@ -20,7 +20,7 @@ class UpdateUserE2eTest extends TestCase
 
     private User $user;
 
-    public function test_update_user_success_case()
+    public function test_api_update_user_success_case()
     {
         //update user
         $response = $this->putJson(
@@ -43,7 +43,7 @@ class UpdateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_update_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
+    public function test_api_update_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
     {
         //create user with same email
         $userMoodel = User::factory()->create([
@@ -72,7 +72,7 @@ class UpdateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_update_user_fail_case_password_less_than_8_characters()
+    public function test_api_update_user_fail_case_password_less_than_8_characters()
     {
         //update user
         $response = $this->putJson(
@@ -96,7 +96,7 @@ class UpdateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_update_user_fail_case_email_exists()
+    public function test_api_update_user_fail_case_email_exists()
     {
         //create user with same email
         $otherUser = User::factory()->create([
@@ -130,7 +130,7 @@ class UpdateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_update_user_success_case_new_valid_email_when_user_change_the_address()
+    public function test_api_update_user_success_case_new_valid_email_when_user_change_the_address()
     {
         //create user with same email
         $otherUser = User::factory()->create([
@@ -156,7 +156,7 @@ class UpdateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_update_user_fail_case_user_not_found()
+    public function test_api_update_user_fail_case_user_not_found()
     {
         //update user
         $response = $this->putJson(
@@ -173,7 +173,7 @@ class UpdateUserE2eTest extends TestCase
         $response->assertStatus(ResponseStatus::NOT_FOUND->value);
     }
 
-    public function test_update_user_fail_case_user_is_not_the_same_user_authenticated()
+    public function test_api_update_user_fail_case_user_is_not_the_same_user_authenticated()
     {
         $user = User::factory()->create([
             'role' => UserRoles::ADMIN

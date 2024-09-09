@@ -20,7 +20,7 @@ class ShowUserE2eTest extends TestCase
 
     private User $user;
 
-    public function test_show_user_success_case_with_same_user_auth()
+    public function test_api_show_user_success_case_with_same_user_auth()
     {
         //update user
         $response = $this->getJson(
@@ -36,7 +36,7 @@ class ShowUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_show_forbiden_case_with_other_user_auth_must_block_access()
+    public function test_api_show_forbiden_case_with_other_user_auth_must_block_access()
     {
         $user = User::factory()->create();
 
@@ -49,7 +49,7 @@ class ShowUserE2eTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_show_user_success_access_for_auth_user_as_an_admin()
+    public function test_api_show_user_success_access_for_auth_user_as_an_admin()
     {
         $user = User::factory()->create();
 

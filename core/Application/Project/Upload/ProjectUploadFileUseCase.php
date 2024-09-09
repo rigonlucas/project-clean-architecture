@@ -12,12 +12,12 @@ use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\Access\ForbidenException;
 use Core\Support\Http\ResponseStatus;
 
-class ProjectUploadFileUseCase
+readonly class ProjectUploadFileUseCase
 {
     public function __construct(
-        private readonly FrameworkContract $framework,
-        private readonly FileCommandInterface $fileCommand,
-        private readonly ProjectMapperInterface $projectMapper
+        private FrameworkContract $framework,
+        private FileCommandInterface $fileCommand,
+        private ProjectMapperInterface $projectMapper
     ) {
     }
 

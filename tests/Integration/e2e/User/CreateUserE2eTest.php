@@ -17,7 +17,7 @@ class CreateUserE2eTest extends TestCase
     use DatabaseMigrations;
     use WithFaker;
 
-    public function test_create_user_success_case()
+    public function test_api_create_user_success_case()
     {
         $response = $this->postJson(
             route('api.v1.user.create'),
@@ -38,7 +38,7 @@ class CreateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_create_user_join_into_an_account_success_case()
+    public function test_api_create_user_join_into_an_account_success_case()
     {
         $accountCode = AccountJoinCode::factory()->create([
             'code' => '123456',
@@ -66,7 +66,7 @@ class CreateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_create_user_join_into_an_account_code_already_used()
+    public function test_api_create_user_join_into_an_account_code_already_used()
     {
         $accountCode = AccountJoinCode::factory()->create([
             'code' => '123456',
@@ -88,7 +88,7 @@ class CreateUserE2eTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_create_user_join_into_an_account_code_expired()
+    public function test_api_create_user_join_into_an_account_code_expired()
     {
         $accountCode = AccountJoinCode::factory()->create([
             'code' => '123456',
@@ -111,7 +111,7 @@ class CreateUserE2eTest extends TestCase
         $response->assertStatus(400);
     }
 
-    public function test_create_user_join_into_an_account_code_not_found()
+    public function test_api_create_user_join_into_an_account_code_not_found()
     {
         $response = $this->postJson(
             route('api.v1.user.create'),
@@ -128,7 +128,7 @@ class CreateUserE2eTest extends TestCase
         $response->assertStatus(404);
     }
 
-    public function test_create_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
+    public function test_api_create_user_fail_case_email_exists_and_birthdate_less_than_18_years_old()
     {
         $userMoodel = User::factory()->create([
             'email' => $this->faker->userName . '@gmail.com'
@@ -154,7 +154,7 @@ class CreateUserE2eTest extends TestCase
         ]);
     }
 
-    public function test_create_user_fail_case_password_less_than_8_characters()
+    public function test_api_create_user_fail_case_password_less_than_8_characters()
     {
         $response = $this->postJson(
             route('api.v1.user.create'),

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-#[Group('test_e2e_delete_project_file')]
+#[Group('test_api_e2e_delete_project_file')]
 #[Group('test_e2e_project')]
 #[Group('test_project')]
 class ProjectDeleteFileE2eTest extends TestCase
@@ -16,7 +16,7 @@ class ProjectDeleteFileE2eTest extends TestCase
 
     private User $user;
 
-    public function test_e()
+    public function test_api_e()
     {
         $this->markTestSkipped();
     }
