@@ -4,12 +4,6 @@
          bootstrap="vendor/autoload.php"
          colors="true"
 >
-    <coverage>
-        <report>
-            <html outputDirectory="storage/app/public/coverage/coverage-html"/>
-            <clover outputFile="storage/app/public/coverage/logs/clover.xml"/>
-        </report>
-    </coverage>
     <testsuites>
         <testsuite name="Unit">
             <directory>tests/Unit</directory>
