@@ -1,10 +1,10 @@
 <?php
 
-namespace Infra\Handlers\UseCases\Project\Upload;
+namespace Infra\Handlers\UseCases\Project\File\Upload;
 
 use Core\Application\File\Shared\Gateways\FileCommandInterface;
+use Core\Application\Project\File\Upload\ProjectUploadFileUseCase;
 use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
-use Core\Application\Project\Upload\ProjectUploadFileUseCase;
 use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Entities\File\Root\FileEntity;
 use Core\Services\Framework\FrameworkContract;

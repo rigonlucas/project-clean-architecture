@@ -15,7 +15,8 @@ use Core\Presentation\Http\Errors\ErrorPresenter;
 use Core\Services\Framework\FrameworkContract;
 use Core\Support\Exceptions\OutputErrorException;
 use Core\Support\Http\ResponseStatus;
-use Infra\Handlers\UseCases\Project\Upload\UploadProjectFileHandler;
+use Exception;
+use Infra\Handlers\UseCases\Project\File\Upload\UploadProjectFileHandler;
 use Ramsey\Uuid\Uuid;
 
 class UploadProjectFileController extends Controller
@@ -57,6 +58,15 @@ class UploadProjectFileController extends Controller
                     errors: $outputErrorException->getErrors()
                 ))->toArray(),
                 status: $outputErrorException->getCode()
+            );
+        } catch (Exception $exception) {
+            $this->framework->transactionManager()->rollBack();
+            return response()->json(
+                data: (new ErrorPresenter(
+                    message: $exception->getMessage(),
+                    errors: []
+                ))->toArray(),
+                status: ResponseStatus::INTERNAL_SERVER_ERROR->value
             );
         }
 

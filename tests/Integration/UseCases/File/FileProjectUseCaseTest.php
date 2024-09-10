@@ -3,8 +3,8 @@
 namespace Tests\Integration\UseCases\File;
 
 use App\Models\Project;
+use Core\Application\Project\File\Upload\ProjectUploadFileUseCase;
 use Core\Application\Project\Shared\Gateways\ProjectMapperInterface;
-use Core\Application\Project\Upload\ProjectUploadFileUseCase;
 use Core\Application\Shared\Inputs\FiletInput;
 use Core\Domain\Entities\Shared\User\Root\UserEntity;
 use Core\Domain\Enum\File\FileContextEnum;

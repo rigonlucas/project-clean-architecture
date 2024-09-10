@@ -7,6 +7,7 @@ use App\Models\ProjectCard;
 use App\Models\ProjectFile;
 use App\Models\ProjectTask;
 use Core\Application\Project\Shared\Gateways\ProjectCommandInterface;
+use Core\Domain\Entities\Project\File\ProjectFileEntity;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Enum\File\FileStatusEnum;
 use Exception;
@@ -89,5 +90,13 @@ class ProjectCommand implements ProjectCommandInterface
                 'deleted_at' => now(),
                 'ulid_deletion' => $projectEntity->getUlidDeletion(),
             ]);
+    }
+
+    public function deleteProjectFileForce(ProjectFileEntity $projectFileEntity): void
+    {
+        ProjectFile::query()
+            ->where('uuid', '=', $projectFileEntity->getUuid())
+            ->where('project_uuid', '=', $projectFileEntity->getProjectUuid())
+            ->forceDelete();
     }
 }

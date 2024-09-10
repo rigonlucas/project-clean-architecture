@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Application\Project\Upload;
+namespace Core\Application\Project\File\Upload;
 
 use Core\Application\File\Shared\Gateways\FileCommandInterface;
 use Core\Application\Project\Shared\Exceptions\ProjectNotFoundException;

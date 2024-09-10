@@ -21,7 +21,7 @@ Route::prefix('project')->group(function () {
         Route::post('/{uuid}/upload', [UploadProjectFileController::class, '__invoke'])
             ->whereUuid('uuid')
             ->name('api.v1.project.file.upload');
-        Route::delete('/{uuid}/delete/{fileUuid}', [DeleteProjectFileController::class, '__invoke'])
+        Route::delete('/{projectUuid}/delete/{fileUuid}', [DeleteProjectFileController::class, '__invoke'])
             ->whereUuid('uuid')
             ->whereUuid('fileUuid')
             ->name('api.v1.project.file.delete');

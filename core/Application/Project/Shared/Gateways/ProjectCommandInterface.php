@@ -2,6 +2,7 @@
 
 namespace Core\Application\Project\Shared\Gateways;
 
+use Core\Domain\Entities\Project\File\ProjectFileEntity;
 use Core\Domain\Entities\Project\Root\ProjectEntity;
 use Core\Domain\Enum\File\FileStatusEnum;
 
@@ -20,4 +21,6 @@ interface ProjectCommandInterface
     public function deleteProjectCardSoftly(ProjectEntity $projectEntity): void;
 
     public function deleteProjectFileSoftly(ProjectEntity $projectEntity, FileStatusEnum $fileStatusEnum): void;
+
+    public function deleteProjectFileForce(ProjectFileEntity $projectFileEntity): void;
 }
