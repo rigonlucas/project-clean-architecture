@@ -30,18 +30,26 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Copy .env.example to .env
-        run: cp .env.example .env
+        run: cp .env.testing .env
+
+      - name: Wait for MySQL to be ready
+        run: |
+          for i in {30..0}; do
+            if mysql --user=root --password=root --host=127.0.0.1 --execute="SELECT 1"; then
+              break
+            fi
+            echo 'MySQL is unavailable - sleeping'
+            sleep 1
+          done
 
       - name: Create MySQL database
-        run: |
-          mysql --user=root --password=root --execute="CREATE DATABASE testing;"
+        run: mysql --user=root --password=root --host=127.0.0.1 --execute="CREATE DATABASE testing;"
 
       - name: Run migrations
         run: php artisan migrate --force
 
       - name: Run tests
         run: vendor/bin/phpunit
-
 
   sonar:
     runs-on: ubuntu-latest
