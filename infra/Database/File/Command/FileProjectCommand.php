@@ -19,7 +19,7 @@ class FileProjectCommand implements FileCommandInterface
         $projectFile->file_size = $projectFileEntity->getSize()->getBytes();
         $projectFile->file_extension = $projectFileEntity->getExtension();
         $projectFile->project_uuid = $referenciaUuid->toString();
-        $projectFile->created_by_user_uuid = $projectFileEntity->getUserEntity()->getUuid();
+        $projectFile->created_by_user_id = $projectFileEntity->getUserEntity()->getId();
         $projectFile->account_uuid = $projectFileEntity->getUserEntity()->getAccount()->getUuid();
         $projectFile->context = $projectFileEntity->getContext()->value;
         $projectFile->status = $projectFileEntity->getStatus()->value;

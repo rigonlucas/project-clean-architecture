@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('project_cards', function (Blueprint $table) {
             $table->uuid()->primary();
-            $table->foreignUuid('created_by_user_uuid')
-                ->constrained('users', 'uuid')
+            $table->foreignId('created_by_user_id')
+                ->constrained('users')
                 ->onDelete('cascade');
             $table->foreignUuid('project_uuid')
                 ->constrained('projects', 'uuid')

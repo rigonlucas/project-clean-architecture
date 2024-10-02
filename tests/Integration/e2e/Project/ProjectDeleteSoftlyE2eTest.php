@@ -22,7 +22,7 @@ class ProjectDeleteSoftlyE2eTest extends TestCase
     public function test_api_delete_project_softly()
     {
         $projectFactory = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid
         ]);
 

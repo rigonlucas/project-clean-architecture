@@ -40,6 +40,7 @@ trait HasUserEntityBuilder
      * @throws InvalidEmailException
      */
     public static function forDetail(
+        int $id,
         string $name,
         string $email,
         UuidInterface $uuid,
@@ -48,6 +49,7 @@ trait HasUserEntityBuilder
         int $role = 0
     ): UserEntity {
         $userEntity = new UserEntity();
+        $userEntity->setId($id);
         $userEntity->setName($name);
         $userEntity->setEmail(new EmailValueObject($email, false));
         $userEntity->setBirthday($birthday);
@@ -91,11 +93,13 @@ trait HasUserEntityBuilder
     }
 
     public static function forIdentify(
+        int $id,
         UuidInterface $uuid,
         int $role = 0,
         ?UuidInterface $accountUuid = null
     ): UserEntity {
         $userEntity = new UserEntity();
+        $userEntity->setId($id);
         $userEntity->setPermissions($role);
         $userEntity->setUuid($uuid);
         if ($accountUuid) {

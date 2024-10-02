@@ -26,7 +26,7 @@ class ProjectFactory extends Factory
             'description' => $this->faker->text,
             'start_at' => $this->faker->dateTime,
             'finish_at' => $this->faker->dateTime,
-            'created_by_user_uuid' => User::factory(),
+            'created_by_user_id' => User::factory(),
             'account_uuid' => Account::factory(),
         ];
     }

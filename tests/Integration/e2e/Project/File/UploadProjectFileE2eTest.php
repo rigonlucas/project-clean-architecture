@@ -25,7 +25,7 @@ class UploadProjectFileE2eTest extends TestCase
         // Arrange
         Storage::fake(config('filesystems.default'));
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid
         ]);
         $file = UploadedFile::fake()->createWithContent(
@@ -67,7 +67,7 @@ class UploadProjectFileE2eTest extends TestCase
         $this->assertDatabaseHas('project_files', [
             'uuid' => $content->data->uuid,
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid,
             'file_name' => $file->name,
             'file_path' => $filePath,
@@ -89,7 +89,7 @@ class UploadProjectFileE2eTest extends TestCase
             ->andReturn(null);
 
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid
         ]);
         $file = UploadedFile::fake()->create(
@@ -123,7 +123,7 @@ class UploadProjectFileE2eTest extends TestCase
             ->andReturn(false);
 
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid
         ]);
         $file = UploadedFile::fake()->create(

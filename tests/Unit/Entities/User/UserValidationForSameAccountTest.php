@@ -16,12 +16,14 @@ class UserValidationForSameAccountTest extends TestCase
     {
         $this->expectException(ForbidenException::class);
         $user1 = UserEntity::forIdentify(
+            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN,
             accountUuid: Uuid::uuid7()
         );
 
         $user2 = UserEntity::forIdentify(
+            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN,
             accountUuid: Uuid::uuid7()
@@ -35,12 +37,14 @@ class UserValidationForSameAccountTest extends TestCase
         $accountUuid = Uuid::uuid7();
         $userUuid = Uuid::uuid7();
         $user1 = UserEntity::forIdentify(
+            id: 1,
             uuid: $userUuid,
             role: UserRoles::ADMIN,
             accountUuid: $accountUuid
         );
 
         $user2 = UserEntity::forIdentify(
+            id: 1,
             uuid: Uuid::uuid7(),
             role: UserRoles::ADMIN,
             accountUuid: $accountUuid

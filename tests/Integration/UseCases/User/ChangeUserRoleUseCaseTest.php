@@ -44,6 +44,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
+                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
                 accountUuid: Uuid::fromString($userAuth->account_uuid)
@@ -77,6 +78,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
+                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
                 accountUuid: Uuid::fromString($userAuth->account_uuid)
@@ -112,6 +114,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
+                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
                 accountUuid: Uuid::fromString($userAuth->account_uuid)
@@ -142,6 +145,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
+                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
                 accountUuid: Uuid::fromString($userAuth->account_uuid)
@@ -166,6 +170,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
 
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
+                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
                 accountUuid: Uuid::fromString($userAuth->account_uuid)
@@ -176,7 +181,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         $this->useCase->execute($input);
     }
 
-    public function test_tail_if_users_arent_from_same_account(): void
+    public function test_fail_if_users_arent_from_same_account(): void
     {
         $this->expectException(ForbidenException::class);
 
@@ -195,6 +200,7 @@ class ChangeUserRoleUseCaseTest extends TestCase
         );
         $input = new ChangeUserRoleInput(
             authenticatedUser: UserEntity::forIdentify(
+                id: $userAuth->id,
                 uuid: Uuid::fromString($userAuth->uuid),
                 role: $userAuth->role,
                 accountUuid: Uuid::fromString($userAuth->account_uuid)

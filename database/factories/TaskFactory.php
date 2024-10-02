@@ -19,7 +19,7 @@ class TaskFactory extends Factory
         return [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'created_by_user_uuid' => User::factory(),
+            'created_by_user_id' => User::factory(),
             'account_uuid' => Account::factory(),
         ];
     }

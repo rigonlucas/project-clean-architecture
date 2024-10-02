@@ -27,14 +27,14 @@ class ProjectRelationsTest extends TestCase
             'account_uuid' => $this->user->account->uuid,
         ]);
         $task = Task::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account->uuid,
         ]);
 
         ProjectTask::factory()->create([
             'project_uuid' => $project->uuid,
             'task_uuid' => $task->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
         ]);
 
         $projectFirst = Project::query()
@@ -53,7 +53,7 @@ class ProjectRelationsTest extends TestCase
         ]);
         $projectFile = ProjectFile::factory()->count(2)->create([
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account->uuid,
         ]);
 
@@ -73,7 +73,7 @@ class ProjectRelationsTest extends TestCase
         ]);
         $projectCard = ProjectCard::factory()->count(2)->create([
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
         ]);
 
         $projectFirst = Project::query()

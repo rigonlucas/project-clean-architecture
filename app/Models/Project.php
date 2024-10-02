@@ -18,7 +18,7 @@ use Ramsey\Uuid\Uuid;
  * @property int $status
  * @property string $description
  * @property string $name
- * @property string $created_by_user_uuid
+ * @property string $created_by_user_id
  * @property int $account_uuid
  * @property DateTimeInterface $start_at
  * @property DateTimeInterface $finish_at
@@ -41,7 +41,7 @@ class Project extends Model
         'name',
         'description',
         'account_uuid',
-        'created_by_user_uuid',
+        'created_by_user_id',
         'status',
         'start_at',
         'finish_at',
@@ -82,5 +82,10 @@ class Project extends Model
             'uuid',
             'task_uuid'
         );
+    }
+
+    public function createdByUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 }

@@ -33,7 +33,7 @@ class AccountMapper implements AccountMapperInterface
         $accountJoin = AccountJoinCode::query()
             ->select(['uuid', 'code', 'account_uuid', 'expired_at'])
             ->where('code', '=', $code)
-            ->whereNull('user_uuid')
+            ->whereNull('user_id')
             ->with(['account:id,name,uuid'])
             ->first();
         if (!$accountJoin) {

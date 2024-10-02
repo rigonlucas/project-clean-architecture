@@ -12,12 +12,14 @@ use Core\Support\Permissions\UserRoles;
 use DateTime;
 use DateTimeInterface;
 use Ramsey\Uuid\UuidInterface;
+use SensitiveParameter;
 
 class UserEntity
 {
     use HasUserEntityBuilder;
     use HasUserRoleTrait;
 
+    private int $id;
     private string $name;
     private ?EmailValueObject $email = null;
     private ?string $password;
@@ -163,6 +165,17 @@ class UserEntity
     public function setBirthday(?DateTimeInterface $birthday): self
     {
         $this->birthday = $birthday;
+        return $this;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): UserEntity
+    {
+        $this->id = $id;
         return $this;
     }
 }

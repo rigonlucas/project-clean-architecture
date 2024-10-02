@@ -28,7 +28,7 @@ class UpdateProjectUseCaseTest extends TestCase
     public function test_create_project_success_without_dates()
     {
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid,
         ]);
         $input = new UpdateProjectInput(
@@ -42,6 +42,7 @@ class UpdateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
+                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
                 accountUuid: Uuid::fromString($this->user->account_uuid)
@@ -61,7 +62,7 @@ class UpdateProjectUseCaseTest extends TestCase
     public function test_create_project_success_with_dates()
     {
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid,
         ]);
         $input = new UpdateProjectInput(
@@ -75,6 +76,7 @@ class UpdateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
+                id: $this->user->id,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
                 accountUuid: Uuid::fromString($this->user->account_uuid)

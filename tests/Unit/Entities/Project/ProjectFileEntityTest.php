@@ -35,6 +35,7 @@ class ProjectFileEntityTest extends TestCase
         $userUuid = Uuid::uuid7();
         $accountUuid = Uuid::uuid7();
         $userEntity = UserEntity::forIdentify(
+            id: 1,
             uuid: $userUuid,
             role: UserRoles::ADMIN,
             accountUuid: $accountUuid

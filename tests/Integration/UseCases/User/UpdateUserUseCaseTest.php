@@ -42,6 +42,7 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(18),
             authenticableUser: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );
@@ -77,6 +78,7 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(17),
             authenticableUser: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );
@@ -97,6 +99,7 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(18),
             authenticableUser: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );
@@ -121,6 +124,7 @@ class UpdateUserUseCaseTest extends TestCase
             password: 'password',
             birthday: now()->subYears(17),
             authenticableUser: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::fromString($this->user->uuid)
             )
         );

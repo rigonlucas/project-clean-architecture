@@ -169,7 +169,7 @@ class ChangeUserRoleE2eTest extends TestCase
         $response->assertStatus(ResponseStatus::NOT_FOUND->value);
     }
 
-    public function test_api_tail_if_users_arent_from_same_account(): void
+    public function test_api_fail_if_users_arent_from_same_account(): void
     {
         $userAuth = User::factory()->create([
             'role' => UserRoles::ADMIN

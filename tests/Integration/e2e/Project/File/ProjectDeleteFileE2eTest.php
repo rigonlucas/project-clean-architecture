@@ -30,7 +30,7 @@ class ProjectDeleteFileE2eTest extends TestCase
     {
         // Arrange
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid
         ]);
         $uliFileName = Ulid::generate();
@@ -43,7 +43,7 @@ class ProjectDeleteFileE2eTest extends TestCase
             ->apply();
         $file = ProjectFile::factory()->create([
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid,
             'context' => FileContextEnum::PROJECT->value,
             'file_extension' => FileExtensionsEnum::TXT->value,
@@ -78,7 +78,7 @@ class ProjectDeleteFileE2eTest extends TestCase
     {
         // Arrange
         $project = Project::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid
         ]);
         $uliFileName = Ulid::generate();
@@ -91,7 +91,7 @@ class ProjectDeleteFileE2eTest extends TestCase
             ->apply();
         $file = ProjectFile::factory()->create([
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account_uuid,
             'context' => FileContextEnum::PROJECT->value,
             'file_extension' => FileExtensionsEnum::TXT->value,

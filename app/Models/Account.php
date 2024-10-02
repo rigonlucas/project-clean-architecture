@@ -7,12 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Ramsey\Uuid\UuidInterface;
 
 /**
  * @property mixed|string $name
  * @property mixed|string $uuid
- * @property mixed|UuidInterface $owner_user_uuid
+ * @property mixed $owner_user_id
  */
 class Account extends Model
 {
@@ -27,7 +26,7 @@ class Account extends Model
     protected $fillable = [
         'name',
         'uuid',
-        'owner_user_uuid',
+        'owner_user_id',
     ];
 
     public function joinCodes(): HasMany

@@ -35,14 +35,14 @@ class DeleteProjectUseCaseTest extends TestCase
         // Arrange
         $project = Project::factory()->create();
         $task = Task::factory()->create([
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account->uuid,
         ]);
 
         $projectTasks = ProjectTask::factory()->count(2)->create([
             'project_uuid' => $project->uuid,
             'task_uuid' => $task->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
         ]);
         // Act
         $projectAggregate = $this->useCase->execute($project->uuid, $this->userEntity);
@@ -72,7 +72,7 @@ class DeleteProjectUseCaseTest extends TestCase
         ]);
         $projectFile = ProjectFile::factory()->count(2)->create([
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
             'account_uuid' => $this->user->account->uuid,
         ]);
 
@@ -104,7 +104,7 @@ class DeleteProjectUseCaseTest extends TestCase
         ]);
         $projectCard = ProjectCard::factory()->count(2)->create([
             'project_uuid' => $project->uuid,
-            'created_by_user_uuid' => $this->user->uuid,
+            'created_by_user_id' => $this->user->id,
         ]);
 
         // Act
@@ -131,6 +131,7 @@ class DeleteProjectUseCaseTest extends TestCase
         parent::setUp();
         $this->user = User::factory()->create();
         $this->userEntity = UserEntity::forIdentify(
+            id: 1,
             uuid: Uuid::fromString($this->user->uuid),
             role: UserRoles::ADMIN,
             accountUuid: Uuid::fromString($this->user->account_uuid)

@@ -25,7 +25,7 @@ class UserMapper implements UserMapperInterface
     public function findByUuid(string $uuid): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('uuid', '=', $uuid)
             ->toBase()
             ->first();
@@ -34,6 +34,7 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
+            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
@@ -52,7 +53,7 @@ class UserMapper implements UserMapperInterface
     public function findByEmail(string $email): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('email', '=', $email)
             ->toBase()
             ->first();
@@ -61,6 +62,7 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
+            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
@@ -77,7 +79,7 @@ class UserMapper implements UserMapperInterface
     public function findByEmailAndUuid(string $email, UuidInterface $uuid): ?UserEntity
     {
         $userModel = User::query()
-            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('email', '=', $email)
             ->where('uuid', '=', $uuid->toString())
             ->toBase()
@@ -87,6 +89,7 @@ class UserMapper implements UserMapperInterface
         }
 
         return UserEntity::forDetail(
+            id: $userModel->id,
             name: $userModel->name,
             email: $userModel->email,
             uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),
@@ -117,7 +120,7 @@ class UserMapper implements UserMapperInterface
         UserEntity $authUser
     ): UserCollection {
         $userModels = User::query()
-            ->select(['name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
+            ->select(['id', 'name', 'email', 'birthday', 'uuid', 'account_uuid', 'role'])
             ->where('account_uuid', '=', $account->getUuid())
             ->with('account:id,name,uuid')
             ->paginate(perPage: $paginationData->perPage, page: $paginationData->page);
@@ -126,6 +129,7 @@ class UserMapper implements UserMapperInterface
         foreach ($userModels->items() as $userModel) {
             $userCollection->add(
                 user: UserEntity::forDetail(
+                    id: $userModel->id,
                     name: $userModel->name,
                     email: $userModel->email,
                     uuid: FrameworkService::getInstance()->uuid()->uuidFromString($userModel->uuid),

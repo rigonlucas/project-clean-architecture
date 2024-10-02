@@ -38,6 +38,7 @@ class StatusFactoryStrategiesTest extends TestCase
                     name: 1,
                     description: 1,
                     user: UserEntity::forDetail(
+                        id: 1,
                         name: 1,
                         email: 1,
                         uuid: Uuid::uuid7(),

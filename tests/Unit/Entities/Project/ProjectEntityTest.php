@@ -40,6 +40,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -62,6 +63,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -84,6 +86,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -106,6 +109,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -128,6 +132,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -150,6 +155,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -171,6 +177,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -192,6 +199,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -217,6 +225,7 @@ class ProjectEntityTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid

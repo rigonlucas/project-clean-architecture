@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->foreignUuid('account_uuid')
                 ->constrained('accounts', 'uuid')
                 ->onDelete('cascade');
-            $table->foreignUuid('created_by_user_uuid')
-                ->constrained('users', 'uuid')
+            $table->foreignId('created_by_user_id')
+                ->constrained('users')
                 ->onDelete('cascade');
             $table->string('name');
             $table->text('description')->nullable();

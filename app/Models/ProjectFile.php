@@ -24,7 +24,7 @@ use Ramsey\Uuid\UuidInterface;
  * @property BytesValueObject|mixed $file_size
  * @property FileExtensionsEnum|mixed $file_extension
  * @property mixed $project_uuid
- * @property mixed $created_by_user_uuid
+ * @property mixed $created_by_user_id
  * @property FileContextEnum|mixed $context
  * @property FileStatusEnum|mixed $status
  */
@@ -47,7 +47,7 @@ class ProjectFile extends Model
         'file_size',
         'file_extension',
         'project_uuid',
-        'created_by_user_uuid',
+        'created_by_user_id',
         'account_uuid',
         'context',
         'status',

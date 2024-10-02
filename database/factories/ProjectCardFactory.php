@@ -18,7 +18,7 @@ class ProjectCardFactory extends Factory
     {
         return [
             'uuid' => $this->faker->uuid,
-            'created_by_user_uuid' => User::factory(),
+            'created_by_user_id' => User::factory(),
             'project_uuid' => Project::factory(),
             'name' => $this->faker->word,
             'description' => $this->faker->sentence,

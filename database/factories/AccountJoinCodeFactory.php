@@ -24,7 +24,7 @@ class AccountJoinCodeFactory extends Factory
             'uuid' => Uuid::uuid7()->toString(),
             'code' => $this->faker->unique()->word,
             'account_uuid' => Account::factory(),
-            'user_uuid' => User::factory(),
+            'user_id' => User::factory(),
             'expired_at' => now()->addDay()
         ];
     }

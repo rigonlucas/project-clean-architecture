@@ -20,7 +20,7 @@ class UserCommand implements UserCommandInterface
         $userModel->birthday = $userEntity->getBirthday();
         $userModel->save();
 
-        return $userEntity;
+        return $userEntity->setId($userModel->id);
     }
 
     public function changeRole(UserEntity $userEntity): void

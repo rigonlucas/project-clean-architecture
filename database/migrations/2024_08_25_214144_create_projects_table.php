@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->uuid()->primary();
             $table->string('name', 255);
             $table->string('description', 500);
-            $table->foreignUuid('created_by_user_uuid')
-                ->constrained('users', 'uuid')
+            $table->foreignId('created_by_user_id')
+                ->constrained('users')
                 ->onDelete('cascade');
             $table->foreignUuid('account_uuid')
                 ->constrained('accounts', 'uuid');
@@ -37,7 +37,7 @@ return new class extends Migration {
                 ->nullable()
                 ->default(null)
                 ->comment('Unique local identifier for deletion');
-            
+
             $table->index(['account_uuid']);
         });
     }

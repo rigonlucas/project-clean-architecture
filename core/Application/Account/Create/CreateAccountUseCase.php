@@ -32,7 +32,7 @@ class CreateAccountUseCase
     {
         $accountEntity = $this->processAccountCreation($input);
 
-        $userEntity = UserEntity::forIdentify($input->getUserUuid());
+        $userEntity = UserEntity::forIdentify($input->getId(), $input->getUserUuid());
         $accountEntity->setUserEntity($userEntity);
 
         if ($accountEntity->getJoinCodeEntity()) {

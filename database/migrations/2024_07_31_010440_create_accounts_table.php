@@ -14,7 +14,7 @@ return new class extends Migration {
         Schema::create('accounts', function (Blueprint $table) {
             $table->uuid()->primary();
             $table->string('name');
-            $table->foreignUuid('owner_user_uuid')->constrained('users', 'uuid');
+            $table->foreignId('owner_user_id')->constrained('users');
 
             $table->unsignedInteger('config_space_limit_mb')->default(500);
             $table->unsignedInteger('config_space_limit_mb_used')->default(0);

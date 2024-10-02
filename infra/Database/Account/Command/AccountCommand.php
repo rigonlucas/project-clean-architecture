@@ -16,13 +16,13 @@ class AccountCommand implements AccountCommandInterface
         $accountModel = new Account();
         $accountModel->name = $accountEntity->getName();
         $accountModel->uuid = $accountEntity->getUuid();
-        $accountModel->owner_user_uuid = $accountEntity->getUserEntity()->getUuid()->toString();
+        $accountModel->owner_user_id = $accountEntity->getUserEntity()->getId();
         $accountModel->save();
 
         User::query()
-            ->where('uuid', '=', $accountEntity->getUserEntity()->getUuid())
+            ->where('id', '=', $accountEntity->getUserEntity()->getId())
             ->update([
-                'account_uuid' => $accountModel->uuid
+                'account_uuid' => $accountEntity->getUuid()->toString()
             ]);
 
         return $accountEntity;
@@ -33,12 +33,12 @@ class AccountCommand implements AccountCommandInterface
         AccountJoinCode::query()
             ->where('code', '=', $accountEntity->getJoinCodeEntity()->getCode())
             ->update([
-                'user_uuid' => $accountEntity->getUserEntity()->getUuid()
+                'user_id' => $accountEntity->getUserEntity()->getId()
             ]);
         User::query()
-            ->where('uuid', '=', $accountEntity->getUserEntity()->getUuid())
+            ->where('id', '=', $accountEntity->getUserEntity()->getId())
             ->update([
-                'account_uuid' => $accountEntity->getUuid()
+                'account_uuid' => $accountEntity->getUuid()->toString()
             ]);
     }
 }

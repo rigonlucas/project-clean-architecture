@@ -37,6 +37,7 @@ class CreateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
                 accountUuid: Uuid::fromString($this->user->account_uuid)
@@ -65,6 +66,7 @@ class CreateProjectUseCaseTest extends TestCase
         $projectEntity = $this->useCase->execute(
             createProjectInput: $input,
             authUser: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::fromString($this->user->uuid),
                 role: UserRoles::ADMIN,
                 accountUuid: Uuid::fromString($this->user->account_uuid)

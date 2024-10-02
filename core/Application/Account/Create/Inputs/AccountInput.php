@@ -8,6 +8,7 @@ class AccountInput
 {
     private ?UuidInterface $userUuid = null;
     private ?string $userName;
+    private int $id;
 
     public function __construct(
         public readonly ?string $accessCode
@@ -34,4 +35,13 @@ class AccountInput
         $this->userUuid = $userUuid;
     }
 
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

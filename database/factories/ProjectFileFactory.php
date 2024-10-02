@@ -26,7 +26,7 @@ class ProjectFileFactory extends Factory
     {
         return [
             'project_uuid' => Project::factory(),
-            'created_by_user_uuid' => User::factory(),
+            'created_by_user_id' => User::factory(),
             'account_uuid' => Account::factory(),
             'file_name' => $this->faker->word,
             'file_path' => $this->faker->filePath(),

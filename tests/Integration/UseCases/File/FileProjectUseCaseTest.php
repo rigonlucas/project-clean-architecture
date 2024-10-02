@@ -43,7 +43,8 @@ class FileProjectUseCaseTest extends TestCase
         $fileEntity = $this->useCase->execute(
             projecFiletInput: $input,
             authUserEntity: UserEntity::forIdentify(
-                uuid: Uuid::fromString($projectModel->created_by_user_uuid),
+                id: $projectModel->createdByUser->id,
+                uuid: Uuid::fromString($projectModel->createdByUser->uuid),
                 role: UserRoles::ADMIN,
                 accountUuid: Uuid::fromString($projectModel->account_uuid)
             )
@@ -58,7 +59,7 @@ class FileProjectUseCaseTest extends TestCase
             'file_size' => $fileEntity->getSize()->getBytes(),
             'file_extension' => $fileEntity->getExtension(),
             'project_uuid' => $projectModel->uuid,
-            'created_by_user_uuid' => $projectModel->created_by_user_uuid,
+            'created_by_user_id' => $projectModel->created_by_user_id,
             'account_uuid' => $projectModel->account_uuid,
             'context' => $fileEntity->getContext()->value,
             'status' => $fileEntity->getStatus()->value,
@@ -93,6 +94,7 @@ class FileProjectUseCaseTest extends TestCase
         $this->useCase->execute(
             projecFiletInput: $input,
             authUserEntity: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid4(),
                 role: UserRoles::ADMIN,
                 accountUuid: Uuid::uuid4()

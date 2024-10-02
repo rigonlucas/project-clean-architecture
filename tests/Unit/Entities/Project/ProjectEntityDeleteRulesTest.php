@@ -27,6 +27,7 @@ class ProjectEntityDeleteRulesTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -50,6 +51,7 @@ class ProjectEntityDeleteRulesTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::EDITOR,
                 accountUuid: $accountUuid
@@ -73,6 +75,7 @@ class ProjectEntityDeleteRulesTest extends TestCase
             name: 'Project Name',
             description: 'Project Description',
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::VIEWER,
                 accountUuid: $accountUuid
@@ -111,6 +114,7 @@ class ProjectEntityDeleteRulesTest extends TestCase
         $projectEntity = ProjectEntity::forIdentify(
             uuid: Uuid::uuid7(),
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid
@@ -131,6 +135,7 @@ class ProjectEntityDeleteRulesTest extends TestCase
         $projectEntity = ProjectEntity::forIdentify(
             uuid: Uuid::uuid7(),
             user: UserEntity::forIdentify(
+                id: 1,
                 uuid: Uuid::uuid7(),
                 role: UserRoles::ADMIN,
                 accountUuid: $accountUuid

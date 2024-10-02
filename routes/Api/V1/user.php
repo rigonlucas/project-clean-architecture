@@ -17,8 +17,7 @@ Route::prefix('user')->group(function () {
     Route::put('/user/update/{uuid}', [UpdateUserController::class, '__invoke'])
         ->whereUuid('uuid')
         ->name('api.v1.user.update');
-    Route::patch('/user/change-role/{uuid}', [ChangeUserRoleController::class, '__invoke']
-    )
+    Route::patch('/user/change-role/{uuid}', [ChangeUserRoleController::class, '__invoke'])
         ->whereUuid('uuid')
         ->name('api.v1.user.change-role');
     Route::get('/user/list', [UserListFromAccountController::class, '__invoke'])

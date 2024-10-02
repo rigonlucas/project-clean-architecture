@@ -4,7 +4,6 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,6 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property mixed|int $role
  * @method BelongsTo accounts()
  * @property int|mixed|null $account_uuid
+ * @property mixed $id
  */
 class User extends Authenticatable
 {
@@ -28,11 +28,6 @@ class User extends Authenticatable
     use Notifiable;
     use HasApiTokens;
     use SoftDeletes;
-    use HasUuids;
-
-    public $incrementing = false;
-    protected $primaryKey = 'uuid';
-    protected $keyType = 'string';
 
     protected $fillable = [
         'name',

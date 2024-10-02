@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->string('code', 8);
             $table->foreignUuid('account_uuid')
                 ->constrained('accounts', 'uuid');
-            $table->foreignUuid('user_uuid')
+            $table->foreignId('user_id')
                 ->nullable()
-                ->constrained('users', 'uuid');
+                ->constrained('users');
             $table->dateTime('expired_at');
             $table->timestamps();
         });

@@ -56,6 +56,7 @@ class UserEntityTest extends TestCase
     public function test_user_admin_can_access_email_not_suppresed()
     {
         $userEntity = UserEntity::forDetail(
+            id: 1,
             name: 'Aaaa',
             email: 'email@email.com',
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
@@ -65,6 +66,7 @@ class UserEntityTest extends TestCase
         );
 
         $requireUserEntity = UserEntity::forIdentify(
+            id: 1,
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             role: UserRoles::ADMIN
         );
@@ -76,6 +78,7 @@ class UserEntityTest extends TestCase
     public function test_user_editor_can_access_email_suppresed()
     {
         $userEntity = UserEntity::forDetail(
+            id: 1,
             name: 'Aaaa',
             email: 'email@email.com',
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
@@ -89,6 +92,7 @@ class UserEntityTest extends TestCase
     public function test_userviewer_can_access_email_suppresed()
     {
         $userEntity = UserEntity::forDetail(
+            id: 1,
             name: 'Aaaa',
             email: 'email@email.com',
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
@@ -98,6 +102,7 @@ class UserEntityTest extends TestCase
         );
 
         $requireUserEntity = UserEntity::forIdentify(
+            id: 1,
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             role: UserRoles::VIEWER
         );
@@ -108,6 +113,7 @@ class UserEntityTest extends TestCase
     public function test_must_throw_exception_forbiden_when_no_email_defined()
     {
         $userEntity = UserEntity::forIdentify(
+            id: 1,
             uuid: FrameworkService::getInstance()->uuid()->uuid7Generate(),
             role: UserRoles::VIEWER
         );

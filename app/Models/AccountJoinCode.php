@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $uuid
  * @property string $code
  * @property int account_uuid
- * @property int user_uuid
+ * @property int user_id
  * @property DateTime expired_at
  */
 class AccountJoinCode extends Model
@@ -28,7 +28,7 @@ class AccountJoinCode extends Model
     protected $fillable = [
         'code',
         'account_uuid',
-        'user_uuid',
+        'user_id',
         'expired_at'
     ];
 

@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->foreignUuid('task_uuid')
                 ->constrained('tasks', 'uuid')
                 ->onDelete('cascade');
-            $table->foreignUuid('created_by_user_uuid')
-                ->constrained('users', 'uuid')
+            $table->foreignId('created_by_user_id')
+                ->constrained('users')
                 ->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();

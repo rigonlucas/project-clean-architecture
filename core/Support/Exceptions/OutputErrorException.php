@@ -2,9 +2,10 @@
 
 namespace Core\Support\Exceptions;
 
+use DomainException;
 use Exception;
 
-class OutputErrorException extends Exception
+class OutputErrorException extends DomainException
 {
     public function __construct(
         string $message,

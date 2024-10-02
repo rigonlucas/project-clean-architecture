@@ -34,6 +34,7 @@ class CreateAccountUseCaseTest extends TestCase
         );
         $input->setUserUuid(Uuid::fromString($userFactory->uuid));
         $input->setUserName($userFactory->name);
+        $input->setId($userFactory->id);
 
         // Act
         $accountEntity = $this->useCase->execute(input: $input);
@@ -54,7 +55,7 @@ class CreateAccountUseCaseTest extends TestCase
         $accountJoinCode = AccountJoinCode::factory()->create([
             'account_uuid' => $accountFactory->uuid,
             'code' => '123456',
-            'user_uuid' => null
+            'user_id' => null
         ]);
         // Arrange
         $input = new AccountInput(
@@ -62,6 +63,7 @@ class CreateAccountUseCaseTest extends TestCase
         );
         $input->setUserUuid(Uuid::fromString($userFactory->uuid));
         $input->setUserName($userFactory->name);
+        $input->setId($userFactory->id);
 
         // Act
         $accountEntity = $this->useCase->execute(input: $input);
@@ -74,10 +76,11 @@ class CreateAccountUseCaseTest extends TestCase
         $this->assertDatabaseHas('account_join_codes', [
             'code' => $accountJoinCode->code,
             'account_uuid' => $accountFactory->uuid,
-            'user_uuid' => $userFactory->uuid
+            'user_id' => $userFactory->id
         ]);
 
         $this->assertDatabaseHas('users', [
+            'id' => $userFactory->id,
             'uuid' => $userFactory->uuid,
             'account_uuid' => $accountFactory->uuid
         ]);
@@ -109,7 +112,7 @@ class CreateAccountUseCaseTest extends TestCase
         $accountJoinCode = AccountJoinCode::factory()->create([
             'account_uuid' => $accountFactory->uuid,
             'code' => '123456',
-            'user_uuid' => null,
+            'user_id' => null,
             'expired_at' => now()->subDay()
         ]);
 

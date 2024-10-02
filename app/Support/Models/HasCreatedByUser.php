@@ -9,6 +9,6 @@ trait HasCreatedByUser
 {
     public function createdByUser(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by_user_uuid');
+        return $this->belongsTo(User::class, 'created_by_user_id');
     }
 }

@@ -20,7 +20,7 @@ class ProjectTaskFactory extends Factory
         return [
             'project_uuid' => Project::factory(),
             'task_uuid' => Task::factory(),
-            'created_by_user_uuid' => User::factory(),
+            'created_by_user_id' => User::factory(),
         ];
     }
 }
