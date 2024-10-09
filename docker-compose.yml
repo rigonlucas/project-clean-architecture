@@ -58,22 +58,22 @@ services:
       - internal
     ports:
       - "6379:6379"
-  #  minio:
-  #    image: minio/minio
-  #    container_name: minio_project_xxxx
-  #    #restart: always
-  #    ports:
-  #      - "9000:9000"
-  #      - "9001:9001"
-  #    environment:
-  #      MINIO_ROOT_USER: "admin"
-  #      MINIO_ROOT_PASSWORD: "admin"
-  #      MINIO_DEFAULT_BUCKETS: "project_bucket"
-  #    volumes:
-  #      - minio-data-projetc-xxxx:/data
-  #    command: server --console-address ":9001" /data
-  #    networks:
-  #      - internal
+  minio:
+    image: minio/minio
+    container_name: minio_project_xxxx
+    #restart: always
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: "admin"
+      MINIO_ROOT_PASSWORD: "adminadmin"
+      MINIO_DEFAULT_BUCKETS: "projectbucket"
+    volumes:
+      - minio-data-projetc-xxxx:/data
+    command: server --console-address ":9001" /data
+    networks:
+      - internal
   mysql:
     image: 'mysql/mysql-server:8.0'
     container_name: 'db_project_xxx'

@@ -113,6 +113,7 @@ class UserMapper implements UserMapperInterface
 
     /**
      * @throws InvalidEmailException
+     * @throws Exception
      */
     public function paginatedAccountUserList(
         AccountEntity $account,
