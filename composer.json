@@ -49,6 +49,10 @@
     "post-autoload-dump": [
       "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
     ],
+    "post-install-cmd": [
+      "chmod -R 775 storage",
+      "chmod -R 775 bootstrap/cache"
+    ],
     "post-update-cmd": [
       "@php artisan vendor:publish --tag=laravel-assets --ansi --force",
       "composer dump-autoload"
