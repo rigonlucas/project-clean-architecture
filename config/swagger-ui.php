@@ -1,7 +1,5 @@
 <?php
 
-use NextApps\SwaggerUi\Http\Middleware\EnsureUserIsAuthorized;
-
 return [
     'files' => [
         [
@@ -32,7 +30,7 @@ return [
              */
             'middleware' => [
                 'web',
-                EnsureUserIsAuthorized::class,
+                //EnsureUserIsAuthorized::class,
             ],
 
             /*
